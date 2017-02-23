@@ -2,10 +2,14 @@
 var events = require('events');
 
 // Local modules
-var client = require('./lib/bacnet-client');
+var client        = require('./lib/bacnet-client');
+var enumerations  = require('./lib/bacnet-enum');
 
 module.exports = function() {
   var self = new events.EventEmitter();
+
+  // Public enums
+  self.enum = enumerations;
 
   // Public functions
   self.whoIs = function(lowLimit, highLimit, receiver) {
@@ -14,23 +18,21 @@ module.exports = function() {
     });
   };
 
-  self.readProperty = function(address, objectType, objectInstance, propertyId, arrayIndex, cb) {
-    client.readProperty(address, objectType, objectInstance, propertyId, arrayIndex, cb);
+  self.readProperty = function(address, objectType, objectInstance, propertyId, arrayIndex, next) {
+    client.readProperty(address, objectType, objectInstance, propertyId, arrayIndex, next);
   };
 
-  self.writeProperty = function() {
-
+  self.writeProperty = function(address, objectType, objectInstance, propertyId, priority, valueList) {
+    client.writeProperty(address, objectType, objectInstance, propertyId, priority, valueList);
   };
 
-  self.readPropertyMultiple = function(address, objectType, objectInstance, propertyIdAndArrayIndex, cb) {
-    client.readPropertyMultiple(address, objectType, objectInstance, propertyIdAndArrayIndex, cb);
+  self.readPropertyMultiple = function(address, objectType, objectInstance, propertyIdAndArrayIndex, next) {
+    client.readPropertyMultiple(address, objectType, objectInstance, propertyIdAndArrayIndex, next);
   };
 
   self.writePropertyMultiple = function() {
 
   };
-
-  // Initialisation
 
   return self;
 };
