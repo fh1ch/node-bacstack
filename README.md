@@ -14,7 +14,7 @@ interact with building automation devices defined by ASHRAE.
 Add Node BACstack to your project by using:
 
 ``` sh
-$ npm install --save node-bacstack
+$ npm install --save bacstack
 ```
 
 **Who Is**
@@ -22,7 +22,7 @@ $ npm install --save node-bacstack
 The `whoIs` command discovers all BACNET devices in the network.
 
 ``` js
-var bacnet = require('node-bacstack');
+var bacnet = require('bacstack');
 var client = bacnet();
 
 client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
@@ -37,7 +37,7 @@ client.whoIs();
 The `readProperty` command reads a single property of an object from a device.
 
 ``` js
-var bacnet = require('node-bacstack');
+var bacnet = require('bacstack');
 var client = bacnet();
 
 client.readProperty('192.168.1.43', 8, 44301, 28, null, function(err, value) {
@@ -50,7 +50,7 @@ client.readProperty('192.168.1.43', 8, 44301, 28, null, function(err, value) {
 The `writeProperty` command writes a single property of an object to a device.
 
 ``` js
-var bacnet = require('node-bacstack');
+var bacnet = require('bacstack');
 var client = bacnet();
 
 client.writeProperty('192.168.1.43', 8, 44301, 28, null, 1, function(err, value) {
