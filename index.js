@@ -1,15 +1,25 @@
 // Dependency modules
-var events = require('events');
+var events        = require('events');
 
 // Local modules
-var client        = require('./lib/bacnet-client');
-var enumerations  = require('./lib/bacnet-enum');
+var baClient      = require('./lib/bacnet-client');
+var baEnum        = require('./lib/bacnet-enum');
 
-module.exports = function() {
+module.exports = function(settings) {
   var self = new events.EventEmitter();
 
+  settings = settings || {};
+  var options = {
+    port: settings.port || 47808,
+    interface: settings.interface,
+    broadcastAddress: settings.broadcastAddress || '255.255.255.255',
+    adpuTimeout: settings.adpuTimeout || 3000
+  };
+
+  var client = baClient(options);
+
   // Public enums
-  self.enum = enumerations;
+  self.enum = baEnum;
 
   // Public functions
   self.whoIs = function(lowLimit, highLimit, receiver) {
