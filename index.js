@@ -22,8 +22,8 @@ module.exports = function(settings) {
   self.enum = baEnum;
 
   // Public functions
-  self.whoIs = function(lowLimit, highLimit, receiver) {
-    client.whoIs(lowLimit, highLimit, null, function(address, deviceId, maxAdpu, segmentation, vendorId) {
+  self.whoIs = function(lowLimit, highLimit, address) {
+    client.whoIs(lowLimit, highLimit, address, function(address, deviceId, maxAdpu, segmentation, vendorId) {
       self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
     });
   };
@@ -36,12 +36,8 @@ module.exports = function(settings) {
     client.writeProperty(address, objectType, objectInstance, propertyId, priority, valueList);
   };
 
-  self.readPropertyMultiple = function(address, objectType, objectInstance, propertyIdAndArrayIndex, next) {
-    client.readPropertyMultiple(address, objectType, objectInstance, propertyIdAndArrayIndex, next);
-  };
-
-  self.writePropertyMultiple = function() {
-
+  self.readPropertyMultiple = function(address, propertyIdAndArrayIndex, next) {
+    client.readPropertyMultiple(address, propertyIdAndArrayIndex, next);
   };
 
   return self;
