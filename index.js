@@ -32,8 +32,8 @@ module.exports = function(settings) {
     client.readProperty(address, objectType, objectInstance, propertyId, arrayIndex, next);
   };
 
-  self.writeProperty = function(address, objectType, objectInstance, propertyId, priority, valueList) {
-    client.writeProperty(address, objectType, objectInstance, propertyId, priority, valueList);
+  self.writeProperty = function(address, objectType, objectInstance, propertyId, priority, valueList, next) {
+    client.writeProperty(address, objectType, objectInstance, propertyId, priority, valueList, next);
   };
 
   self.readPropertyMultiple = function(address, propertyIdAndArrayIndex, next) {
