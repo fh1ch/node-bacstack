@@ -1,6 +1,6 @@
 {
     "bitwise": false,
-    "curly": true,
+    "curly": false,
     "eqeqeq": true,
     "es3": false,
     "forin": true,
@@ -13,10 +13,10 @@
     "undef": true,
     "unused": false,
     "strict": false,
-    "maxparams": 10,
+    "maxparams": 15,
     "maxdepth": 5,
-    "maxstatements": 40,
-    "maxcomplexity": 8,
+    "maxstatements": 100,
+    "maxcomplexity": 40,
 
     "asi": false,
     "boss": false,
