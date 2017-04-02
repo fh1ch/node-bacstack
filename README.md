@@ -89,7 +89,7 @@ The `writeProperty` command writes a single property of an object to a device.
 - `objectInstance` *[number]* - IP address of the target device.
 - `propertyId` *[number]* - The BACNET property id in the specified object to write.
 - `priority` *[number]* - The priority to be used for writing to the property.
-- `valueList` *[array]* - A list of values to be written to the speicifed property.
+- `valueList` *[array]* - A list of values to be written to the speicifed property. The `Tag` value has to be a `BacnetApplicationTags` declaration as specified in `lib/bacnet-enum.js`.
 - `next` *[function]* - The callback containing an error, in case of a failure and value object in case of success.
 
 propertyId, ,
@@ -98,7 +98,7 @@ propertyId, ,
 var bacnet = require('bacstack');
 var client = bacnet();
 
-client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [100], function(err, value) {
+client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [{Tag: 4, Value: 100}], function(err, value) {
   console.log('value: ', value);
 });
 ```
