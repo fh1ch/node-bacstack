@@ -1,5 +1,7 @@
 {
   "preset": "google",
-  "maximumLineLength": 160,
-  "requireSemicolons": true
+  "maximumLineLength": 260,
+  "requireSemicolons": true,
+  "requireCamelCaseOrUpperCaseIdentifiers": false,
+  "requireCurlyBraces": false
 }
