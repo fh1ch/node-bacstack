@@ -5,7 +5,7 @@
     "es3": false,
     "forin": true,
     "freeze": true,
-    "latedef": "nofunc",
+    "latedef": false,
     "noarg": true,
     "nonbsp": true,
     "nonew": true,
