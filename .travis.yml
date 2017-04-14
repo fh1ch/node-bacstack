@@ -1,9 +1,9 @@
 language: "node_js"
 node_js:
+  - "7"
   - "6"
   - "5"
   - "4"
-  - "0.12"
 
 before_install:
   - "npm install coveralls"
@@ -12,5 +12,6 @@ script:
   - "npm run lint"
   - "npm run test"
   - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
+  - "npm run integration"
 
 sudo: false
