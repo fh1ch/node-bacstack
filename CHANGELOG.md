@@ -1,3 +1,19 @@
+<a name="0.0.1-beta.4"></a>
+# [0.0.1-beta.4](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2017-05-04)
+
+### Features
+
+* **bacnet-asn1:** expose property value type ([b6ca82b](https://github.com/fh1ch/node-bacstack/commit/b6ca82b9a9f6dd96191853d9ddbb3275b07b159b))
+
+### Bug Fixes
+
+* **bacnet-client:** re-enable who-is handler ([ae1d710](https://github.com/fh1ch/node-bacstack/commit/ae1d710494cf75a1557235e28af2a3c6506aea77))
+
+### BREAKING CHANGES
+
+* bacnet-asn1: property values changed from single value array (`[12]`) to array of object `[{value: 12, type: 3}]`
+
+
 <a name="0.0.1-beta.3"></a>
 # [0.0.1-beta.3](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2017-04-14)
 
