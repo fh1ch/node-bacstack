@@ -1,2 +1,4 @@
 var bacnet = require('../../');
-module.exports = bacnet();
+
+module.exports.bacnetClient = bacnet;
+module.exports.globalBacnetClient = bacnet();
