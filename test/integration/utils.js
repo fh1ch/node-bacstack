@@ -13,7 +13,7 @@ module.exports.transportStub = function() {
     return '255.255.255.255';
   };
   self.getMaxPayload = function() {
-    return 1472;
+    return 1482;
   };
   self.send = function() {};
   return self;
