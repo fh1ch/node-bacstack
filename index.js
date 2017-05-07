@@ -12,6 +12,7 @@ module.exports = function(settings) {
   var options = {
     port: settings.port || 47808,
     interface: settings.interface,
+    transport: settings.transport,
     broadcastAddress: settings.broadcastAddress || '255.255.255.255',
     adpuTimeout: settings.adpuTimeout || 3000
   };
