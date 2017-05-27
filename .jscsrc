@@ -3,5 +3,6 @@
   "maximumLineLength": 320,
   "requireSemicolons": true,
   "requireCamelCaseOrUpperCaseIdentifiers": false,
-  "requireCurlyBraces": false
+  "requireCurlyBraces": false,
+  "jsDoc": false
 }

@@ -9,7 +9,7 @@ interact with building automation devices defined by ASHRAE.
 [![](https://codeclimate.com/github/fh1ch/node-bacstack/badges/gpa.svg)](https://codeclimate.com/github/fh1ch/node-bacstack)
 [![](https://david-dm.org/fh1ch/node-bacstack/status.svg)](https://david-dm.org/fh1ch/node-bacstack)
 
-> **Note:** This is an early prototype and shall not be considerate as stable.
+> **Note:** This is an early prototype and shall not be considered as stable.
 > Use it with caution and at your own risk!
 
 ## Usage
@@ -20,107 +20,23 @@ Add Node BACstack to your project by using:
 $ npm install --save bacstack
 ```
 
-#### Client
+The API documentation is available under **[fh1ch.github.io/node-bacstack](https://fh1ch.github.io/node-bacstack)**.
 
-To be able to communicate to BACNET devices, you have to initialize a new
-bacstack instance. Hereby, following options are avilable:
-
-- `option` *[object]* - The options object used for parameterising the bacstack.
-  - `port` *[number]* - BACNET communication port for listening and sending. Default is `47808`. *Optional*.
-  - `interface` *[string]* - Specific BACNET communication interface if different from primary one. *Optional*.
-  - `broadcastAddress` *[string]* - The address used for broadcast messages. Default is `255.255.255.255`. *Optional*.
-  - `adpuTimeout` *[number]* - The timeout in milliseconds until a transaction should be interpreted as error. Default is `3000`. *Optional*.
+### Example
 
 ``` js
 var bacnet = require('bacstack');
-var client = bacnet({
-  port: 47809,                          // Use BAC1 as communication port
-  interface: '192.168.251.10',          // Listen on a specific interface
-  broadcastAddress: '192.168.251.255',  // Use the subnet broadcast address
-  adpuTimeout: 6000                     // Wait twice as long for response
-});
-```
 
-#### Who Is
+// Initialize BACStack
+var client = bacnet({adpuTimeout: 6000});
 
-The `whoIs` command discovers all BACNET devices in the network.
-
-- `lowLimit` *[number]* - Minimal device instance number to search for. *Optional*.
-- `highLimit` *[number]* - Maximal device instance number to search for. *Optional*.
-- `address` *[string]* - Unicast address if command should device directly. *Optional*.
-
-``` js
-var bacnet = require('bacstack');
-var client = bacnet();
-
+// Discover Devices
 client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
 });
-
 client.whoIs();
-```
 
-#### Read Property
-
-The `readProperty` command reads a single property of an object from a device.
-
-- `address` *[string]* - IP address of the target device.
-- `objectType` *[number]* - The BACNET object type to read.
-- `objectInstance` *[number]* - The BACNET object instance to read.
-- `propertyId` *[number]* - The BACNET property id in the specified object to read.
-- `arrayIndex` *[number]* - The array index of the property to be read.
-- `next` *[function]* - The callback containing an error, in case of a failure and value object in case of success.
-
-``` js
-var bacnet = require('bacstack');
-var client = bacnet();
-
-client.readProperty('192.168.1.43', 8, 44301, 28, null, function(err, value) {
-  console.log('value: ', value);
-});
-```
-
-#### Write Property
-
-The `writeProperty` command writes a single property of an object to a device.
-
-- `address` *[string]* - IP address of the target device.
-- `objectType` *[number]* - The BACNET object type to write.
-- `objectInstance` *[number]* - IP address of the target device.
-- `propertyId` *[number]* - The BACNET property id in the specified object to write.
-- `priority` *[number]* - The priority to be used for writing to the property.
-- `valueList` *[array]* - A list of values to be written to the speicifed property. The `Tag` value has to be a `BacnetApplicationTags` declaration as specified in `lib/bacnet-enum.js`.
-- `next` *[function]* - The callback containing an error, in case of a failure and value object in case of success.
-
-propertyId, ,
-
-``` js
-var bacnet = require('bacstack');
-var client = bacnet();
-
-client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [{Tag: 4, Value: 100}], function(err, value) {
-  console.log('value: ', value);
-});
-```
-
-#### Read Property Multiple
-
-The `readPropertyMultiple` command reads multiple properties in multiple objects
-from a device.
-
-- `address` *[string]* - IP address of the target device.
-- `propertyIdAndArrayIndex` *[array]* - List of object and property specifications to be read.
-  - `objectIdentifier` *[object]* - Specifies which object to read.
-    - `type` *[number]* - The BACNET object type to read.
-    - `instance` *[number]* - The BACNET object instance to read.
-  - `propertyReferences` *[array]* - List of properties to be read.
-    - `propertyIdentifier` *[number]* - The BACNET property id in the specified object to read. Also supports `8` for *all* properties.
-- `next` *[function]* - The callback containing an error, in case of a failure and value object in case of success.
-
-``` js
-var bacnet = require('bacstack');
-var client = bacnet();
-
+// Read Device Object
 var requestArray = [
   {objectIdentifier: {type: 8, instance: 4194303}, propertyReferences: [{propertyIdentifier: 8}]}
 ];
@@ -128,6 +44,57 @@ client.readPropertyMultiple('192.168.1.43', requestArray, function(err, value) {
   console.log('value: ', value);
 });
 ```
+
+## Contributing
+
+Implementing and maintaining a protocol stack is a lot of work, therefore any
+help is appreciated, from creating issues, to contributing documentation, fixing
+issues and adding new features.
+
+Please follow the best-practice contribution guidelines as mentioned below when
+submitting any changes.
+
+### Code Style
+
+This module uses the [Google JavaScript Code-Style](https://google.github.io/styleguide/javascriptguide.xml)
+and enforces it using [JSCS](http://jscs.info/) as additional linter beneath
+[JSHint](http://jshint.com/). You can test if your changes comply with the code
+style by executing:
+
+``` sh
+$ npm run lint
+```
+
+### Testing and Coverage
+
+Testing is done using [Mocha](https://mochajs.org/) and is separated into two
+sets, `unit` and `integration`. While unit tries to test on function level,
+including synthetic decoding and encoding, the integration tests are using real
+recorded data and are only mocking the transport layer.
+
+For both sets, the test-coverage is calculated using [Istanbul](https://istanbul.js.org/).
+Running the tests and calculating the coverage can be done locally by executing:
+
+``` sh
+$ npm run test
+$ npm run integration
+```
+
+It is expected that new features or fixes do not negatively impact the test
+results or the coverage.
+
+### Documentation
+
+The API documentation is generated using [JSDoc](http://usejsdoc.org/) and
+relies on in-line JSDoc3 syntax. The documentation can also be built locally by
+executing:
+
+``` sh
+$ npm run docs
+```
+
+It is expected that new features or changes are reflected in the documentation
+as well.
 
 ## License
 

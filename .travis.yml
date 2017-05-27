@@ -13,5 +13,14 @@ script:
   - "npm run test"
   - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
   - "npm run integration"
+  - "npm run docs"
+
+deploy:
+  provider: pages
+  local_dir: ./docs
+  skip_cleanup: true
+  github_token: $GITHUB_API_KEY
+  on:
+    branch: master
 
 sudo: false
