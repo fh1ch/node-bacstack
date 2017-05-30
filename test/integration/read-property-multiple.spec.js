@@ -44,10 +44,10 @@ describe('bacstack - readPropertyMultiple integration', function() {
       expect(object[4941]).to.deep.equal([{value: 6, type: 9}]);
       expect(object[5030]).to.deep.equal([{value: 0, type: 2}]);
       expect(object[5053]).to.deep.equal([{value: 0, type: 9}]);
-      /*expect(object[5086]).to.deep.equal([{value: [
-        {value: '(Bit String)'},
-        {value: '(Bit String)'}
-      ], type: ''}]);*/
+      expect(object[5086]).to.deep.equal([
+        {value: {value: [1], bits_used: 1}, type: 8},
+        {value: {value: [0], bits_used: 1}, type: 8}
+      ]);
       expect(object[5102]).to.deep.equal([{value: 41, type: 9}]);
       next();
     });
@@ -83,7 +83,7 @@ describe('bacstack - readPropertyMultiple integration', function() {
         {value: 'Missing or wrong configuration', type: 7},
         {value: 'Searching', type: 7},
       ]);
-      //expect(object[111]).to.deep.equal([{value: '(Bit String)', type: ''}]);
+      expect(object[111]).to.deep.equal([{value: {value: [0], bits_used: 4}, type: 8}]);
       expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-024-SBCv13.20', type: 7}]);
       expect(object[4930]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[4941]).to.deep.equal([{value: 5, type: 9}]);
