@@ -191,12 +191,11 @@ describe('bacstack - Services layer', function() {
       });
     });
 
-    xit('should successfully encode and decode an octet-string value', function() {
+    it('should successfully encode and decode an octet-string value', function() {
       var buffer = utils.getBuffer();
       baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        // FIXME: correct octet-string implementation
-        // {Tag: 6, Value: []}
-        // {Tag: 6, Value: [1, 2, 100, 200]}
+        {Tag: 6, Value: []},
+        {Tag: 6, Value: [1, 2, 100, 200]}
       ]);
       var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -210,8 +209,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 6, value: [], len: 0},
-          {type: 6, value: [1, 2, 100, 200], len: 4}
+          {type: 6, value: [], len: 1},
+          {type: 6, value: [1, 2, 100, 200], len: 5}
         ]
       });
     });
