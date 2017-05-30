@@ -239,12 +239,11 @@ describe('bacstack - Services layer', function() {
       });
     });
 
-    xit('should successfully encode and decode a bit-string value', function() {
+    it('should successfully encode and decode a bit-string value', function() {
       var buffer = utils.getBuffer();
       baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        // FIXME: correct bit-string implementation
-        // {Tag: 8, Value: {bits_used: 0, value: []}},
-        // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}}
+        {Tag: 8, Value: {bits_used: 0, value: []}},
+        {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}}
       ]);
       var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -258,8 +257,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 8, value: {bits_used: 0, value: []}, len: 0},
-          {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}, len: 3}
+          {type: 8, value: {bits_used: 0, value: []}, len: 2},
+          {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5}
         ]
       });
     });
