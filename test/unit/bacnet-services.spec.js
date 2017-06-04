@@ -357,6 +357,90 @@ describe('bacstack - Services layer', function() {
         ]
       });
     });
+
+    it('should successfully encode and decode a cov-subscription value', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 222, instance: 3}, 152, 0xFFFFFFFF, [
+        {Tag: 111, Value: {
+          Recipient: {net: 12, adr: [0, 1]},
+          subscriptionProcessIdentifier: 3,
+          monitoredObjectIdentifier: {type: 2, instance: 1},
+          monitoredProperty: {propertyIdentifier: 85, propertyArrayIndex: 0},
+          IssueConfirmedNotifications: false,
+          TimeRemaining: 5,
+          COVIncrement: 1
+        }},
+        {Tag: 111, Value: {
+          Recipient: {net: 0xFFFF, adr: []},
+          subscriptionProcessIdentifier: 3,
+          monitoredObjectIdentifier: {type: 2, instance: 1},
+          monitoredProperty: {propertyIdentifier: 85, propertyArrayIndex: 5},
+          IssueConfirmedNotifications: true,
+          TimeRemaining: 5
+        }}
+      ]);
+      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 222,
+          instance: 3
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 152
+        },
+        valueList: [
+          {type: 111, value: {
+            recipient: {net: 12, adr: [0, 1]},
+            subscriptionProcessIdentifier: 3,
+            monitoredObjectIdentifier: {type: 2, instance: 1},
+            monitoredProperty: {propertyIdentifier: 85, propertyArrayIndex: 0},
+            issueConfirmedNotifications: false,
+            timeRemaining: 5,
+            covIncrement: 1
+          }, len: 33},
+          {type: 111, value: {
+            recipient: {net: 0xFFFF, adr: []},
+            subscriptionProcessIdentifier: 3,
+            monitoredObjectIdentifier: {type: 2, instance: 1},
+            monitoredProperty: {propertyIdentifier: 85, propertyArrayIndex: 5},
+            issueConfirmedNotifications: true,
+            timeRemaining: 5,
+          }, len: 27}
+        ]
+      });
+    });
+
+    it('should successfully encode and decode a read-access-specification value', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 223, instance: 90000}, 53, 0xFFFFFFFF, [
+        {Tag: 115, Value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}},
+        {Tag: 115, Value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
+          {propertyIdentifier: 85},
+          {propertyIdentifier: 1, propertyArrayIndex: 2}
+        ]}},
+      ]);
+      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 223,
+          instance: 90000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 53
+        },
+        valueList: [
+          {type: 115, value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}, len: 7},
+          {type: 115, value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
+            {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF},
+            {propertyIdentifier: 1, propertyArrayIndex: 2}
+          ]}, len: 13}
+        ]
+      });
+    });
   });
 
   describe('ReadPropertyMultipleAcknowledge', function() {
