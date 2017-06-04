@@ -1,3 +1,28 @@
+<a name="0.0.1-beta.6"></a>
+# [0.0.1-beta.6](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.5...v0.0.1-beta.6) (2017-06-04)
+
+### Features
+
+* **bacnet-asn1:** implement read-access-specification, cov-subscription, calendar decoding functionality ([b015f62](https://github.com/fh1ch/node-bacstack/commit/b015f627b06123de531462be04c8aa1b8ae9e1d9))
+* **bacnet-asn1:** implement additional ASN1 base encoding functions ([2d6276e](https://github.com/fh1ch/node-bacstack/commit/2d6276ee9bba71b855adfb3110f9d91edb5e19be))
+* **bacnet-services:** implemented various new BACNET service encodings ([d891305](https://github.com/fh1ch/node-bacstack/commit/d891305acf6d2eda10711d81f4cdae2279dd79b1))
+* **bacnet-services.spec:** implement test coverage for cov-subscription and read-access-specification value types ([6665a7c](https://github.com/fh1ch/node-bacstack/commit/6665a7cc24b40ce90024d56c1833fc28a66dfd50))
+* add JSDoc inline documentation and gh-page publishing ([44f88be](https://github.com/fh1ch/node-bacstack/commit/44f88be7a4f42195c9a4cae29efab717618681fb))
+
+### Bug Fixes
+
+* **bacnet-asn1:** add guard to prevent endless loops ([63d7d8f](https://github.com/fh1ch/node-bacstack/commit/63d7d8fefc0aaf3135a6d9ec330c8bf4d882cbff))
+* **bacnet-asn1:** correct generic blob decoding context implementation ([63eacc6](https://github.com/fh1ch/node-bacstack/commit/63eacc61203f08e6fb4f403f1d00ceedca6138f6))
+* **bacnet-asn1:** correct variable initialization for datetime decoding ([3bc1591](https://github.com/fh1ch/node-bacstack/commit/3bc159181c5ad37f2df3f3e003bd7a805dcda2cb))
+* **bacnet-asn1:** correct bit-string encoding and decoding ([14cda6d](https://github.com/fh1ch/node-bacstack/commit/14cda6d9edf5a37432adce8d4f467c742169b269))
+* **bacnet-asn1:** correct octet-string encoding and decoding ([aee51a5](https://github.com/fh1ch/node-bacstack/commit/aee51a5be16cf4c229dec31249807bc577a141f5))
+* **bacnet-asn1:** correct ASN1 date and time encodings ([486153c](https://github.com/fh1ch/node-bacstack/commit/486153c1a055a7317e181c03258b611e6c3b8966))
+* **bacnet-asn1:** align error handling to prevent dead-loop ([3feaaba](https://github.com/fh1ch/node-bacstack/commit/3feaabae56973831cf8236432ecb60142b37a6f4))
+* **bacnet-client:** correctly handle invalid encoding cases ([347b0ed](https://github.com/fh1ch/node-bacstack/commit/347b0ed8fc4671ca1d49a49431f96dadfb97b9fb))
+* **bacnet-client:** remove callback from store if already invoked ([16e4483](https://github.com/fh1ch/node-bacstack/commit/16e4483a39187069a6a9f1f53117e135ac924ee4))
+* **bacnet-services:** correct string and tag comparison ([0302fe0](https://github.com/fh1ch/node-bacstack/commit/0302fe0d3748c1892b21c0cc8237c3bc74eece26))
+
+
 <a name="0.0.1-beta.5"></a>
 # [0.0.1-beta.5](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2017-05-08)
 
