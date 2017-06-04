@@ -37,8 +37,8 @@ describe('bacstack - readPropertyMultiple integration', function() {
         {value: 'PscDet(*)', type: 7}
       ]);
       expect(object[211]).to.deep.equal([
-        {value: {value: {type: 5, instance: 0}, type: 12}, type: undefined},
-        {value: {value: {type: 3, instance: 0}, type: 12}, type: undefined}
+        {value: {value: {type: 5, instance: 0}, type: 12}, type: 118},
+        {value: {value: {type: 3, instance: 0}, type: 12}, type: 118}
       ]);
       expect(object[4930]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[4941]).to.deep.equal([{value: 6, type: 9}]);
