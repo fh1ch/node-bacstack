@@ -1,3 +1,11 @@
+<a name="0.0.1-beta.7"></a>
+# [0.0.1-beta.7](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.6...v0.0.1-beta.7) (2017-06-11)
+
+### Bug Fixes
+
+* **bacnet-services:** correct all invalid no-array and no-priority checks ([ba16839](https://github.com/fh1ch/node-bacstack/commit/f0cb5bdf0da45903f893d915e9eead2e555800d8)), closes [#20](https://github.com/fh1ch/node-bacstack/issues/20)  
+
+
 <a name="0.0.1-beta.6"></a>
 # [0.0.1-beta.6](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.5...v0.0.1-beta.6) (2017-06-04)
 
