@@ -515,6 +515,188 @@ describe('bacstack - Services layer', function() {
     });
   });
 
+  describe('WriteProperty', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 0, [
+        {Tag: 1, Value: true},
+        {Tag: 1, Value: false},
+        {Tag: 2, Value: 1},
+        {Tag: 2, Value: 1000},
+        {Tag: 2, Value: 1000000},
+        {Tag: 2, Value: 1000000000},
+        {Tag: 3, Value: -1},
+        {Tag: 3, Value: -1000},
+        {Tag: 3, Value: -1000000},
+        {Tag: 3, Value: -1000000000},
+        {Tag: 4, Value: 0},
+        {Tag: 5, Value: 100.121212},
+        {Tag: 7, Value: 'Test1234$'},
+        {Tag: 9, Value: 4},
+        {Tag: 10, Value: date},
+        {Tag: 11, Value: time},
+        {Tag: 12, Value: {type: 3, instance: 0}}
+      ]);
+      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          instance: 12,
+          type: 12
+        },
+        value: {
+          priority: 16,
+          property: {
+            propertyArrayIndex: 4294967295,
+            propertyIdentifier: 80
+          },
+          value: [
+            true,
+            false,
+            1,
+            1000,
+            1000000,
+            1000000000,
+            -1,
+            -1000,
+            -1000000,
+            -1000000000,
+            0,
+            100.121212,
+            'Test1234$',
+            4,
+            date,
+            time,
+            {instance: 0, type: 3}
+          ]
+        }
+      });
+    });
+
+    it('should successfully encode and decode with defined priority', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 8, [
+        {Tag: 1, Value: true},
+        {Tag: 1, Value: false},
+        {Tag: 2, Value: 1},
+        {Tag: 2, Value: 1000},
+        {Tag: 2, Value: 1000000},
+        {Tag: 2, Value: 1000000000},
+        {Tag: 3, Value: -1},
+        {Tag: 3, Value: -1000},
+        {Tag: 3, Value: -1000000},
+        {Tag: 3, Value: -1000000000},
+        {Tag: 4, Value: 0},
+        {Tag: 5, Value: 100.121212},
+        {Tag: 7, Value: 'Test1234$'},
+        {Tag: 9, Value: 4},
+        {Tag: 10, Value: date},
+        {Tag: 11, Value: time},
+        {Tag: 12, Value: {type: 3, instance: 0}}
+      ]);
+      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          instance: 12,
+          type: 12
+        },
+        value: {
+          priority: 8,
+          property: {
+            propertyArrayIndex: 4294967295,
+            propertyIdentifier: 80
+          },
+          value: [
+            true,
+            false,
+            1,
+            1000,
+            1000000,
+            1000000000,
+            -1,
+            -1000,
+            -1000000,
+            -1000000000,
+            0,
+            100.121212,
+            'Test1234$',
+            4,
+            date,
+            time,
+            {instance: 0, type: 3}
+          ]
+        }
+      });
+    });
+
+    it('should successfully encode and decode with defined array index', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 2, 0, [
+        {Tag: 1, Value: true},
+        {Tag: 1, Value: false},
+        {Tag: 2, Value: 1},
+        {Tag: 2, Value: 1000},
+        {Tag: 2, Value: 1000000},
+        {Tag: 2, Value: 1000000000},
+        {Tag: 3, Value: -1},
+        {Tag: 3, Value: -1000},
+        {Tag: 3, Value: -1000000},
+        {Tag: 3, Value: -1000000000},
+        {Tag: 4, Value: 0},
+        {Tag: 5, Value: 100.121212},
+        {Tag: 7, Value: 'Test1234$'},
+        {Tag: 9, Value: 4},
+        {Tag: 10, Value: date},
+        {Tag: 11, Value: time},
+        {Tag: 12, Value: {type: 3, instance: 0}}
+      ]);
+      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          instance: 12,
+          type: 12
+        },
+        value: {
+          priority: 16,
+          property: {
+            propertyArrayIndex: 2,
+            propertyIdentifier: 80
+          },
+          value: [
+            true,
+            false,
+            1,
+            1000,
+            1000000,
+            1000000000,
+            -1,
+            -1000,
+            -1000000,
+            -1000000000,
+            0,
+            100.121212,
+            'Test1234$',
+            4,
+            date,
+            time,
+            {instance: 0, type: 3}
+          ]
+        }
+      });
+    });
+  });
+
   describe('DeviceCommunicationControl', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
