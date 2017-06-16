@@ -3,14 +3,14 @@ var utils = require('./utils');
 
 describe('bacstack - readPropertyMultiple integration', function() {
   it('should return a timeout error if no device is available', function(next) {
-    var client = utils.globalBacnetClient;
-    this.timeout(5000);
+    var client = new utils.bacnetClient({adpuTimeout: 200});
     var requestArray = [
       {objectIdentifier: {type: 8, instance: 4194303}, propertyReferences: [{propertyIdentifier: 8}]}
     ];
     client.readPropertyMultiple('127.0.0.1', requestArray, function(err, value) {
       expect(err).to.eql(new Error('ERR_TIMEOUT'));
       expect(value).to.eql(undefined);
+      client.close();
       next();
     });
   });
@@ -49,6 +49,7 @@ describe('bacstack - readPropertyMultiple integration', function() {
         {value: {value: [0], bits_used: 1}, type: 8}
       ]);
       expect(object[5102]).to.deep.equal([{value: 41, type: 9}]);
+      client.close();
       next();
     });
     transport.handler(data, '127.0.0.1');
@@ -99,6 +100,7 @@ describe('bacstack - readPropertyMultiple integration', function() {
       expect(object[5103]).to.deep.equal([{value: '', type: 7}]);
       expect(object[5104]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[5107]).to.deep.equal([{value: 1, type: 2}]);
+      client.close();
       next();
     });
     transport.handler(data, '127.0.0.1');

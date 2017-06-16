@@ -133,5 +133,16 @@ module.exports = function(settings) {
     client.readPropertyMultiple(address, propertyIdAndArrayIndex, next);
   };
 
+  /**
+   * Unloads the current BACstack instance and closes the underlying UDP socket.
+   * @function bacstack.close
+   * @example
+   * var client = new bacnet();
+   * client.close();
+   */
+  self.close = function() {
+    client.close();
+  };
+
   return self;
 };

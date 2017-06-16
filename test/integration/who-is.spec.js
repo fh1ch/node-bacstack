@@ -3,14 +3,15 @@ var utils = require('./utils');
 
 describe('bacstack - whoIs integration', function() {
   it('should not invoke a event if no device is available', function(next) {
-    var client = utils.globalBacnetClient;
-    this.timeout(5000);
+    var client = new utils.bacnetClient({adpuTimeout: 200});
     client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+      client.close();
       next(new Erro('Unallowed Callback'));
     });
     setTimeout(function() {
+      client.close();
       next();
-    }, 3100);
+    }, 300);
     client.whoIs();
   });
 });
