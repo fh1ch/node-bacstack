@@ -545,7 +545,7 @@ describe('bacstack - Services layer', function() {
       expect(result).to.deep.equal({
         objectId: {
           instance: 12,
-          type: 12
+          type: 31
         },
         value: {
           priority: 16,
@@ -605,7 +605,7 @@ describe('bacstack - Services layer', function() {
       expect(result).to.deep.equal({
         objectId: {
           instance: 12,
-          type: 12
+          type: 31
         },
         value: {
           priority: 8,
@@ -665,7 +665,7 @@ describe('bacstack - Services layer', function() {
       expect(result).to.deep.equal({
         objectId: {
           instance: 12,
-          type: 12
+          type: 31
         },
         value: {
           priority: 16,
@@ -693,6 +693,147 @@ describe('bacstack - Services layer', function() {
             {instance: 0, type: 3}
           ]
         }
+      });
+    });
+  });
+
+  describe('WritePropertyMultiple', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+        {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
+          {Tag: 1, Value: true},
+          {Tag: 1, Value: false},
+          {Tag: 2, Value: 1},
+          {Tag: 2, Value: 1000},
+          {Tag: 2, Value: 1000000},
+          {Tag: 2, Value: 1000000000},
+          {Tag: 3, Value: -1},
+          {Tag: 3, Value: -1000},
+          {Tag: 3, Value: -1000000},
+          {Tag: 3, Value: -1000000000},
+          {Tag: 4, Value: 0.1},
+          {Tag: 5, Value: 100.121212},
+          // FIXME: correct octet-string implementation
+          // {Tag: 6, Value: [1, 2, 100, 200]},
+          {Tag: 7, Value: 'Test1234$'},
+          // FIXME: correct bit-string implementation
+          // {Tag: 8, Value: {bits_used: 0, value: []}},
+          // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+          {Tag: 9, Value: 4},
+          {Tag: 10, Value: date},
+          {Tag: 11, Value: time},
+          {Tag: 12, Value: {type: 3, instance: 0}}
+        ], priority: 0}
+      ]);
+      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      result.valuesRefs[0].value[10].value = Math.floor(result.valuesRefs[0].value[10].value * 1000) / 1000;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 39,
+          instance: 2400
+        },
+        valuesRefs: [
+          {
+            priority: 0,
+            property: {
+              arrayIndex: 0xFFFFFFFF,
+              propertyId: 81
+            },
+            value: [
+              {type: 1, value: true, len: 1},
+              {type: 1, value: false, len: 1},
+              {type: 2, value: 1, len: 2},
+              {type: 2, value: 1000, len: 3},
+              {type: 2, value: 1000000, len: 4},
+              {type: 2, value: 1000000000, len: 5},
+              {type: 3, value: -1, len: 2},
+              {type: 3, value: -1000, len: 3},
+              {type: 3, value: -1000000, len: 4},
+              {type: 3, value: -1000000000, len: 5},
+              {type: 4, value: 0.1, len: 5},
+              {type: 5, value: 100.121212, len: 10},
+              // FIXME: correct octet-string implementation
+              // {type: 6, value: [1, 2, 100, 200]},
+              {type: 7, value: 'Test1234$', len: 12},
+              // FIXME: correct bit-string implementation
+              // {type: 8, value: {bits_used: 0, value: []}},
+              // {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+              {type: 9, value: 4, len: 2},
+              {type: 10, value: date, len: 5},
+              {type: 11, value: time, len: 5},
+              {type: 12, value: {type: 3, instance: 0}, len: 5}
+            ]
+          }
+        ]
+      });
+    });
+
+    it('should successfully encode and decode with defined priority', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+        {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
+          {Tag: 7, Value: 'Test1234$'}
+        ], priority: 12}
+      ]);
+      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 39,
+          instance: 2400
+        },
+        valuesRefs: [
+          {
+            priority: 12,
+            property: {
+              arrayIndex: 0xFFFFFFFF,
+              propertyId: 81
+            },
+            value: [
+              {type: 7, value: 'Test1234$', len: 12}
+            ]
+          }
+        ]
+      });
+    });
+
+    it('should successfully encode and decode with defined array index', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      var time = new Date(1, 1, 1);
+      time.setMilliseconds(990);
+      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+        {property: {propertyIdentifier: 81, propertyArrayIndex: 414141}, value: [
+          {Tag: 7, Value: 'Test1234$'}
+        ], priority: 0}
+      ]);
+      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 39,
+          instance: 2400
+        },
+        valuesRefs: [
+          {
+            priority: 0,
+            property: {
+              arrayIndex: 414141,
+              propertyId: 81
+            },
+            value: [
+              {type: 7, value: 'Test1234$', len: 12}
+            ]
+          }
+        ]
       });
     });
   });
