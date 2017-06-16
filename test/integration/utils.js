@@ -5,9 +5,10 @@ module.exports.bacnetClient = bacnet;
 module.exports.transportStub = function() {
   var self = this;
   self.handler = function() {};
-  self.setHandler = function(handler) {
+  self.setMessageHandler = function(handler) {
     self.handler = handler;
   };
+  self.setErrorHandler = function(handler) {};
   self.getBroadcastAddress = function() {
     return '255.255.255.255';
   };
@@ -15,6 +16,7 @@ module.exports.transportStub = function() {
     return 1482;
   };
   self.send = function() {};
+  self.open = function() {};
   self.close = function() {};
   return self;
 };

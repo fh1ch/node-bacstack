@@ -57,6 +57,20 @@ module.exports = function(settings) {
     self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
   });
 
+  client.events.on('error', function(err) {
+
+    /**
+     * @event bacstack.error
+     * @param {error} err - The IP address of the detected device.
+     * @example
+     * client.on('error', function(err) {
+     *   console.log('Error occurred: ', err);
+     *   client.close();
+     * });
+     */
+    self.emit('error', err);
+  });
+
   /**
    * The whoIs command discovers all BACNET devices in a network.
    * @function bacstack.whoIs
