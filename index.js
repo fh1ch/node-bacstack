@@ -40,6 +40,23 @@ module.exports = function(settings) {
   // Public enums
   self.enum = baEnum;
 
+  client.events.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+
+    /**
+     * @event bacstack.iAm
+     * @param {string} address - The IP address of the detected device.
+     * @param {number} deviceId - The BACNET device-id of the detected device.
+     * @param {number} maxAdpu - The max ADPU size the detected device is supporting.
+     * @param {number} segmentation - The type of segmentation the detected device is supporting.
+     * @param {number} vendorId - The BACNET vendor-id of the detected device.
+     * @example
+     * client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+     *   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
+     * });
+     */
+    self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
+  });
+
   /**
    * The whoIs command discovers all BACNET devices in a network.
    * @function bacstack.whoIs
@@ -51,22 +68,7 @@ module.exports = function(settings) {
    * client.whoIs();
    */
   self.whoIs = function(lowLimit, highLimit, address) {
-    client.whoIs(lowLimit, highLimit, address, function(address, deviceId, maxAdpu, segmentation, vendorId) {
-
-      /**
-       * @event bacstack.iAm
-       * @param {string} address - The IP address of the detected device.
-       * @param {number} deviceId - The BACNET device-id of the detected device.
-       * @param {number} maxAdpu - The max ADPU size the detected device is supporting.
-       * @param {number} segmentation - The type of segmentation the detected device is supporting.
-       * @param {number} vendorId - The BACNET vendor-id of the detected device.
-       * @example
-       * client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
-       *   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
-       * });
-       */
-      self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
-    });
+    client.whoIs(lowLimit, highLimit, address);
   };
 
   /**
