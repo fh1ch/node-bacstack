@@ -1,3 +1,16 @@
+<a name="0.0.1-beta.8"></a>
+# [0.0.1-beta.8](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.7...v0.0.1-beta.8) (2017-06-19)
+
+### Features
+
+* **bacnet-client:** implement additional unsupported services ([d82fefe](https://github.com/fh1ch/node-bacstack/commit/d82fefee7a2a5d53e9551cdf1ce09d9c6ca238cd))
+* **bacnet-client:** rework unconfirmed services to utilize even emitter ([b5b8d78](https://github.com/fh1ch/node-bacstack/commit/b5b8d785e5e153a287cf73dc38f522e6a8daf347))
+
+### Bug Fixes
+
+* **bacnet-client:** ensure invokeId range of 0-255 ([c195331](https://github.com/fh1ch/node-bacstack/commit/c19533139097eccd7cefde4a4d709fa7923b2ad6))
+
+
 <a name="0.0.1-beta.7"></a>
 # [0.0.1-beta.7](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.6...v0.0.1-beta.7) (2017-06-11)
 
