@@ -1,7 +1,6 @@
 var bacnet = require('../../');
 
 module.exports.bacnetClient = bacnet;
-module.exports.globalBacnetClient = bacnet();
 
 module.exports.transportStub = function() {
   var self = this;
@@ -16,6 +15,7 @@ module.exports.transportStub = function() {
     return 1482;
   };
   self.send = function() {};
+  self.close = function() {};
   return self;
 };
 

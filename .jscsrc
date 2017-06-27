@@ -4,5 +4,6 @@
   "requireSemicolons": true,
   "requireCamelCaseOrUpperCaseIdentifiers": false,
   "requireCurlyBraces": false,
+  "requireCapitalizedConstructors": false,
   "jsDoc": false
 }

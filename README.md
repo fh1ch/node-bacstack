@@ -28,7 +28,7 @@ The API documentation is available under **[fh1ch.github.io/node-bacstack](https
 var bacnet = require('bacstack');
 
 // Initialize BACStack
-var client = bacnet({adpuTimeout: 6000});
+var client = new bacnet({adpuTimeout: 6000});
 
 // Discover Devices
 client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {

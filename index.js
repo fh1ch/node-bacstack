@@ -16,7 +16,7 @@ var baEnum        = require('./lib/bacnet-enum');
  * @example
  * var bacnet = require('bacstack');
  *
- * var client = bacnet({
+ * var client = new bacnet({
  *   port: 47809,                          // Use BAC1 as communication port
  *   interface: '192.168.251.10',          // Listen on a specific interface
  *   broadcastAddress: '192.168.251.255',  // Use the subnet broadcast address
@@ -35,7 +35,7 @@ module.exports = function(settings) {
     adpuTimeout: settings.adpuTimeout || 3000
   };
 
-  var client = baClient(options);
+  var client = new baClient(options);
 
   // Public enums
   self.enum = baEnum;
@@ -131,6 +131,17 @@ module.exports = function(settings) {
    */
   self.readPropertyMultiple = function(address, propertyIdAndArrayIndex, next) {
     client.readPropertyMultiple(address, propertyIdAndArrayIndex, next);
+  };
+
+  /**
+   * Unloads the current BACstack instance and closes the underlying UDP socket.
+   * @function bacstack.close
+   * @example
+   * var client = new bacnet();
+   * client.close();
+   */
+  self.close = function() {
+    client.close();
   };
 
   return self;
