@@ -5,6 +5,9 @@ var events        = require('events');
 var baClient      = require('./lib/bacnet-client');
 var baEnum        = require('./lib/bacnet-enum');
 
+// Public enums
+module.exports.enum = baEnum;
+
 /**
  * To be able to communicate to BACNET devices, you have to initialize a new bacstack instance.
  * @class bacstack
@@ -36,9 +39,6 @@ module.exports = function(settings) {
   };
 
   var client = new baClient(options);
-
-  // Public enums
-  self.enum = baEnum;
 
   client.events.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
 
