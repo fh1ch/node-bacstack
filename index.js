@@ -158,6 +158,23 @@ module.exports = function(settings) {
   };
 
   /**
+   * The deviceCommunicationControl command enables or disables network communication of the target device.
+   * @function bacstack.deviceCommunicationControl
+   * @param {string} address - IP address of the target device.
+   * @param {number} timeDuration - The time to hold the network communication state in seconds. 0 for infinite.
+   * @param {number} enableDisable - The network communication state to set. Has to be a BacnetEnableDisable declaration as specified in lib/bacnet-enum.js.
+   * @param {string=} password - The optional password used to set the network communication state.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * client.deviceCommunicationControl('192.168.1.43', 0, 1, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.deviceCommunicationControl = function(address, timeDuration, enableDisable, password, next) {
+    client.deviceCommunicationControl(address, timeDuration, enableDisable, password, next);
+  };
+
+  /**
    * Unloads the current BACstack instance and closes the underlying UDP socket.
    * @function bacstack.close
    * @example
