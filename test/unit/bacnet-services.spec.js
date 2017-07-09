@@ -241,9 +241,33 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
         {tag: 7, value: ''},
-        {tag: 7, value: 'Test1234$'}
+        {tag: 7, value: 'Test1234$äöu'}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;ä
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 7, value: '', len: 2, encoding: 0},
+          {type: 7, value: 'Test1234$äöü', len: 18, encoding: 0}
+        ]
+      });
+    });
+
+    it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {Tag: 7, Value: '', Encoding: 5},
+        {Tag: 7, Value: 'Test1234$äöu', Encoding: 5} // Encoding: 5 => ISO-8859-1
+      ]);
+      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -255,8 +279,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 7, value: '', len: 2},
-          {type: 7, value: 'Test1234$', len: 12}
+          {type: 7, value: '', len: 2, encoding: 5},
+          {type: 7, value: 'Test1234$äöü', len: 15, encoding: 5}
         ]
       });
     });
@@ -488,7 +512,7 @@ describe('bacstack - Services layer', function() {
             {tag: 5, value: 100.121212},
             // FIXME: correct octet-string implementation
             // {tag: 6, value: [1, 2, 100, 200]},
-            {tag: 7, value: 'Test1234$'},
+            {tag: 7, value: 'Test1234$', encoding: 0},
             // FIXME: correct bit-string implementation
             // {tag: 8, value: {bitsUsed: 0, value: []}},
             // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
@@ -525,7 +549,7 @@ describe('bacstack - Services layer', function() {
               {type: 3, value: -1000000000},
               {type: 4, value: 0},
               {type: 5, value: 100.121212},
-              {type: 7, value: 'Test1234$'},
+              {type: 7, value: 'Test1234$', encoding: 0},
               {type: 9, value: 4},
               {type: 10, value: date},
               {type: 11, value: time},
@@ -556,7 +580,7 @@ describe('bacstack - Services layer', function() {
         {tag: 3, value: -1000000000},
         {tag: 4, value: 0},
         {tag: 5, value: 100.121212},
-        {tag: 7, value: 'Test1234$'},
+        {tag: 7, value: 'Test1234$', encoding: 0},
         {tag: 9, value: 4},
         {tag: 10, value: date},
         {tag: 11, value: time},
@@ -781,7 +805,7 @@ describe('bacstack - Services layer', function() {
               {type: 5, value: 100.121212, len: 10},
               // FIXME: correct octet-string implementation
               // {type: 6, value: [1, 2, 100, 200]},
-              {type: 7, value: 'Test1234$', len: 12},
+              {type: 7, value: 'Test1234$', len: 12, encoding: 0},
               // FIXME: correct bit-string implementation
               // {type: 8, value: {bitsUsed: 0, value: []}},
               // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
@@ -820,7 +844,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12}
+              {type: 7, value: 'Test1234$', len: 12, encoding: 0}
             ]
           }
         ]
@@ -852,7 +876,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12}
+              {type: 7, value: 'Test1234$', len: 12, encoding: 0}
             ]
           }
         ]
