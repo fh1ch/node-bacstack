@@ -175,6 +175,22 @@ module.exports = function(settings) {
   };
 
   /**
+   * The reinitializeDevice command initiates a restart of the target device.
+   * @function bacstack.reinitializeDevice
+   * @param {string} address - IP address of the target device.
+   * @param {number} state - The type of restart to be initiated. Has to be a BacnetReinitializedStates declaration as specified in lib/bacnet-enum.js.
+   * @param {string=} password - The optional password used to restart the device.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * client.reinitializeDevice('192.168.1.43', 0, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.reinitializeDevice = function(address, state, password, next) {
+    client.reinitializeDevice(address, state, password, next);
+  };
+
+  /**
    * Unloads the current BACstack instance and closes the underlying UDP socket.
    * @function bacstack.close
    * @example
