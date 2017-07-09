@@ -8,7 +8,7 @@ var baEnum        = require('./lib/bacnet-enum');
 /**
  * To be able to communicate to BACNET devices, you have to initialize a new bacstack instance.
  * @class bacstack
- * @param {object=} settings - The options object used for parameterising the bacstack.
+ * @param {object=} settings - The options object used for parameterizing the bacstack.
  * @param {number=} [settings.port=47808] - BACNET communication port for listening and sending.
  * @param {string=} settings.interface - Specific BACNET communication interface if different from primary one.
  * @param {string=} [settings.broadcastAddress=255.255.255.255] - The address used for broadcast messages.
@@ -121,7 +121,7 @@ module.exports = function(settings) {
    * @param {number} objectInstance - The BACNET object instance to write.
    * @param {number} propertyId - The BACNET property id in the specified object to write.
    * @param {number} priority - The priority to be used for writing to the property.
-   * @param {object[]} valueList - A list of values to be written to the speicifed property.
+   * @param {object[]} valueList - A list of values to be written to the specified property.
    * @param {number} valueList.Tag - The data-type of the value to be written. Has to be a BacnetApplicationTags declaration as specified in lib/bacnet-enum.js.
    * @param {number} valueList.Value - The actual value to be written.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
