@@ -83,6 +83,19 @@ module.exports = function(settings) {
   };
 
   /**
+   * The timeSync command sets the time of a target device.
+   * @function bacstack.timeSync
+   * @param {string} address - IP address of the target device.
+   * @param {date} dateTime - The date and time to set on the target device.
+   * @param {boolean} [isUtc=false] - Identifier if UTC time sync service shall be used.
+   * @example
+   * client.timeSync('192.168.1.43', new Date(), true);
+   */
+  self.timeSync = function(address, dateTime, isUtc) {
+    client.timeSync(address, dateTime, isUtc);
+  };
+
+  /**
    * The readProperty command reads a single property of an object from a device.
    * @function bacstack.readProperty
    * @param {string} address - IP address of the target device.
