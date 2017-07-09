@@ -8,7 +8,7 @@ var baEnum        = require('./lib/bacnet-enum');
 /**
  * To be able to communicate to BACNET devices, you have to initialize a new bacstack instance.
  * @class bacstack
- * @param {object=} settings - The options object used for parameterising the bacstack.
+ * @param {object=} settings - The options object used for parameterizing the bacstack.
  * @param {number=} [settings.port=47808] - BACNET communication port for listening and sending.
  * @param {string=} settings.interface - Specific BACNET communication interface if different from primary one.
  * @param {string=} [settings.broadcastAddress=255.255.255.255] - The address used for broadcast messages.
@@ -83,6 +83,19 @@ module.exports = function(settings) {
   };
 
   /**
+   * The timeSync command sets the time of a target device.
+   * @function bacstack.timeSync
+   * @param {string} address - IP address of the target device.
+   * @param {date} dateTime - The date and time to set on the target device.
+   * @param {boolean} [isUtc=false] - Identifier if UTC time sync service shall be used.
+   * @example
+   * client.timeSync('192.168.1.43', new Date(), true);
+   */
+  self.timeSync = function(address, dateTime, isUtc) {
+    client.timeSync(address, dateTime, isUtc);
+  };
+
+  /**
    * The readProperty command reads a single property of an object from a device.
    * @function bacstack.readProperty
    * @param {string} address - IP address of the target device.
@@ -108,7 +121,7 @@ module.exports = function(settings) {
    * @param {number} objectInstance - The BACNET object instance to write.
    * @param {number} propertyId - The BACNET property id in the specified object to write.
    * @param {number} priority - The priority to be used for writing to the property.
-   * @param {object[]} valueList - A list of values to be written to the speicifed property.
+   * @param {object[]} valueList - A list of values to be written to the specified property.
    * @param {number} valueList.Tag - The data-type of the value to be written. Has to be a BacnetApplicationTags declaration as specified in lib/bacnet-enum.js.
    * @param {number} valueList.Value - The actual value to be written.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
@@ -142,6 +155,39 @@ module.exports = function(settings) {
    */
   self.readPropertyMultiple = function(address, propertyIdAndArrayIndex, next) {
     client.readPropertyMultiple(address, propertyIdAndArrayIndex, next);
+  };
+
+  /**
+   * The deviceCommunicationControl command enables or disables network communication of the target device.
+   * @function bacstack.deviceCommunicationControl
+   * @param {string} address - IP address of the target device.
+   * @param {number} timeDuration - The time to hold the network communication state in seconds. 0 for infinite.
+   * @param {number} enableDisable - The network communication state to set. Has to be a BacnetEnableDisable declaration as specified in lib/bacnet-enum.js.
+   * @param {string=} password - The optional password used to set the network communication state.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * client.deviceCommunicationControl('192.168.1.43', 0, 1, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.deviceCommunicationControl = function(address, timeDuration, enableDisable, password, next) {
+    client.deviceCommunicationControl(address, timeDuration, enableDisable, password, next);
+  };
+
+  /**
+   * The reinitializeDevice command initiates a restart of the target device.
+   * @function bacstack.reinitializeDevice
+   * @param {string} address - IP address of the target device.
+   * @param {number} state - The type of restart to be initiated. Has to be a BacnetReinitializedStates declaration as specified in lib/bacnet-enum.js.
+   * @param {string=} password - The optional password used to restart the device.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * client.reinitializeDevice('192.168.1.43', 0, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.reinitializeDevice = function(address, state, password, next) {
+    client.reinitializeDevice(address, state, password, next);
   };
 
   /**
