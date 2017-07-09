@@ -1,26 +1,32 @@
 language: "node_js"
+
 node_js:
   - "7"
   - "6"
   - "5"
   - "4"
 
-before_install:
-  - "npm install coveralls"
+jobs:
+  include:
 
-script:
-  - "npm run lint"
-  - "npm run test"
-  - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
-  - "npm run integration"
-  - "npm run docs"
+    - stage: test
+      before_install:
+        - "npm install coveralls"
+      script:
+        - "npm run lint"
+        - "npm run test"
+        - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
+        - "npm run integration"
+        - "npm run docs"
 
-deploy:
-  provider: pages
-  local_dir: ./docs
-  skip_cleanup: true
-  github_token: $GITHUB_API_KEY
-  on:
-    branch: master
+    - stage: deploy-pages
+      deploy:
+        provider: pages
+        local_dir: ./docs
+        skip_cleanup: true
+        github_token: $GITHUB_API_KEY
+        on:
+          branch: master
+      node_js: "7"
 
 sudo: false
