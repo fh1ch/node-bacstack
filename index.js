@@ -139,6 +139,7 @@ module.exports = function(settings) {
    * @param {object[]} valueList - A list of values to be written to the specified property.
    * @param {BacnetApplicationTags} valueList.tag - The data-type of the value to be written.
    * @param {number} valueList.value - The actual value to be written.
+   * @param {number=} valueList.encoding - Optional encoding type for character strings (BacnetCharacterStringEncodings specified in lib/bacnet-enum.js)
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
    * var bacnet = require('bacstack');
@@ -195,6 +196,7 @@ module.exports = function(settings) {
    * @param {object[]} valueList.values.value - A list of values to be written to the specified property.
    * @param {BacnetApplicationTags} valueList.values.value.tag - The data-type of the value to be written.
    * @param {object} valueList.values.value.value - The actual value to be written.
+   * @param {number=} valueList.values.value.encoding - Optional encoding type for character strings (BacnetCharacterStringEncodings specified in lib/bacnet-enum.js)
    * @param {number} valueList.values.priority - The priority to be used for writing to the property.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
