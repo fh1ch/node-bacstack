@@ -6,7 +6,7 @@ describe('bacstack - whoIs integration', function() {
     var client = new utils.bacnetClient({adpuTimeout: 200});
     client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
       client.close();
-      next(new Erro('Unallowed Callback'));
+      next(new Error('Unallowed Callback'));
     });
     setTimeout(function() {
       client.close();
