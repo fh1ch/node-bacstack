@@ -158,6 +158,38 @@ module.exports = function(settings) {
   };
 
   /**
+   * The writePropertyMultiple command writes multiple properties in multiple objects to a device.
+   * @function bacstack.writePropertyMultiple
+   * @param {string} address - IP address of the target device.
+   * @param {object[]} valueList - List of object and property specifications to be written.
+   * @param {object} valueList.objectIdentifier - Specifies which object to read.
+   * @param {number} valueList.objectIdentifier.type - The BACNET object type to read.
+   * @param {number} valueList.objectIdentifier.instance - The BACNET object instance to read.
+   * @param {object[]} valueList.values - List of properties to be written.
+   * @param {object} valueList.values.property - Property specifications to be written.
+   * @param {number} valueList.values.property.propertyIdentifier - The BACNET property id in the specified object to write.
+   * @param {number} valueList.values.property.propertyArrayIndex - The array index of the property to be written.
+   * @param {object[]} valueList.values.value - A list of values to be written to the specified property.
+   * @param {number} valueList.values.value.Tag - The data-type of the value to be written. Has to be a BacnetApplicationTags declaration as specified in lib/bacnet-enum.js.
+   * @param {object} valueList.values.value.Value - The actual value to be written.
+   * @param {number} valueList.values.priority - The priority to be used for writing to the property.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+
+   * var valueList = [
+   *   {objectIdentifier: {type: 8, instance: 44301}, values: [
+   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{Tag: 1, Value: true}], priority: 8}
+   *   ]}
+   * ];
+   * client.readPropertyMultiple('192.168.1.43', valueList, function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.writePropertyMultiple = function(address, valueList, next) {
+    client.writePropertyMultiple(address, valueList, next);
+  };
+
+  /**
    * The deviceCommunicationControl command enables or disables network communication of the target device.
    * @function bacstack.deviceCommunicationControl
    * @param {string} address - IP address of the target device.
