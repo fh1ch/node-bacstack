@@ -206,7 +206,7 @@ module.exports = function(settings) {
    *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, value: true}], priority: 8}
    *   ]}
    * ];
-   * client.readPropertyMultiple('192.168.1.43', valueList, function(err, value) {
+   * client.writePropertyMultiple('192.168.1.43', valueList, function(err, value) {
    *   console.log('value: ', value);
    * });
    */
