@@ -22,6 +22,24 @@ $ npm install --save bacstack
 
 The API documentation is available under **[fh1ch.github.io/node-bacstack](https://fh1ch.github.io/node-bacstack)**.
 
+### Features
+
+The BACNET standard defines a wide variety of services as part of it's
+specification. While Node BACstack tries to be as complete as possible,
+following services are already supported at this point in time:
+
+| Service                      | Execute |
+|------------------------------|:-------:|
+| Who Is                       | yes     |
+| Time Sync                    | yes     |
+| UTC Time Sync                | yes     |
+| Read Property                | yes     |
+| Read Property Multiple       | yes     |
+| Write Property               | yes     |
+| Write Property Multiple      | yes     |
+| Reinitialize Device          | yes     |
+| Device Communication Control | yes     |
+
 ### Example
 
 ``` js

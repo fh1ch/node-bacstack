@@ -47,6 +47,9 @@ module.exports = function(settings) {
      * @param {number} segmentation - The type of segmentation the detected device is supporting.
      * @param {number} vendorId - The BACNET vendor-id of the detected device.
      * @example
+     * var bacnet = require('bacstack');
+     * var client = new bacnet();
+     *
      * client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
      *   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
      * });
@@ -60,6 +63,9 @@ module.exports = function(settings) {
      * @event bacstack.error
      * @param {error} err - The IP address of the detected device.
      * @example
+     * var bacnet = require('bacstack');
+     * var client = new bacnet();
+     *
      * client.on('error', function(err) {
      *   console.log('Error occurred: ', err);
      *   client.close();
@@ -76,6 +82,9 @@ module.exports = function(settings) {
    * @param {string=} address - Unicast address if command should device directly.
    * @fires bacstack.iAm
    * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
    * client.whoIs();
    */
   self.whoIs = function(lowLimit, highLimit, address) {
@@ -89,6 +98,9 @@ module.exports = function(settings) {
    * @param {date} dateTime - The date and time to set on the target device.
    * @param {boolean} [isUtc=false] - Identifier if UTC time sync service shall be used.
    * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
    * client.timeSync('192.168.1.43', new Date(), true);
    */
   self.timeSync = function(address, dateTime, isUtc) {
@@ -105,6 +117,9 @@ module.exports = function(settings) {
    * @param {number=} arrayIndex - The array index of the property to be read.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
    * client.readProperty('192.168.1.43', 8, 44301, 28, null, function(err, value) {
    *   console.log('value: ', value);
    * });
@@ -122,11 +137,16 @@ module.exports = function(settings) {
    * @param {number} propertyId - The BACNET property id in the specified object to write.
    * @param {number} priority - The priority to be used for writing to the property.
    * @param {object[]} valueList - A list of values to be written to the specified property.
-   * @param {number} valueList.Tag - The data-type of the value to be written. Has to be a BacnetApplicationTags declaration as specified in lib/bacnet-enum.js.
+   * @param {BacnetApplicationTags} valueList.Tag - The data-type of the value to be written.
    * @param {number} valueList.Value - The actual value to be written.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
-   * client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [{Tag: 4, Value: 100}], function(err, value) {
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
+   * client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [
+   *   {Tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_REAL, Value: 100}
+   * ], function(err, value) {
    *   console.log('value: ', value);
    * });
    */
@@ -146,6 +166,9 @@ module.exports = function(settings) {
    * @param {number} propertyIdAndArrayIndex.propertyReferences.propertyIdentifier - The BACNET property id in the specified object to read. Also supports 8 for all properties.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
    * var requestArray = [
    *   {objectIdentifier: {type: 8, instance: 4194303}, propertyReferences: [{propertyIdentifier: 8}]}
    * ];
@@ -170,15 +193,17 @@ module.exports = function(settings) {
    * @param {number} valueList.values.property.propertyIdentifier - The BACNET property id in the specified object to write.
    * @param {number} valueList.values.property.propertyArrayIndex - The array index of the property to be written.
    * @param {object[]} valueList.values.value - A list of values to be written to the specified property.
-   * @param {number} valueList.values.value.Tag - The data-type of the value to be written. Has to be a BacnetApplicationTags declaration as specified in lib/bacnet-enum.js.
+   * @param {BacnetApplicationTags} valueList.values.value.Tag - The data-type of the value to be written.
    * @param {object} valueList.values.value.Value - The actual value to be written.
    * @param {number} valueList.values.priority - The priority to be used for writing to the property.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
-
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
    * var valueList = [
    *   {objectIdentifier: {type: 8, instance: 44301}, values: [
-   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{Tag: 1, Value: true}], priority: 8}
+   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{Tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, Value: true}], priority: 8}
    *   ]}
    * ];
    * client.readPropertyMultiple('192.168.1.43', valueList, function(err, value) {
@@ -194,11 +219,14 @@ module.exports = function(settings) {
    * @function bacstack.deviceCommunicationControl
    * @param {string} address - IP address of the target device.
    * @param {number} timeDuration - The time to hold the network communication state in seconds. 0 for infinite.
-   * @param {number} enableDisable - The network communication state to set. Has to be a BacnetEnableDisable declaration as specified in lib/bacnet-enum.js.
+   * @param {BacnetEnableDisable} enableDisable - The network communication state to set.
    * @param {string=} password - The optional password used to set the network communication state.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
-   * client.deviceCommunicationControl('192.168.1.43', 0, 1, 'Test1234$', function(err, value) {
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
+   * client.deviceCommunicationControl('192.168.1.43', 0, bacnet.enum.BacnetEnableDisable.DISABLE, 'Test1234$', function(err, value) {
    *   console.log('value: ', value);
    * });
    */
@@ -210,11 +238,14 @@ module.exports = function(settings) {
    * The reinitializeDevice command initiates a restart of the target device.
    * @function bacstack.reinitializeDevice
    * @param {string} address - IP address of the target device.
-   * @param {number} state - The type of restart to be initiated. Has to be a BacnetReinitializedStates declaration as specified in lib/bacnet-enum.js.
+   * @param {BacnetReinitializedStates} state - The type of restart to be initiated.
    * @param {string=} password - The optional password used to restart the device.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
-   * client.reinitializeDevice('192.168.1.43', 0, 'Test1234$', function(err, value) {
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
+   * client.reinitializeDevice('192.168.1.43', bacnet.enum.BacnetReinitializedStates.BACNET_REINIT_COLDSTART, 'Test1234$', function(err, value) {
    *   console.log('value: ', value);
    * });
    */
@@ -226,7 +257,9 @@ module.exports = function(settings) {
    * Unloads the current BACstack instance and closes the underlying UDP socket.
    * @function bacstack.close
    * @example
+   * var bacnet = require('bacstack');
    * var client = new bacnet();
+   *
    * client.close();
    */
   self.close = function() {
