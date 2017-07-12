@@ -264,8 +264,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a bit-string value', function() {
       var buffer = utils.getBuffer();
       baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 8, Value: {bits_used: 0, value: []}},
-        {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}}
+        {Tag: 8, Value: {bitsUsed: 0, value: []}},
+        {Tag: 8, Value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}}
       ]);
       var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -279,8 +279,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 8, value: {bits_used: 0, value: []}, len: 2},
-          {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5}
+          {type: 8, value: {bitsUsed: 0, value: []}, len: 2},
+          {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5}
         ]
       });
     });
@@ -490,8 +490,8 @@ describe('bacstack - Services layer', function() {
             // {Tag: 6, Value: [1, 2, 100, 200]},
             {Tag: 7, Value: 'Test1234$'},
             // FIXME: correct bit-string implementation
-            // {Tag: 8, Value: {bits_used: 0, value: []}},
-            // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+            // {Tag: 8, Value: {bitsUsed: 0, value: []}},
+            // {Tag: 8, Value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
             {Tag: 9, Value: 4},
             {Tag: 10, Value: date},
             {Tag: 11, Value: time},
@@ -743,8 +743,8 @@ describe('bacstack - Services layer', function() {
           // {Tag: 6, Value: [1, 2, 100, 200]},
           {Tag: 7, Value: 'Test1234$'},
           // FIXME: correct bit-string implementation
-          // {Tag: 8, Value: {bits_used: 0, value: []}},
-          // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+          // {Tag: 8, Value: {bitsUsed: 0, value: []}},
+          // {Tag: 8, Value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
           {Tag: 9, Value: 4},
           {Tag: 10, Value: date},
           {Tag: 11, Value: time},
@@ -783,8 +783,8 @@ describe('bacstack - Services layer', function() {
               // {type: 6, value: [1, 2, 100, 200]},
               {type: 7, value: 'Test1234$', len: 12},
               // FIXME: correct bit-string implementation
-              // {type: 8, value: {bits_used: 0, value: []}},
-              // {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+              // {type: 8, value: {bitsUsed: 0, value: []}},
+              // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
               {type: 9, value: 4, len: 2},
               {type: 10, value: date, len: 5},
               {type: 11, value: time, len: 5},
@@ -1252,8 +1252,8 @@ describe('bacstack - Services layer', function() {
         ackRequired: true,
         fromState: 5,
         toState: 6,
-        changeOfBitstringReferencedBitString: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
-        changeOfBitstringStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfBitstringReferencedBitString: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfBitstringStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
       var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
@@ -1291,7 +1291,7 @@ describe('bacstack - Services layer', function() {
         fromState: 1,
         toState: 2,
         changeOfStateNewState: {Tag: 2, state: 2},
-        changeOfStateStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfStateStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
       var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
@@ -1327,7 +1327,7 @@ describe('bacstack - Services layer', function() {
         notifyType: 1,
         changeOfValueTag: 1,
         changeOfValueChangeValue: 90,
-        changeOfValueStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
       var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
@@ -1365,7 +1365,7 @@ describe('bacstack - Services layer', function() {
         fromState: 19,
         toState: 12,
         floatingLimitReferenceValue: 121,
-        floatingLimitStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        floatingLimitStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         floatingLimitSetPointValue: 120,
         floatingLimitErrorLimit: 120
       });
@@ -1402,7 +1402,7 @@ describe('bacstack - Services layer', function() {
         messageText: 'Test1234$',
         notifyType: 1,
         outOfRangeExceedingValue: 155,
-        outOfRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        outOfRangeStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         outOfRangeDeadband: 50,
         outOfRangeExceededLimit: 150
       });
@@ -1440,7 +1440,7 @@ describe('bacstack - Services layer', function() {
         notifyType: 1,
         changeOfLifeSafetyNewState: 8,
         changeOfLifeSafetyNewMode: 9,
-        changeOfLifeSafetyStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfLifeSafetyStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         changeOfLifeSafetyOperationExpected: 2
       });
       var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
@@ -1517,7 +1517,7 @@ describe('bacstack - Services layer', function() {
         messageText: 'Test1234$',
         notifyType: 1,
         unsignedRangeExceedingValue: 101,
-        unsignedRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        unsignedRangeStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         unsignedRangeExceededLimit: 100
       });
       var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
@@ -1543,7 +1543,7 @@ describe('bacstack - Services layer', function() {
   describe.skip('ReadRangeAcknowledge', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bits_used: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
+      baServices.EncodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bitsUsed: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
       var result = baServices.DecodeReadRangeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
