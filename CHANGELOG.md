@@ -1,3 +1,32 @@
+<a name="0.0.1-beta.9"></a>
+# [0.0.1-beta.9](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.8...v0.0.1-beta.9) (2017-07-12)
+
+### Features
+
+* **bacnet-client:** expose BACNET errors and aborts to user ([8cda7de](https://github.com/fh1ch/node-bacstack/commit/8cda7de50f60c12cbaaf0c6d44240f15013ea040))
+* **bacnet-client:** expose underlying transport errors to user ([7d547be](https://github.com/fh1ch/node-bacstack/commit/7d547be4c0220eed7c6b0601116de079d30b4849))
+* **bacnet-client:** implement close function for BACstack and underlying UDP socket ([4be06bd](https://github.com/fh1ch/node-bacstack/commit/4be06bd2afd3775fdd76b907516cd7bc3d8bbb69))
+* **bacnet-services:** implement missing BACNET service encodings ([db6ac7f](https://github.com/fh1ch/node-bacstack/commit/db6ac7fd62e76f1f79992b90fbf4c42fb7f1b536))
+* **bacnet-services:** implement writePropertyMultiple service ([ea9332c](https://github.com/fh1ch/node-bacstack/commit/ea9332c945884e163dba9b908d2161047f322031))
+* **bacnet-transport:** allow reuse of network interface when using bacstack ([0fb216c](https://github.com/fh1ch/node-bacstack/commit/0fb216ca7ab94af6ea657c3a736d6079657e4ea0))
+* implement write-property-multiple ([5f9f7a0](https://github.com/fh1ch/node-bacstack/commit/5f9f7a0447c333414f8d9f2cd9316dbb3673bf8f))
+* implement reinitialize-device ([1283cc3](https://github.com/fh1ch/node-bacstack/commit/1283cc32f6b0b66ea71cb16751d82f53a8f0a548))
+* implement device-communication-control ([04a38a8](https://github.com/fh1ch/node-bacstack/commit/04a38a829afabd77c932698bec412525f4ad5ef5))
+* implement time-sync ([9980a4d](https://github.com/fh1ch/node-bacstack/commit/9980a4d7b8524a1175be9aec182dc58eab4a23ac))
+
+### Bug Fixes
+
+* **ba-enums:** make sure the exported enums are not overridden ([8369cc8](https://github.com/fh1ch/node-bacstack/commit/8369cc8daa0a97d5e20e554eea5e9fbc0d570c93))
+* **bacnet-client:** correct error message format for BACNET aborts and errors ([6533e3f](https://github.com/fh1ch/node-bacstack/commit/6533e3f3185a23b990fff66fd9b5122a1282f1a8))
+* **string-decode:** add decoding support for ISO 8859-1 ([a224928](https://github.com/fh1ch/node-bacstack/commit/a224928360da49d1c1d620b025f5066db006d1ff))
+
+### BREAKING CHANGES
+
+* index: enumerations are no longer accessible via BACStack client instance and have been moved to the module level (`require("bacstack").enum;`).
+
+* `Tag` and `Value` parameters for writeProperty and writePropertyMultiple have to be adapted to small-case
+
+
 <a name="0.0.1-beta.8"></a>
 # [0.0.1-beta.8](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.7...v0.0.1-beta.8) (2017-06-19)
 
