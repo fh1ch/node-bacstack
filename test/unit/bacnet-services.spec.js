@@ -85,6 +85,28 @@ describe('bacstack - Services layer', function() {
       });
     });
 
+    it('should successfully encode and decode a boolean value with array index', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 2, [
+        {Tag: 1, Value: true}
+      ]);
+      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 2,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 1, value: true, len: 1}
+        ]
+      });
+    });
+
     it('should successfully encode and decode an unsigned value', function() {
       var buffer = utils.getBuffer();
       baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
@@ -909,6 +931,631 @@ describe('bacstack - Services layer', function() {
       expect(result).to.deep.equal({
         class: 15,
         code: 25
+      });
+    });
+  });
+
+  describe('ReadPropertyMultiple', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadPropertyMultiple(buffer, [
+        {objectIdentifier: {type: 51, instance: 1}, propertyReferences: [
+          {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF},
+          {propertyIdentifier: 85, propertyArrayIndex: 4}
+        ]}
+      ]);
+      var result = baServices.DecodeReadPropertyMultiple(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({properties: [{objectIdentifier: {type: 51, instance: 1}, propertyReferences: [
+        {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF},
+        {propertyIdentifier: 85, propertyArrayIndex: 4}
+      ]}]});
+    });
+  });
+
+  describe('SubscribeProperty', function() {
+    it('should successfully encode and decode with cancellation request', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeSubscribeProperty(buffer, 7, {type: 148, instance: 362}, true, false, 1, {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF}, true, 1);
+      var result = baServices.DecodeSubscribeProperty(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        cancellationRequest: true,
+        covIncrement: 1,
+        issueConfirmedNotifications: false,
+        lifetime: 0,
+        monitoredObjectIdentifier: {
+          instance: 362,
+          type: 148
+        },
+        monitoredProperty: {
+          propertyArrayIndex: 4294967295,
+          propertyIdentifier: 85
+        },
+        subscriberProcessIdentifier: 7
+      });
+    });
+
+    it('should successfully encode and decode without cancellation request', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeSubscribeProperty(buffer, 8, {type: 149, instance: 363}, false, true, 2, {propertyIdentifier: 86, propertyArrayIndex: 3}, false, 10);
+      var result = baServices.DecodeSubscribeProperty(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        cancellationRequest: false,
+        covIncrement: 0,
+        issueConfirmedNotifications: true,
+        lifetime: 2,
+        monitoredObjectIdentifier: {
+          instance: 363,
+          type: 149
+        },
+        monitoredProperty: {
+          propertyArrayIndex: 3,
+          propertyIdentifier: 86
+        },
+        subscriberProcessIdentifier: 8
+      });
+    });
+  });
+
+  describe('SubscribeCOV', function() {
+    it('should successfully encode and decode a cancelation request', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeSubscribeCOV(buffer, 10, {type: 3, instance: 1}, true);
+      var result = baServices.DecodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        cancellationRequest: true,
+        monitoredObjectIdentifier: {type: 3, instance: 1},
+        subscriberProcessIdentifier: 10
+      });
+    });
+
+    it('should successfully encode and decode subscription request', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeSubscribeCOV(buffer, 11, {type: 3, instance: 2}, false, true, 5000);
+      var result = baServices.DecodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        cancellationRequest: false,
+        issueConfirmedNotifications: true,
+        lifetime: 5000,
+        monitoredObjectIdentifier: {type: 3, instance: 2},
+        subscriberProcessIdentifier: 11
+      });
+    });
+  });
+
+  describe('AtomicWriteFileAcknowledge', function() {
+    it('should successfully encode and decode streamed file', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicWriteFileAcknowledge(buffer, true, -10);
+      var result = baServices.DecodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        isStream: true,
+        position: -10
+      });
+    });
+
+    it('should successfully encode and decode non-streamed file', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicWriteFileAcknowledge(buffer, false, 10);
+      var result = baServices.DecodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        isStream: false,
+        position: 10
+      });
+    });
+  });
+
+  describe('ReadProperty', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadProperty(buffer, 4, 630, 85, 0xFFFFFFFF);
+      var result = baServices.DecodeReadProperty(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 4, instance: 630},
+        property: {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF}
+      });
+    });
+
+    it('should successfully encode and decode with array index', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadProperty(buffer, 4, 630, 85, 2);
+      var result = baServices.DecodeReadProperty(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 4, instance: 630},
+        property: {propertyIdentifier: 85, propertyArrayIndex: 2}
+      });
+    });
+  });
+
+  describe('AtomicReadFile', function() {
+    it('should successfully encode and decode as stream', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicReadFile(buffer, true, {type: 13, instance: 5000}, -50, 12);
+      var result = baServices.DecodeAtomicReadFile(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 13, instance: 5000},
+        count: 12,
+        isStream: true,
+        position: -50
+      });
+    });
+
+    it('should successfully encode and decode as non-stream', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicReadFile(buffer, false, {type: 14, instance: 5001}, 60, 13);
+      var result = baServices.DecodeAtomicReadFile(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 14, instance: 5001},
+        count: 13,
+        isStream: false,
+        position: 60
+      });
+    });
+  });
+
+  describe('AtomicReadFileAcknowledge', function() {
+    it('should successfully encode and decode as stream', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicReadFileAcknowledge(buffer, true, false, 0, 90, [[12, 12, 12]], [3]);
+      var result = baServices.DecodeAtomicReadFileAcknowledge(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        isStream: true,
+        position: 0,
+        endOfFile: false,
+        buffer: Buffer.from([12, 12, 12])
+      });
+    });
+
+    it('should successfully encode and decode as non-stream', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeAtomicReadFileAcknowledge(buffer, false, false, 0, 90, [12, 12, 12], 3);
+      // TODO: AtomicReadFileAcknowledge as non-stream not yet implemented
+      expect(function() {
+        baServices.DecodeAtomicReadFileAcknowledge(buffer.buffer, 0);
+      }).to.throw('NotImplemented');
+    });
+  });
+
+  // TODO: Correct test behaviour
+  describe.skip('AtomicWriteFile', function() {
+    it('should successfully encode and decode as stream', function() {
+      var buffer = utils.getBuffer();
+      // (buffer, isStream, objectId, position, blockCount, blocks, counts);
+      baServices.EncodeAtomicWriteFile(buffer, true, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      var result = baServices.DecodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 51, instance: 2},
+        count: 12,
+        isStream: true,
+        position: -50
+      });
+    });
+
+    it('should successfully encode and decode as non-stream', function() {
+      var buffer = utils.getBuffer();
+      // (buffer, isStream, objectId, position, blockCount, blocks, counts);
+      baServices.EncodeAtomicWriteFile(buffer, false, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      var result = baServices.DecodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 51, instance: 2},
+        count: 12,
+        isStream: true,
+        position: -50
+      });
+    });
+  });
+
+  describe('ReadRange', function() {
+    it('should successfully encode and decode by position', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 1, 10, null, 0);
+      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        count: 0,
+        objectId: {type: 61, instance: 35},
+        position: 10,
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 85
+        },
+        requestType: 1,
+        time: undefined
+      });
+    });
+
+    it('should successfully encode and decode by position with array index', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 12, 2, 1, 10, null, 0);
+      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        count: 0,
+        objectId: {type: 61, instance: 35},
+        position: 10,
+        property: {
+          propertyArrayIndex: 2,
+          propertyIdentifier: 12
+        },
+        requestType: 1,
+        time: undefined
+      });
+    });
+
+    it('should successfully encode and decode by sequence', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 2, 11, null, 1111);
+      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        count: 1111,
+        objectId: {type: 61, instance: 35},
+        position: 11,
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 85
+        },
+        requestType: 2,
+        time: undefined
+      });
+    });
+
+    it('should successfully encode and decode by time', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date(1, 1, 1);
+      date.setMilliseconds(990);
+      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 4, null, date, -1111);
+      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        count: -1111,
+        objectId: {type: 61, instance: 35},
+        position: undefined,
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 85
+        },
+        requestType: 4,
+        time: date
+      });
+    });
+  });
+
+  describe('EventNotifyData', function() {
+    it('should successfully encode and decode a change of bitstring event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 60, instance: 12},
+        eventObjectIdentifier: {type: 61, instance: 1121},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 0,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: true,
+        fromState: 5,
+        toState: 6,
+        changeOfBitstringReferencedBitString: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfBitstringStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 60, instance: 12},
+        eventObjectIdentifier: {type: 61, instance: 1121},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 0,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: true,
+        fromState: 5,
+        toState: 6
+      });
+    });
+
+    it('should successfully encode and decode a change of state event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 1,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 1,
+        toState: 2,
+        changeOfStateNewState: {Tag: 2, state: 2},
+        changeOfStateStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 1,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 1,
+        toState: 2
+      });
+    });
+
+    it('should successfully encode and decode a change of value event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 2,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        changeOfValueTag: 1,
+        changeOfValueChangeValue: 90,
+        changeOfValueStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 2,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 0,
+        toState: 0
+      });
+    });
+
+    it('should successfully encode and decode a floating limit event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 4,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: true,
+        fromState: 19,
+        toState: 12,
+        floatingLimitReferenceValue: 121,
+        floatingLimitStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        floatingLimitSetPointValue: 120,
+        floatingLimitErrorLimit: 120
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 4,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: true,
+        fromState: 19,
+        toState: 12
+      });
+    });
+
+    it('should successfully encode and decode an out of range event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 5,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        outOfRangeExceedingValue: 155,
+        outOfRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        outOfRangeDeadband: 50,
+        outOfRangeExceededLimit: 150
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 5,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 0,
+        toState: 0
+      });
+    });
+
+    it('should successfully encode and decode a change of life-safety event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 8,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        changeOfLifeSafetyNewState: 8,
+        changeOfLifeSafetyNewMode: 9,
+        changeOfLifeSafetyStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfLifeSafetyOperationExpected: 2
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 8,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 0,
+        toState: 0
+      });
+    });
+
+    it('should successfully encode and decode a buffer ready event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 10,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        bufferReadyBufferProperty: {
+          objectIdentifier: {type: 65, instance: 2},
+          propertyIdentifier: 85,
+          arrayIndex: 3,
+          deviceIndentifier: {type: 8, instance: 443}
+        },
+        bufferReadyPreviousNotification: 121,
+        bufferReadyCurrentNotification: 281
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 10,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 0,
+        toState: 0
+      });
+    });
+
+    it('should successfully encode and decode a unsigned range event', function() {
+      var buffer = utils.getBuffer();
+      var date = new Date();
+      date.setMilliseconds(880);
+      baServices.EncodeEventNotifyData(buffer, {
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {},
+        eventObjectIdentifier: {},
+        timeStamp: {tag: 2, value: date},
+        notificationClass: 9,
+        priority: 7,
+        eventType: 11,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        unsignedRangeExceedingValue: 101,
+        unsignedRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        unsignedRangeExceededLimit: 100
+      });
+      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processIdentifier: 3,
+        initiatingObjectIdentifier: {type: 0, instance: 0},
+        eventObjectIdentifier: {type: 0, instance: 0},
+        timeStamp: date,
+        notificationClass: 9,
+        priority: 7,
+        eventType: 11,
+        messageText: 'Test1234$',
+        notifyType: 1,
+        ackRequired: false,
+        fromState: 0,
+        toState: 0
+      });
+    });
+  });
+
+  // TODO: Correct test behaviour
+  describe.skip('ReadRangeAcknowledge', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.EncodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bits_used: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
+      var result = baServices.DecodeReadRangeAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        count: 0,
+        objectId: {type: 61, instance: 35},
+        position: 10,
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 85
+        },
+        requestType: 1,
+        time: undefined
       });
     });
   });
