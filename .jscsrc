@@ -2,7 +2,6 @@
   "preset": "google",
   "maximumLineLength": 320,
   "requireSemicolons": true,
-  "requireCamelCaseOrUpperCaseIdentifiers": false,
   "requireCurlyBraces": false,
   "requireCapitalizedConstructors": false,
   "jsDoc": false

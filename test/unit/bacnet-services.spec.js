@@ -21,8 +21,8 @@ describe('bacstack - Services layer', function() {
   describe('WhoHas', function() {
     it('should successfully encode and decode by id', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeWhoHasBroadcast(buffer, 3, 4000, {type: 3, instance: 15});
-      var result = baServices.DecodeWhoHasBroadcast(buffer.buffer, 0, buffer.offset);
+      baServices.encodeWhoHasBroadcast(buffer, 3, 4000, {type: 3, instance: 15});
+      var result = baServices.decodeWhoHasBroadcast(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         lowLimit: 3,
@@ -36,8 +36,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode by name', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeWhoHasBroadcast(buffer, 3, 4000, {}, 'analog-output-1');
-      var result = baServices.DecodeWhoHasBroadcast(buffer.buffer, 0, buffer.offset);
+      baServices.encodeWhoHasBroadcast(buffer, 3, 4000, {}, 'analog-output-1');
+      var result = baServices.decodeWhoHasBroadcast(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         lowLimit: 3,
@@ -50,8 +50,8 @@ describe('bacstack - Services layer', function() {
   describe('WhoIs', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeWhoIsBroadcast(buffer, 1, 3000);
-      var result = baServices.DecodeWhoIsBroadcast(buffer.buffer, 0, buffer.offset);
+      baServices.encodeWhoIsBroadcast(buffer, 1, 3000);
+      var result = baServices.decodeWhoIsBroadcast(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         lowLimit: 1,
@@ -63,11 +63,11 @@ describe('bacstack - Services layer', function() {
   describe('ReadPropertyAcknowledge', function() {
     it('should successfully encode and decode a boolean value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 1, Value: true},
-        {Tag: 1, Value: false}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 1, value: true},
+        {tag: 1, value: false}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -87,10 +87,10 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a boolean value with array index', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 2, [
-        {Tag: 1, Value: true}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 2, [
+        {tag: 1, value: true}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -109,13 +109,13 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode an unsigned value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 2, Value: 1},
-        {Tag: 2, Value: 1000},
-        {Tag: 2, Value: 1000000},
-        {Tag: 2, Value: 1000000000}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 2, value: 1},
+        {tag: 2, value: 1000},
+        {tag: 2, value: 1000000},
+        {tag: 2, value: 1000000000}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -137,13 +137,13 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a signed value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 3, Value: -1},
-        {Tag: 3, Value: -1000},
-        {Tag: 3, Value: -1000000},
-        {Tag: 3, Value: -1000000000}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 3, value: -1},
+        {tag: 3, value: -1000},
+        {tag: 3, value: -1000000},
+        {tag: 3, value: -1000000000}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -165,11 +165,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode an real value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 4, Value: 0},
-        {Tag: 4, Value: 0.1}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 4, value: 0},
+        {tag: 4, value: 0.1}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(Math.floor(0.1 * 10000)).to.equal(Math.floor(result.valueList[1].value * 10000));
       result.valueList[1].value = 0;
@@ -191,11 +191,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a double value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 5, Value: 0},
-        {Tag: 5, Value: 100.121212}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 5, value: 0},
+        {tag: 5, value: 100.121212}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -215,11 +215,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode an octet-string value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 6, Value: []},
-        {Tag: 6, Value: [1, 2, 100, 200]}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 6, value: []},
+        {tag: 6, value: [1, 2, 100, 200]}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -239,11 +239,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a character-string value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 7, Value: ''},
-        {Tag: 7, Value: 'Test1234$'}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 7, value: ''},
+        {tag: 7, value: 'Test1234$'}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -263,11 +263,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a bit-string value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 8, Value: {bits_used: 0, value: []}},
-        {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 8, value: {bitsUsed: 0, value: []}},
+        {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -279,19 +279,19 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 8, value: {bits_used: 0, value: []}, len: 2},
-          {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5}
+          {type: 8, value: {bitsUsed: 0, value: []}, len: 2},
+          {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5}
         ]
       });
     });
 
     it('should successfully encode and decode a enumeration value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 9, Value: 0},
-        {Tag: 9, Value: 4}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 9, value: 0},
+        {tag: 9, value: 4}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -312,10 +312,10 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a date value', function() {
       var buffer = utils.getBuffer();
       var date = new Date(1, 1, 1);
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 10, Value: date}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 10, value: date}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -336,10 +336,10 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 11, Value: time}
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 11, value: time}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -358,11 +358,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a object-identifier value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {Tag: 12, Value: {type: 3, instance: 0}},
-        {Tag: 12, Value: {type: 3, instance: 50000}},
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 12, value: {type: 3, instance: 0}},
+        {tag: 12, value: {type: 3, instance: 50000}},
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -382,8 +382,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a cov-subscription value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 222, instance: 3}, 152, 0xFFFFFFFF, [
-        {Tag: 111, Value: {
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 222, instance: 3}, 152, 0xFFFFFFFF, [
+        {tag: 111, value: {
           Recipient: {net: 12, adr: [0, 1]},
           subscriptionProcessIdentifier: 3,
           monitoredObjectIdentifier: {type: 2, instance: 1},
@@ -392,7 +392,7 @@ describe('bacstack - Services layer', function() {
           TimeRemaining: 5,
           COVIncrement: 1
         }},
-        {Tag: 111, Value: {
+        {tag: 111, value: {
           Recipient: {net: 0xFFFF, adr: []},
           subscriptionProcessIdentifier: 3,
           monitoredObjectIdentifier: {type: 2, instance: 1},
@@ -401,7 +401,7 @@ describe('bacstack - Services layer', function() {
           TimeRemaining: 5
         }}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -436,14 +436,14 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a read-access-specification value', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 223, instance: 90000}, 53, 0xFFFFFFFF, [
-        {Tag: 115, Value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}},
-        {Tag: 115, Value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 223, instance: 90000}, 53, 0xFFFFFFFF, [
+        {tag: 115, value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}},
+        {tag: 115, value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
           {propertyIdentifier: 85},
           {propertyIdentifier: 1, propertyArrayIndex: 2}
         ]}},
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -471,35 +471,35 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeReadPropertyMultipleAcknowledge(buffer, [
+      baServices.encodeReadPropertyMultipleAcknowledge(buffer, [
         {objectIdentifier: {type: 9, instance: 50000}, values: [
           {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-            {Tag: 1, Value: true},
-            {Tag: 1, Value: false},
-            {Tag: 2, Value: 1},
-            {Tag: 2, Value: 1000},
-            {Tag: 2, Value: 1000000},
-            {Tag: 2, Value: 1000000000},
-            {Tag: 3, Value: -1},
-            {Tag: 3, Value: -1000},
-            {Tag: 3, Value: -1000000},
-            {Tag: 3, Value: -1000000000},
-            {Tag: 4, Value: 0.1},
-            {Tag: 5, Value: 100.121212},
+            {tag: 1, value: true},
+            {tag: 1, value: false},
+            {tag: 2, value: 1},
+            {tag: 2, value: 1000},
+            {tag: 2, value: 1000000},
+            {tag: 2, value: 1000000000},
+            {tag: 3, value: -1},
+            {tag: 3, value: -1000},
+            {tag: 3, value: -1000000},
+            {tag: 3, value: -1000000000},
+            {tag: 4, value: 0.1},
+            {tag: 5, value: 100.121212},
             // FIXME: correct octet-string implementation
-            // {Tag: 6, Value: [1, 2, 100, 200]},
-            {Tag: 7, Value: 'Test1234$'},
+            // {tag: 6, value: [1, 2, 100, 200]},
+            {tag: 7, value: 'Test1234$'},
             // FIXME: correct bit-string implementation
-            // {Tag: 8, Value: {bits_used: 0, value: []}},
-            // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
-            {Tag: 9, Value: 4},
-            {Tag: 10, Value: date},
-            {Tag: 11, Value: time},
-            {Tag: 12, Value: {type: 3, instance: 0}}
+            // {tag: 8, value: {bitsUsed: 0, value: []}},
+            // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+            {tag: 9, value: 4},
+            {tag: 10, value: date},
+            {tag: 11, value: time},
+            {tag: 12, value: {type: 3, instance: 0}}
           ]}
         ]}
       ]);
-      var result = baServices.DecodeReadPropertyMultipleAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyMultipleAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(Math.floor(0.1 * 10000)).to.equal(Math.floor(result.values[0].values[0].value[10].value * 10000));
       result.values[0].values[0].value[10].value = 0;
@@ -543,26 +543,26 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 0, [
-        {Tag: 1, Value: true},
-        {Tag: 1, Value: false},
-        {Tag: 2, Value: 1},
-        {Tag: 2, Value: 1000},
-        {Tag: 2, Value: 1000000},
-        {Tag: 2, Value: 1000000000},
-        {Tag: 3, Value: -1},
-        {Tag: 3, Value: -1000},
-        {Tag: 3, Value: -1000000},
-        {Tag: 3, Value: -1000000000},
-        {Tag: 4, Value: 0},
-        {Tag: 5, Value: 100.121212},
-        {Tag: 7, Value: 'Test1234$'},
-        {Tag: 9, Value: 4},
-        {Tag: 10, Value: date},
-        {Tag: 11, Value: time},
-        {Tag: 12, Value: {type: 3, instance: 0}}
+      baServices.encodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 0, [
+        {tag: 1, value: true},
+        {tag: 1, value: false},
+        {tag: 2, value: 1},
+        {tag: 2, value: 1000},
+        {tag: 2, value: 1000000},
+        {tag: 2, value: 1000000000},
+        {tag: 3, value: -1},
+        {tag: 3, value: -1000},
+        {tag: 3, value: -1000000},
+        {tag: 3, value: -1000000000},
+        {tag: 4, value: 0},
+        {tag: 5, value: 100.121212},
+        {tag: 7, value: 'Test1234$'},
+        {tag: 9, value: 4},
+        {tag: 10, value: date},
+        {tag: 11, value: time},
+        {tag: 12, value: {type: 3, instance: 0}}
       ]);
-      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -603,26 +603,26 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 8, [
-        {Tag: 1, Value: true},
-        {Tag: 1, Value: false},
-        {Tag: 2, Value: 1},
-        {Tag: 2, Value: 1000},
-        {Tag: 2, Value: 1000000},
-        {Tag: 2, Value: 1000000000},
-        {Tag: 3, Value: -1},
-        {Tag: 3, Value: -1000},
-        {Tag: 3, Value: -1000000},
-        {Tag: 3, Value: -1000000000},
-        {Tag: 4, Value: 0},
-        {Tag: 5, Value: 100.121212},
-        {Tag: 7, Value: 'Test1234$'},
-        {Tag: 9, Value: 4},
-        {Tag: 10, Value: date},
-        {Tag: 11, Value: time},
-        {Tag: 12, Value: {type: 3, instance: 0}}
+      baServices.encodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 8, [
+        {tag: 1, value: true},
+        {tag: 1, value: false},
+        {tag: 2, value: 1},
+        {tag: 2, value: 1000},
+        {tag: 2, value: 1000000},
+        {tag: 2, value: 1000000000},
+        {tag: 3, value: -1},
+        {tag: 3, value: -1000},
+        {tag: 3, value: -1000000},
+        {tag: 3, value: -1000000000},
+        {tag: 4, value: 0},
+        {tag: 5, value: 100.121212},
+        {tag: 7, value: 'Test1234$'},
+        {tag: 9, value: 4},
+        {tag: 10, value: date},
+        {tag: 11, value: time},
+        {tag: 12, value: {type: 3, instance: 0}}
       ]);
-      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -663,26 +663,26 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWriteProperty(buffer, 31, 12, 80, 2, 0, [
-        {Tag: 1, Value: true},
-        {Tag: 1, Value: false},
-        {Tag: 2, Value: 1},
-        {Tag: 2, Value: 1000},
-        {Tag: 2, Value: 1000000},
-        {Tag: 2, Value: 1000000000},
-        {Tag: 3, Value: -1},
-        {Tag: 3, Value: -1000},
-        {Tag: 3, Value: -1000000},
-        {Tag: 3, Value: -1000000000},
-        {Tag: 4, Value: 0},
-        {Tag: 5, Value: 100.121212},
-        {Tag: 7, Value: 'Test1234$'},
-        {Tag: 9, Value: 4},
-        {Tag: 10, Value: date},
-        {Tag: 11, Value: time},
-        {Tag: 12, Value: {type: 3, instance: 0}}
+      baServices.encodeWriteProperty(buffer, 31, 12, 80, 2, 0, [
+        {tag: 1, value: true},
+        {tag: 1, value: false},
+        {tag: 2, value: 1},
+        {tag: 2, value: 1000},
+        {tag: 2, value: 1000000},
+        {tag: 2, value: 1000000000},
+        {tag: 3, value: -1},
+        {tag: 3, value: -1000},
+        {tag: 3, value: -1000000},
+        {tag: 3, value: -1000000000},
+        {tag: 4, value: 0},
+        {tag: 5, value: 100.121212},
+        {tag: 7, value: 'Test1234$'},
+        {tag: 9, value: 4},
+        {tag: 10, value: date},
+        {tag: 11, value: time},
+        {tag: 12, value: {type: 3, instance: 0}}
       ]);
-      var result = baServices.DecodeWriteProperty(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -725,33 +725,33 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+      baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-          {Tag: 1, Value: true},
-          {Tag: 1, Value: false},
-          {Tag: 2, Value: 1},
-          {Tag: 2, Value: 1000},
-          {Tag: 2, Value: 1000000},
-          {Tag: 2, Value: 1000000000},
-          {Tag: 3, Value: -1},
-          {Tag: 3, Value: -1000},
-          {Tag: 3, Value: -1000000},
-          {Tag: 3, Value: -1000000000},
-          {Tag: 4, Value: 0.1},
-          {Tag: 5, Value: 100.121212},
+          {tag: 1, value: true},
+          {tag: 1, value: false},
+          {tag: 2, value: 1},
+          {tag: 2, value: 1000},
+          {tag: 2, value: 1000000},
+          {tag: 2, value: 1000000000},
+          {tag: 3, value: -1},
+          {tag: 3, value: -1000},
+          {tag: 3, value: -1000000},
+          {tag: 3, value: -1000000000},
+          {tag: 4, value: 0.1},
+          {tag: 5, value: 100.121212},
           // FIXME: correct octet-string implementation
-          // {Tag: 6, Value: [1, 2, 100, 200]},
-          {Tag: 7, Value: 'Test1234$'},
+          // {tag: 6, value: [1, 2, 100, 200]},
+          {tag: 7, value: 'Test1234$'},
           // FIXME: correct bit-string implementation
-          // {Tag: 8, Value: {bits_used: 0, value: []}},
-          // {Tag: 8, Value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
-          {Tag: 9, Value: 4},
-          {Tag: 10, Value: date},
-          {Tag: 11, Value: time},
-          {Tag: 12, Value: {type: 3, instance: 0}}
+          // {tag: 8, value: {bitsUsed: 0, value: []}},
+          // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+          {tag: 9, value: 4},
+          {tag: 10, value: date},
+          {tag: 11, value: time},
+          {tag: 12, value: {type: 3, instance: 0}}
         ], priority: 0}
       ]);
-      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
       delete result.len;
       result.valuesRefs[0].value[10].value = Math.floor(result.valuesRefs[0].value[10].value * 1000) / 1000;
       expect(result).to.deep.equal({
@@ -783,8 +783,8 @@ describe('bacstack - Services layer', function() {
               // {type: 6, value: [1, 2, 100, 200]},
               {type: 7, value: 'Test1234$', len: 12},
               // FIXME: correct bit-string implementation
-              // {type: 8, value: {bits_used: 0, value: []}},
-              // {type: 8, value: {bits_used: 24, value: [0xAA, 0xAA, 0xAA]}},
+              // {type: 8, value: {bitsUsed: 0, value: []}},
+              // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
               {type: 9, value: 4, len: 2},
               {type: 10, value: date, len: 5},
               {type: 11, value: time, len: 5},
@@ -800,12 +800,12 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+      baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-          {Tag: 7, Value: 'Test1234$'}
+          {tag: 7, value: 'Test1234$'}
         ], priority: 12}
       ]);
-      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -832,12 +832,12 @@ describe('bacstack - Services layer', function() {
       var date = new Date(1, 1, 1);
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
-      baServices.EncodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
+      baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 414141}, value: [
-          {Tag: 7, Value: 'Test1234$'}
+          {tag: 7, value: 'Test1234$'}
         ], priority: 0}
       ]);
-      var result = baServices.DecodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
@@ -863,8 +863,8 @@ describe('bacstack - Services layer', function() {
   describe('DeviceCommunicationControl', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeDeviceCommunicationControl(buffer, 30, 1);
-      var result = baServices.DecodeDeviceCommunicationControl(buffer.buffer, 0, buffer.offset);
+      baServices.encodeDeviceCommunicationControl(buffer, 30, 1);
+      var result = baServices.decodeDeviceCommunicationControl(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         timeDuration: 30,
@@ -874,8 +874,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode with password', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeDeviceCommunicationControl(buffer, 30, 1, 'Test1234!');
-      var result = baServices.DecodeDeviceCommunicationControl(buffer.buffer, 0, buffer.offset);
+      baServices.encodeDeviceCommunicationControl(buffer, 30, 1, 'Test1234!');
+      var result = baServices.decodeDeviceCommunicationControl(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         timeDuration: 30,
@@ -888,8 +888,8 @@ describe('bacstack - Services layer', function() {
   describe('ReinitializeDevice', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReinitializeDevice(buffer, 5);
-      var result = baServices.DecodeReinitializeDevice(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReinitializeDevice(buffer, 5);
+      var result = baServices.decodeReinitializeDevice(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         state: 5
@@ -898,8 +898,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode with password', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReinitializeDevice(buffer, 5, 'Test1234$');
-      var result = baServices.DecodeReinitializeDevice(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReinitializeDevice(buffer, 5, 'Test1234$');
+      var result = baServices.decodeReinitializeDevice(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         state: 5,
@@ -913,8 +913,8 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(990);
-      baServices.EncodeTimeSync(buffer, date);
-      var result = baServices.DecodeTimeSync(buffer.buffer, 0, buffer.offset);
+      baServices.encodeTimeSync(buffer, date);
+      var result = baServices.decodeTimeSync(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         value: date,
@@ -925,8 +925,8 @@ describe('bacstack - Services layer', function() {
   describe('Error', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeError(buffer, 15, 25);
-      var result = baServices.DecodeError(buffer.buffer, 0);
+      baServices.encodeError(buffer, 15, 25);
+      var result = baServices.decodeError(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         class: 15,
@@ -938,13 +938,13 @@ describe('bacstack - Services layer', function() {
   describe('ReadPropertyMultiple', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyMultiple(buffer, [
+      baServices.encodeReadPropertyMultiple(buffer, [
         {objectIdentifier: {type: 51, instance: 1}, propertyReferences: [
           {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF},
           {propertyIdentifier: 85, propertyArrayIndex: 4}
         ]}
       ]);
-      var result = baServices.DecodeReadPropertyMultiple(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyMultiple(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({properties: [{objectIdentifier: {type: 51, instance: 1}, propertyReferences: [
         {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF},
@@ -956,8 +956,8 @@ describe('bacstack - Services layer', function() {
   describe('SubscribeProperty', function() {
     it('should successfully encode and decode with cancellation request', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeSubscribeProperty(buffer, 7, {type: 148, instance: 362}, true, false, 1, {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF}, true, 1);
-      var result = baServices.DecodeSubscribeProperty(buffer.buffer, 0);
+      baServices.encodeSubscribeProperty(buffer, 7, {type: 148, instance: 362}, true, false, 1, {propertyIdentifier: 85, propertyArrayIndex: 0xFFFFFFFF}, true, 1);
+      var result = baServices.decodeSubscribeProperty(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         cancellationRequest: true,
@@ -978,8 +978,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode without cancellation request', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeSubscribeProperty(buffer, 8, {type: 149, instance: 363}, false, true, 2, {propertyIdentifier: 86, propertyArrayIndex: 3}, false, 10);
-      var result = baServices.DecodeSubscribeProperty(buffer.buffer, 0);
+      baServices.encodeSubscribeProperty(buffer, 8, {type: 149, instance: 363}, false, true, 2, {propertyIdentifier: 86, propertyArrayIndex: 3}, false, 10);
+      var result = baServices.decodeSubscribeProperty(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         cancellationRequest: false,
@@ -1002,8 +1002,8 @@ describe('bacstack - Services layer', function() {
   describe('SubscribeCOV', function() {
     it('should successfully encode and decode a cancelation request', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeSubscribeCOV(buffer, 10, {type: 3, instance: 1}, true);
-      var result = baServices.DecodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
+      baServices.encodeSubscribeCOV(buffer, 10, {type: 3, instance: 1}, true);
+      var result = baServices.decodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         cancellationRequest: true,
@@ -1014,8 +1014,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode subscription request', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeSubscribeCOV(buffer, 11, {type: 3, instance: 2}, false, true, 5000);
-      var result = baServices.DecodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
+      baServices.encodeSubscribeCOV(buffer, 11, {type: 3, instance: 2}, false, true, 5000);
+      var result = baServices.decodeSubscribeCOV(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         cancellationRequest: false,
@@ -1030,8 +1030,8 @@ describe('bacstack - Services layer', function() {
   describe('AtomicWriteFileAcknowledge', function() {
     it('should successfully encode and decode streamed file', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicWriteFileAcknowledge(buffer, true, -10);
-      var result = baServices.DecodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
+      baServices.encodeAtomicWriteFileAcknowledge(buffer, true, -10);
+      var result = baServices.decodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         isStream: true,
@@ -1041,8 +1041,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode non-streamed file', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicWriteFileAcknowledge(buffer, false, 10);
-      var result = baServices.DecodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
+      baServices.encodeAtomicWriteFileAcknowledge(buffer, false, 10);
+      var result = baServices.decodeAtomicWriteFileAcknowledge(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         isStream: false,
@@ -1054,8 +1054,8 @@ describe('bacstack - Services layer', function() {
   describe('ReadProperty', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadProperty(buffer, 4, 630, 85, 0xFFFFFFFF);
-      var result = baServices.DecodeReadProperty(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadProperty(buffer, 4, 630, 85, 0xFFFFFFFF);
+      var result = baServices.decodeReadProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 4, instance: 630},
@@ -1065,8 +1065,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode with array index', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadProperty(buffer, 4, 630, 85, 2);
-      var result = baServices.DecodeReadProperty(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadProperty(buffer, 4, 630, 85, 2);
+      var result = baServices.decodeReadProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 4, instance: 630},
@@ -1078,8 +1078,8 @@ describe('bacstack - Services layer', function() {
   describe('AtomicReadFile', function() {
     it('should successfully encode and decode as stream', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicReadFile(buffer, true, {type: 13, instance: 5000}, -50, 12);
-      var result = baServices.DecodeAtomicReadFile(buffer.buffer, 0);
+      baServices.encodeAtomicReadFile(buffer, true, {type: 13, instance: 5000}, -50, 12);
+      var result = baServices.decodeAtomicReadFile(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 13, instance: 5000},
@@ -1091,8 +1091,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode as non-stream', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicReadFile(buffer, false, {type: 14, instance: 5001}, 60, 13);
-      var result = baServices.DecodeAtomicReadFile(buffer.buffer, 0);
+      baServices.encodeAtomicReadFile(buffer, false, {type: 14, instance: 5001}, 60, 13);
+      var result = baServices.decodeAtomicReadFile(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 14, instance: 5001},
@@ -1106,8 +1106,8 @@ describe('bacstack - Services layer', function() {
   describe('AtomicReadFileAcknowledge', function() {
     it('should successfully encode and decode as stream', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicReadFileAcknowledge(buffer, true, false, 0, 90, [[12, 12, 12]], [3]);
-      var result = baServices.DecodeAtomicReadFileAcknowledge(buffer.buffer, 0);
+      baServices.encodeAtomicReadFileAcknowledge(buffer, true, false, 0, 90, [[12, 12, 12]], [3]);
+      var result = baServices.decodeAtomicReadFileAcknowledge(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         isStream: true,
@@ -1119,10 +1119,10 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode as non-stream', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeAtomicReadFileAcknowledge(buffer, false, false, 0, 90, [12, 12, 12], 3);
+      baServices.encodeAtomicReadFileAcknowledge(buffer, false, false, 0, 90, [12, 12, 12], 3);
       // TODO: AtomicReadFileAcknowledge as non-stream not yet implemented
       expect(function() {
-        baServices.DecodeAtomicReadFileAcknowledge(buffer.buffer, 0);
+        baServices.decodeAtomicReadFileAcknowledge(buffer.buffer, 0);
       }).to.throw('NotImplemented');
     });
   });
@@ -1132,8 +1132,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode as stream', function() {
       var buffer = utils.getBuffer();
       // (buffer, isStream, objectId, position, blockCount, blocks, counts);
-      baServices.EncodeAtomicWriteFile(buffer, true, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
-      var result = baServices.DecodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
+      baServices.encodeAtomicWriteFile(buffer, true, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      var result = baServices.decodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 51, instance: 2},
@@ -1146,8 +1146,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode as non-stream', function() {
       var buffer = utils.getBuffer();
       // (buffer, isStream, objectId, position, blockCount, blocks, counts);
-      baServices.EncodeAtomicWriteFile(buffer, false, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
-      var result = baServices.DecodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
+      baServices.encodeAtomicWriteFile(buffer, false, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      var result = baServices.decodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {type: 51, instance: 2},
@@ -1161,8 +1161,8 @@ describe('bacstack - Services layer', function() {
   describe('ReadRange', function() {
     it('should successfully encode and decode by position', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 1, 10, null, 0);
-      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 1, 10, null, 0);
+      var result = baServices.decodeReadRange(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         count: 0,
@@ -1179,8 +1179,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode by position with array index', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 12, 2, 1, 10, null, 0);
-      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadRange(buffer, {type: 61, instance: 35}, 12, 2, 1, 10, null, 0);
+      var result = baServices.decodeReadRange(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         count: 0,
@@ -1197,8 +1197,8 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode by sequence', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 2, 11, null, 1111);
-      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 2, 11, null, 1111);
+      var result = baServices.decodeReadRange(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         count: 1111,
@@ -1217,8 +1217,8 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date(1, 1, 1);
       date.setMilliseconds(990);
-      baServices.EncodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 4, null, date, -1111);
-      var result = baServices.DecodeReadRange(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadRange(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 4, null, date, -1111);
+      var result = baServices.decodeReadRange(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         count: -1111,
@@ -1239,7 +1239,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {type: 60, instance: 12},
         eventObjectIdentifier: {type: 61, instance: 1121},
@@ -1252,10 +1252,10 @@ describe('bacstack - Services layer', function() {
         ackRequired: true,
         fromState: 5,
         toState: 6,
-        changeOfBitstringReferencedBitString: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
-        changeOfBitstringStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfBitstringReferencedBitString: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfBitstringStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1277,7 +1277,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1290,10 +1290,10 @@ describe('bacstack - Services layer', function() {
         ackRequired: false,
         fromState: 1,
         toState: 2,
-        changeOfStateNewState: {Tag: 2, state: 2},
-        changeOfStateStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfStateNewState: {tag: 2, state: 2},
+        changeOfStateStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1315,7 +1315,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1327,9 +1327,9 @@ describe('bacstack - Services layer', function() {
         notifyType: 1,
         changeOfValueTag: 1,
         changeOfValueChangeValue: 90,
-        changeOfValueStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]}
+        changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1351,7 +1351,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1365,11 +1365,11 @@ describe('bacstack - Services layer', function() {
         fromState: 19,
         toState: 12,
         floatingLimitReferenceValue: 121,
-        floatingLimitStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        floatingLimitStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         floatingLimitSetPointValue: 120,
         floatingLimitErrorLimit: 120
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1391,7 +1391,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1402,11 +1402,11 @@ describe('bacstack - Services layer', function() {
         messageText: 'Test1234$',
         notifyType: 1,
         outOfRangeExceedingValue: 155,
-        outOfRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        outOfRangeStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         outOfRangeDeadband: 50,
         outOfRangeExceededLimit: 150
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1428,7 +1428,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1440,10 +1440,10 @@ describe('bacstack - Services layer', function() {
         notifyType: 1,
         changeOfLifeSafetyNewState: 8,
         changeOfLifeSafetyNewMode: 9,
-        changeOfLifeSafetyStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        changeOfLifeSafetyStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         changeOfLifeSafetyOperationExpected: 2
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1465,7 +1465,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1484,7 +1484,7 @@ describe('bacstack - Services layer', function() {
         bufferReadyPreviousNotification: 121,
         bufferReadyCurrentNotification: 281
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1506,7 +1506,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date();
       date.setMilliseconds(880);
-      baServices.EncodeEventNotifyData(buffer, {
+      baServices.encodeEventNotifyData(buffer, {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
@@ -1517,10 +1517,10 @@ describe('bacstack - Services layer', function() {
         messageText: 'Test1234$',
         notifyType: 1,
         unsignedRangeExceedingValue: 101,
-        unsignedRangeStatusFlags: {bits_used: 24, value: [0xaa, 0xaa, 0xaa]},
+        unsignedRangeStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]},
         unsignedRangeExceededLimit: 100
       });
-      var result = baServices.DecodeEventNotifyData(buffer.buffer, 0);
+      var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
       delete result.len;
       expect(result).to.deep.equal({
         processIdentifier: 3,
@@ -1543,8 +1543,8 @@ describe('bacstack - Services layer', function() {
   describe.skip('ReadRangeAcknowledge', function() {
     it('should successfully encode and decode', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bits_used: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
-      var result = baServices.DecodeReadRangeAcknowledge(buffer.buffer, 0, buffer.offset);
+      baServices.encodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bitsUsed: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
+      var result = baServices.decodeReadRangeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         count: 0,

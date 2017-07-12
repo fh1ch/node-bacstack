@@ -137,15 +137,15 @@ module.exports = function(settings) {
    * @param {number} propertyId - The BACNET property id in the specified object to write.
    * @param {number} priority - The priority to be used for writing to the property.
    * @param {object[]} valueList - A list of values to be written to the specified property.
-   * @param {BacnetApplicationTags} valueList.Tag - The data-type of the value to be written.
-   * @param {number} valueList.Value - The actual value to be written.
+   * @param {BacnetApplicationTags} valueList.tag - The data-type of the value to be written.
+   * @param {number} valueList.value - The actual value to be written.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
    * var bacnet = require('bacstack');
    * var client = new bacnet();
    *
    * client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [
-   *   {Tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_REAL, Value: 100}
+   *   {tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_REAL, value: 100}
    * ], function(err, value) {
    *   console.log('value: ', value);
    * });
@@ -193,8 +193,8 @@ module.exports = function(settings) {
    * @param {number} valueList.values.property.propertyIdentifier - The BACNET property id in the specified object to write.
    * @param {number} valueList.values.property.propertyArrayIndex - The array index of the property to be written.
    * @param {object[]} valueList.values.value - A list of values to be written to the specified property.
-   * @param {BacnetApplicationTags} valueList.values.value.Tag - The data-type of the value to be written.
-   * @param {object} valueList.values.value.Value - The actual value to be written.
+   * @param {BacnetApplicationTags} valueList.values.value.tag - The data-type of the value to be written.
+   * @param {object} valueList.values.value.value - The actual value to be written.
    * @param {number} valueList.values.priority - The priority to be used for writing to the property.
    * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
    * @example
@@ -203,10 +203,10 @@ module.exports = function(settings) {
    *
    * var valueList = [
    *   {objectIdentifier: {type: 8, instance: 44301}, values: [
-   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{Tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, Value: true}], priority: 8}
+   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, value: true}], priority: 8}
    *   ]}
    * ];
-   * client.readPropertyMultiple('192.168.1.43', valueList, function(err, value) {
+   * client.writePropertyMultiple('192.168.1.43', valueList, function(err, value) {
    *   console.log('value: ', value);
    * });
    */
