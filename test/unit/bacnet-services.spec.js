@@ -242,7 +242,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
         {tag: 7, value: ''},
-        {tag: 7, value: 'Test1234$äöu'}
+        {tag: 7, value: 'Test1234$äöü'}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -264,11 +264,11 @@ describe('bacstack - Services layer', function() {
 
     it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', function() {
       var buffer = utils.getBuffer();
-      baServices.EncodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
         {tag: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
         {tag: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
       ]);
-      var result = baServices.DecodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
         objectId: {
