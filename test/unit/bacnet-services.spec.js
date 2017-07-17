@@ -1,7 +1,7 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
 var baServices    = require('../../lib/bacnet-services');
-var baEnum   = require('../../lib/bacnet-enum');
+var baEnum        = require('../../lib/bacnet-enum');
 
 describe('bacstack - Services layer', function() {
   describe('Iam', function() {
@@ -256,8 +256,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 7, value: '', len: 2, encoding: 0},
-          {type: 7, value: 'Test1234$äöü', len: 18, encoding: 0}
+          {type: 7, value: '', encoding: 0, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: 0, len: 18}
         ]
       });
     });
@@ -280,8 +280,8 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 7, value: '', len: 2, encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
-          {type: 7, value: 'Test1234$äöü', len: 15, encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
+          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1, len: 15}
         ]
       });
     });
@@ -513,7 +513,7 @@ describe('bacstack - Services layer', function() {
             {tag: 5, value: 100.121212},
             // FIXME: correct octet-string implementation
             // {tag: 6, value: [1, 2, 100, 200]},
-            {tag: 7, value: 'Test1234$', encoding: 0},
+            {tag: 7, value: 'Test1234$'},
             // FIXME: correct bit-string implementation
             // {tag: 8, value: {bitsUsed: 0, value: []}},
             // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
@@ -581,7 +581,7 @@ describe('bacstack - Services layer', function() {
         {tag: 3, value: -1000000000},
         {tag: 4, value: 0},
         {tag: 5, value: 100.121212},
-        {tag: 7, value: 'Test1234$', encoding: 0},
+        {tag: 7, value: 'Test1234$'},
         {tag: 9, value: 4},
         {tag: 10, value: date},
         {tag: 11, value: time},
@@ -806,7 +806,7 @@ describe('bacstack - Services layer', function() {
               {type: 5, value: 100.121212, len: 10},
               // FIXME: correct octet-string implementation
               // {type: 6, value: [1, 2, 100, 200]},
-              {type: 7, value: 'Test1234$', len: 12, encoding: 0},
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12},
               // FIXME: correct bit-string implementation
               // {type: 8, value: {bitsUsed: 0, value: []}},
               // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
@@ -845,7 +845,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12, encoding: 0}
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12}
             ]
           }
         ]
@@ -877,7 +877,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12, encoding: 0}
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12}
             ]
           }
         ]
