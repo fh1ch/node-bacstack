@@ -145,7 +145,7 @@ module.exports = function(settings) {
    * var client = new bacnet();
    *
    * client.writeProperty('192.168.1.43', 8, 44301, 28, 12, [
-   *   {tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_REAL, value: 100}
+   *   {type: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_REAL, value: 100}
    * ], function(err, value) {
    *   console.log('value: ', value);
    * });
@@ -203,7 +203,7 @@ module.exports = function(settings) {
    *
    * var valueList = [
    *   {objectIdentifier: {type: 8, instance: 44301}, values: [
-   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{tag: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, value: true}], priority: 8}
+   *     {property: {propertyIdentifier: 28, propertyArrayIndex: 12}, value: [{type: bacnet.enum.BacnetApplicationTags.BACNET_APPLICATION_TAG_BOOLEAN, value: true}], priority: 8}
    *   ]}
    * ];
    * client.writePropertyMultiple('192.168.1.43', valueList, function(err, value) {

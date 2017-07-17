@@ -65,8 +65,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a boolean value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 1, value: true},
-        {tag: 1, value: false}
+        {type: 1, value: true},
+        {type: 1, value: false}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -89,7 +89,7 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a boolean value with array index', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 2, [
-        {tag: 1, value: true}
+        {type: 1, value: true}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -111,10 +111,10 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode an unsigned value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 2, value: 1},
-        {tag: 2, value: 1000},
-        {tag: 2, value: 1000000},
-        {tag: 2, value: 1000000000}
+        {type: 2, value: 1},
+        {type: 2, value: 1000},
+        {type: 2, value: 1000000},
+        {type: 2, value: 1000000000}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -139,10 +139,10 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a signed value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 3, value: -1},
-        {tag: 3, value: -1000},
-        {tag: 3, value: -1000000},
-        {tag: 3, value: -1000000000}
+        {type: 3, value: -1},
+        {type: 3, value: -1000},
+        {type: 3, value: -1000000},
+        {type: 3, value: -1000000000}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -167,8 +167,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode an real value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 4, value: 0},
-        {tag: 4, value: 0.1}
+        {type: 4, value: 0},
+        {type: 4, value: 0.1}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -193,8 +193,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a double value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 5, value: 0},
-        {tag: 5, value: 100.121212}
+        {type: 5, value: 0},
+        {type: 5, value: 100.121212}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -217,8 +217,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode an octet-string value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 6, value: []},
-        {tag: 6, value: [1, 2, 100, 200]}
+        {type: 6, value: []},
+        {type: 6, value: [1, 2, 100, 200]}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -241,8 +241,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 7, value: ''},
-        {tag: 7, value: 'Test1234$äöü'}
+        {type: 7, value: ''},
+        {type: 7, value: 'Test1234$äöü'}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -265,8 +265,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
-        {tag: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
+        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -289,8 +289,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a bit-string value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 8, value: {bitsUsed: 0, value: []}},
-        {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}}
+        {type: 8, value: {bitsUsed: 0, value: []}},
+        {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -313,8 +313,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a enumeration value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 9, value: 0},
-        {tag: 9, value: 4}
+        {type: 9, value: 0},
+        {type: 9, value: 4}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -338,7 +338,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var date = new Date(1, 1, 1);
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 10, value: date}
+        {type: 10, value: date}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -362,7 +362,7 @@ describe('bacstack - Services layer', function() {
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 11, value: time}
+        {type: 11, value: time}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -384,8 +384,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a object-identifier value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {tag: 12, value: {type: 3, instance: 0}},
-        {tag: 12, value: {type: 3, instance: 50000}},
+        {type: 12, value: {type: 3, instance: 0}},
+        {type: 12, value: {type: 3, instance: 50000}},
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -408,7 +408,7 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a cov-subscription value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 222, instance: 3}, 152, 0xFFFFFFFF, [
-        {tag: 111, value: {
+        {type: 111, value: {
           Recipient: {net: 12, adr: [0, 1]},
           subscriptionProcessIdentifier: 3,
           monitoredObjectIdentifier: {type: 2, instance: 1},
@@ -417,7 +417,7 @@ describe('bacstack - Services layer', function() {
           TimeRemaining: 5,
           COVIncrement: 1
         }},
-        {tag: 111, value: {
+        {type: 111, value: {
           Recipient: {net: 0xFFFF, adr: []},
           subscriptionProcessIdentifier: 3,
           monitoredObjectIdentifier: {type: 2, instance: 1},
@@ -462,8 +462,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a read-access-specification value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 223, instance: 90000}, 53, 0xFFFFFFFF, [
-        {tag: 115, value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}},
-        {tag: 115, value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
+        {type: 115, value: {objectIdentifier: {type: 3, instance: 0}, propertyReferences: []}},
+        {type: 115, value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
           {propertyIdentifier: 85},
           {propertyIdentifier: 1, propertyArrayIndex: 2}
         ]}},
@@ -499,28 +499,28 @@ describe('bacstack - Services layer', function() {
       baServices.encodeReadPropertyMultipleAcknowledge(buffer, [
         {objectIdentifier: {type: 9, instance: 50000}, values: [
           {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-            {tag: 1, value: true},
-            {tag: 1, value: false},
-            {tag: 2, value: 1},
-            {tag: 2, value: 1000},
-            {tag: 2, value: 1000000},
-            {tag: 2, value: 1000000000},
-            {tag: 3, value: -1},
-            {tag: 3, value: -1000},
-            {tag: 3, value: -1000000},
-            {tag: 3, value: -1000000000},
-            {tag: 4, value: 0.1},
-            {tag: 5, value: 100.121212},
+            {type: 1, value: true},
+            {type: 1, value: false},
+            {type: 2, value: 1},
+            {type: 2, value: 1000},
+            {type: 2, value: 1000000},
+            {type: 2, value: 1000000000},
+            {type: 3, value: -1},
+            {type: 3, value: -1000},
+            {type: 3, value: -1000000},
+            {type: 3, value: -1000000000},
+            {type: 4, value: 0.1},
+            {type: 5, value: 100.121212},
             // FIXME: correct octet-string implementation
-            // {tag: 6, value: [1, 2, 100, 200]},
-            {tag: 7, value: 'Test1234$'},
+            // {type: 6, value: [1, 2, 100, 200]},
+            {type: 7, value: 'Test1234$'},
             // FIXME: correct bit-string implementation
-            // {tag: 8, value: {bitsUsed: 0, value: []}},
-            // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
-            {tag: 9, value: 4},
-            {tag: 10, value: date},
-            {tag: 11, value: time},
-            {tag: 12, value: {type: 3, instance: 0}}
+            // {type: 8, value: {bitsUsed: 0, value: []}},
+            // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+            {type: 9, value: 4},
+            {type: 10, value: date},
+            {type: 11, value: time},
+            {type: 12, value: {type: 3, instance: 0}}
           ]}
         ]}
       ]);
@@ -569,23 +569,23 @@ describe('bacstack - Services layer', function() {
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
       baServices.encodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 0, [
-        {tag: 1, value: true},
-        {tag: 1, value: false},
-        {tag: 2, value: 1},
-        {tag: 2, value: 1000},
-        {tag: 2, value: 1000000},
-        {tag: 2, value: 1000000000},
-        {tag: 3, value: -1},
-        {tag: 3, value: -1000},
-        {tag: 3, value: -1000000},
-        {tag: 3, value: -1000000000},
-        {tag: 4, value: 0},
-        {tag: 5, value: 100.121212},
-        {tag: 7, value: 'Test1234$'},
-        {tag: 9, value: 4},
-        {tag: 10, value: date},
-        {tag: 11, value: time},
-        {tag: 12, value: {type: 3, instance: 0}}
+        {type: 1, value: true},
+        {type: 1, value: false},
+        {type: 2, value: 1},
+        {type: 2, value: 1000},
+        {type: 2, value: 1000000},
+        {type: 2, value: 1000000000},
+        {type: 3, value: -1},
+        {type: 3, value: -1000},
+        {type: 3, value: -1000000},
+        {type: 3, value: -1000000000},
+        {type: 4, value: 0},
+        {type: 5, value: 100.121212},
+        {type: 7, value: 'Test1234$'},
+        {type: 9, value: 4},
+        {type: 10, value: date},
+        {type: 11, value: time},
+        {type: 12, value: {type: 3, instance: 0}}
       ]);
       var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -629,23 +629,23 @@ describe('bacstack - Services layer', function() {
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
       baServices.encodeWriteProperty(buffer, 31, 12, 80, 0xFFFFFFFF, 8, [
-        {tag: 1, value: true},
-        {tag: 1, value: false},
-        {tag: 2, value: 1},
-        {tag: 2, value: 1000},
-        {tag: 2, value: 1000000},
-        {tag: 2, value: 1000000000},
-        {tag: 3, value: -1},
-        {tag: 3, value: -1000},
-        {tag: 3, value: -1000000},
-        {tag: 3, value: -1000000000},
-        {tag: 4, value: 0},
-        {tag: 5, value: 100.121212},
-        {tag: 7, value: 'Test1234$'},
-        {tag: 9, value: 4},
-        {tag: 10, value: date},
-        {tag: 11, value: time},
-        {tag: 12, value: {type: 3, instance: 0}}
+        {type: 1, value: true},
+        {type: 1, value: false},
+        {type: 2, value: 1},
+        {type: 2, value: 1000},
+        {type: 2, value: 1000000},
+        {type: 2, value: 1000000000},
+        {type: 3, value: -1},
+        {type: 3, value: -1000},
+        {type: 3, value: -1000000},
+        {type: 3, value: -1000000000},
+        {type: 4, value: 0},
+        {type: 5, value: 100.121212},
+        {type: 7, value: 'Test1234$'},
+        {type: 9, value: 4},
+        {type: 10, value: date},
+        {type: 11, value: time},
+        {type: 12, value: {type: 3, instance: 0}}
       ]);
       var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -689,23 +689,23 @@ describe('bacstack - Services layer', function() {
       var time = new Date(1, 1, 1);
       time.setMilliseconds(990);
       baServices.encodeWriteProperty(buffer, 31, 12, 80, 2, 0, [
-        {tag: 1, value: true},
-        {tag: 1, value: false},
-        {tag: 2, value: 1},
-        {tag: 2, value: 1000},
-        {tag: 2, value: 1000000},
-        {tag: 2, value: 1000000000},
-        {tag: 3, value: -1},
-        {tag: 3, value: -1000},
-        {tag: 3, value: -1000000},
-        {tag: 3, value: -1000000000},
-        {tag: 4, value: 0},
-        {tag: 5, value: 100.121212},
-        {tag: 7, value: 'Test1234$'},
-        {tag: 9, value: 4},
-        {tag: 10, value: date},
-        {tag: 11, value: time},
-        {tag: 12, value: {type: 3, instance: 0}}
+        {type: 1, value: true},
+        {type: 1, value: false},
+        {type: 2, value: 1},
+        {type: 2, value: 1000},
+        {type: 2, value: 1000000},
+        {type: 2, value: 1000000000},
+        {type: 3, value: -1},
+        {type: 3, value: -1000},
+        {type: 3, value: -1000000},
+        {type: 3, value: -1000000000},
+        {type: 4, value: 0},
+        {type: 5, value: 100.121212},
+        {type: 7, value: 'Test1234$'},
+        {type: 9, value: 4},
+        {type: 10, value: date},
+        {type: 11, value: time},
+        {type: 12, value: {type: 3, instance: 0}}
       ]);
       var result = baServices.decodeWriteProperty(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -752,28 +752,28 @@ describe('bacstack - Services layer', function() {
       time.setMilliseconds(990);
       baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-          {tag: 1, value: true},
-          {tag: 1, value: false},
-          {tag: 2, value: 1},
-          {tag: 2, value: 1000},
-          {tag: 2, value: 1000000},
-          {tag: 2, value: 1000000000},
-          {tag: 3, value: -1},
-          {tag: 3, value: -1000},
-          {tag: 3, value: -1000000},
-          {tag: 3, value: -1000000000},
-          {tag: 4, value: 0.1},
-          {tag: 5, value: 100.121212},
+          {type: 1, value: true},
+          {type: 1, value: false},
+          {type: 2, value: 1},
+          {type: 2, value: 1000},
+          {type: 2, value: 1000000},
+          {type: 2, value: 1000000000},
+          {type: 3, value: -1},
+          {type: 3, value: -1000},
+          {type: 3, value: -1000000},
+          {type: 3, value: -1000000000},
+          {type: 4, value: 0.1},
+          {type: 5, value: 100.121212},
           // FIXME: correct octet-string implementation
-          // {tag: 6, value: [1, 2, 100, 200]},
-          {tag: 7, value: 'Test1234$'},
+          // {type: 6, value: [1, 2, 100, 200]},
+          {type: 7, value: 'Test1234$'},
           // FIXME: correct bit-string implementation
-          // {tag: 8, value: {bitsUsed: 0, value: []}},
-          // {tag: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
-          {tag: 9, value: 4},
-          {tag: 10, value: date},
-          {tag: 11, value: time},
-          {tag: 12, value: {type: 3, instance: 0}}
+          // {type: 8, value: {bitsUsed: 0, value: []}},
+          // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+          {type: 9, value: 4},
+          {type: 10, value: date},
+          {type: 11, value: time},
+          {type: 12, value: {type: 3, instance: 0}}
         ], priority: 0}
       ]);
       var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
@@ -827,7 +827,7 @@ describe('bacstack - Services layer', function() {
       time.setMilliseconds(990);
       baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 0xFFFFFFFF}, value: [
-          {tag: 7, value: 'Test1234$'}
+          {type: 7, value: 'Test1234$'}
         ], priority: 12}
       ]);
       var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
@@ -859,7 +859,7 @@ describe('bacstack - Services layer', function() {
       time.setMilliseconds(990);
       baServices.encodeWritePropertyMultiple(buffer, {type: 39, instance: 2400}, [
         {property: {propertyIdentifier: 81, propertyArrayIndex: 414141}, value: [
-          {tag: 7, value: 'Test1234$'}
+          {type: 7, value: 'Test1234$'}
         ], priority: 0}
       ]);
       var result = baServices.decodeWritePropertyMultiple(buffer.buffer, 0, buffer.offset);
@@ -1268,7 +1268,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {type: 60, instance: 12},
         eventObjectIdentifier: {type: 61, instance: 1121},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 0,
@@ -1306,7 +1306,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 1,
@@ -1315,7 +1315,7 @@ describe('bacstack - Services layer', function() {
         ackRequired: false,
         fromState: 1,
         toState: 2,
-        changeOfStateNewState: {tag: 2, state: 2},
+        changeOfStateNewState: {type: 2, state: 2},
         changeOfStateStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
       var result = baServices.decodeEventNotifyData(buffer.buffer, 0);
@@ -1344,7 +1344,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 2,
@@ -1380,7 +1380,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 4,
@@ -1420,7 +1420,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 5,
@@ -1457,7 +1457,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 8,
@@ -1494,7 +1494,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 10,
@@ -1535,7 +1535,7 @@ describe('bacstack - Services layer', function() {
         processIdentifier: 3,
         initiatingObjectIdentifier: {},
         eventObjectIdentifier: {},
-        timeStamp: {tag: 2, value: date},
+        timeStamp: {type: 2, value: date},
         notificationClass: 9,
         priority: 7,
         eventType: 11,
