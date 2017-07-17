@@ -25,16 +25,16 @@ describe('bacstack - readPropertyMultiple integration', function() {
     client.readPropertyMultiple('127.0.0.1', requestArray, function(err, response) {
       var object = utils.propertyFormater(response.values[0].values);
       expect(response.values[0].objectIdentifier).to.deep.equal({type: 29, instance: 31});
-      expect(object[28]).to.deep.equal([{value: 'Collection of lighting presence detector', type: 7}]);
+      expect(object[28]).to.deep.equal([{value: 'Collection of lighting presence detector', type: 7, encoding: 0}]);
       expect(object[75]).to.deep.equal([{value: {type: 29, instance: 31}, type: 12}]);
-      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'Lgt\'PscOp\'LgtPscDetCol', type: 7}]);
+      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'Lgt\'PscOp\'LgtPscDetCol', type: 7, encoding: 0}]);
       expect(object[79]).to.deep.equal([{value: 29, type: 9}]);
-      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-041-SBCv13.20', type: 7}]);
-      expect(object[207]).to.deep.equal([{value: '', type: 7}]);
+      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-041-SBCv13.20', type: 7, encoding: 0}]);
+      expect(object[207]).to.deep.equal([{value: '', type: 7, encoding: 0}]);
       expect(object[208]).to.deep.equal([{value: 8, type: 9}]);
       expect(object[210]).to.deep.equal([
-        {value: 'LgtPscDetRs', type: 7},
-        {value: 'PscDet(*)', type: 7}
+        {value: 'LgtPscDetRs', type: 7, encoding: 0},
+        {value: 'PscDet(*)', type: 7, encoding: 0}
       ]);
       expect(object[211]).to.deep.equal([
         {value: {value: {type: 5, instance: 0}, type: 12}, type: 118},
@@ -65,39 +65,39 @@ describe('bacstack - readPropertyMultiple integration', function() {
     client.readPropertyMultiple('127.0.0.1', requestArray, function(err, response) {
       expect(response.values[0].objectIdentifier).to.deep.equal({type: 19, instance: 10});
       var object = utils.propertyFormater(response.values[0].values);
-      expect(object[28]).to.deep.equal([{value: 'Sensor', type: 7}]);
+      expect(object[28]).to.deep.equal([{value: 'Sensor', type: 7, encoding: 0}]);
       expect(object[36]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[74]).to.deep.equal([{value: 8, type: 2}]);
       expect(object[75]).to.deep.equal([{value: {type: 19, instance: 10}, type: 12}]);
-      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'SenDev\'Sen', type: 7}]);
+      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'SenDev\'Sen', type: 7, encoding: 0}]);
       expect(object[79]).to.deep.equal([{value: 19, type: 9}]);
       expect(object[81]).to.deep.equal([{value: false, type: 1}]);
       expect(object[85]).to.deep.equal([{value: 1, type: 2}]);
       expect(object[103]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[110]).to.deep.equal([
-        {value: 'Operational', type: 7},
-        {value: 'Device stopped', type: 7},
-        {value: 'Device not assigned', type: 7},
-        {value: 'Device missing', type: 7},
-        {value: 'Configuring device', type: 7},
-        {value: 'Unused', type: 7},
-        {value: 'Missing or wrong configuration', type: 7},
-        {value: 'Searching', type: 7},
+        {value: 'Operational', type: 7, encoding: 0},
+        {value: 'Device stopped', type: 7, encoding: 0},
+        {value: 'Device not assigned', type: 7, encoding: 0},
+        {value: 'Device missing', type: 7, encoding: 0},
+        {value: 'Configuring device', type: 7, encoding: 0},
+        {value: 'Unused', type: 7, encoding: 0},
+        {value: 'Missing or wrong configuration', type: 7, encoding: 0},
+        {value: 'Searching', type: 7, encoding: 0},
       ]);
       expect(object[111]).to.deep.equal([{value: {value: [0], bitsUsed: 4}, type: 8}]);
-      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-024-SBCv13.20', type: 7}]);
+      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-024-SBCv13.20', type: 7, encoding: 0}]);
       expect(object[4930]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[4941]).to.deep.equal([{value: 5, type: 9}]);
       expect(object[5000]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[5001]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[5039]).to.deep.equal([{value: '0.2.249', type: 7}]);
-      expect(object[5087]).to.deep.equal([{value: '5WG1258-2DB12', type: 7}]);
-      expect(object[5092]).to.deep.equal([{value: 'PL-1:DL=1;', type: 7}]);
+      expect(object[5039]).to.deep.equal([{value: '0.2.249', type: 7, encoding: 0}]);
+      expect(object[5087]).to.deep.equal([{value: '5WG1258-2DB12', type: 7, encoding: 0}]);
+      expect(object[5092]).to.deep.equal([{value: 'PL-1:DL=1;', type: 7, encoding: 0}]);
       expect(object[5094]).to.deep.equal([{value: 3, type: 2}]);
-      expect(object[5100]).to.deep.equal([{value: '00010043eddc', type: 7}]);
-      expect(object[5101]).to.deep.equal([{value: 'PL:DDT=0586.0001.00.01.00;FW=0.1.13;MODE=PL;', type: 7}]);
+      expect(object[5100]).to.deep.equal([{value: '00010043eddc', type: 7, encoding: 0}]);
+      expect(object[5101]).to.deep.equal([{value: 'PL:DDT=0586.0001.00.01.00;FW=0.1.13;MODE=PL;', type: 7, encoding: 0}]);
       expect(object[5102]).to.deep.equal([{value: 24, type: 9}]);
-      expect(object[5103]).to.deep.equal([{value: '', type: 7}]);
+      expect(object[5103]).to.deep.equal([{value: '', type: 7, encoding: 0}]);
       expect(object[5104]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[5107]).to.deep.equal([{value: 1, type: 2}]);
       client.close();

@@ -1,6 +1,7 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
 var baServices    = require('../../lib/bacnet-services');
+var baEnum        = require('../../lib/bacnet-enum');
 
 describe('bacstack - Services layer', function() {
   describe('Iam', function() {
@@ -241,7 +242,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
         {tag: 7, value: ''},
-        {tag: 7, value: 'Test1234$'}
+        {tag: 7, value: 'Test1234$äöü'}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -255,8 +256,32 @@ describe('bacstack - Services layer', function() {
           propertyIdentifier: 81
         },
         valueList: [
-          {type: 7, value: '', len: 2},
-          {type: 7, value: 'Test1234$', len: 12}
+          {type: 7, value: '', encoding: 0, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: 0, len: 18}
+        ]
+      });
+    });
+
+    it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {tag: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
+        {tag: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
+      ]);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1, len: 15}
         ]
       });
     });
@@ -525,7 +550,7 @@ describe('bacstack - Services layer', function() {
               {type: 3, value: -1000000000},
               {type: 4, value: 0},
               {type: 5, value: 100.121212},
-              {type: 7, value: 'Test1234$'},
+              {type: 7, value: 'Test1234$', encoding: 0},
               {type: 9, value: 4},
               {type: 10, value: date},
               {type: 11, value: time},
@@ -781,7 +806,7 @@ describe('bacstack - Services layer', function() {
               {type: 5, value: 100.121212, len: 10},
               // FIXME: correct octet-string implementation
               // {type: 6, value: [1, 2, 100, 200]},
-              {type: 7, value: 'Test1234$', len: 12},
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12},
               // FIXME: correct bit-string implementation
               // {type: 8, value: {bitsUsed: 0, value: []}},
               // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
@@ -820,7 +845,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12}
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12}
             ]
           }
         ]
@@ -852,7 +877,7 @@ describe('bacstack - Services layer', function() {
               propertyId: 81
             },
             value: [
-              {type: 7, value: 'Test1234$', len: 12}
+              {type: 7, value: 'Test1234$', encoding: 0, len: 12}
             ]
           }
         ]
