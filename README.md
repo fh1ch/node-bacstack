@@ -28,17 +28,37 @@ The BACNET standard defines a wide variety of services as part of it's
 specification. While Node BACstack tries to be as complete as possible,
 following services are already supported at this point in time:
 
-| Service                      | Execute |
-|------------------------------|:-------:|
-| Who Is                       | yes     |
-| Time Sync                    | yes     |
-| UTC Time Sync                | yes     |
-| Read Property                | yes     |
-| Read Property Multiple       | yes     |
-| Write Property               | yes     |
-| Write Property Multiple      | yes     |
-| Reinitialize Device          | yes     |
-| Device Communication Control | yes     |
+| Service                        | Execute | Handle |
+|--------------------------------|:-------:|:------:|
+| Who Is / I Am                  | yes     |        |
+| Who Has	/ I Have               |         |        |
+| Time Sync                      | yes     |        |
+| UTC Time Sync                  | yes     |        |
+| Read Property                  | yes     |        |
+| Read Property Multiple         | yes     |        |
+| Read Property Conditional      |         |        |
+| Read Range                     |         |        |
+| Write Property                 | yes     | yes    |
+| Write Property Multiple        | yes     |        |
+| Add List Element               |         |        |
+| Remove List Element            |         |        |
+| Create Object                  |         |        |
+| Delete Object                  |         |        |
+| Subscribe COV	                 |         |        |
+| Confirmed COV Notification	   |         |        |
+| Unconfirmed COV Notification   |         |        |
+| Atomic Read File               |         |        |
+| Atomic Write File              |         |        |
+| Reinitialize Device            | yes     |        |
+| Device Communication Control   | yes     |        |
+| Get Alarm Summary              |         |        |
+| Get Event Information          |         |        |
+| Get Enrollment Summary         |         |        |
+| Acknowledge Alarm              |         |        |
+| Confirmed Event Notification   |         |        |
+| Unconfirmed Event Notification |         |        |
+| Unconfirmed Private Transfer   |         |        |
+| Confirmed Private Transfer     |         |        |
 
 ### Example
 

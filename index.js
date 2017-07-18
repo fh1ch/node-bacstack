@@ -37,7 +37,7 @@ module.exports = function(settings) {
 
   var client = new baClient(options);
 
-  client.events.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+  client.events.on('iAm', function(data) {
 
     /**
      * @event bacstack.iAm
@@ -54,7 +54,7 @@ module.exports = function(settings) {
      *   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
      * });
      */
-    self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
+    self.emit('iAm', data);
   });
 
   client.events.on('error', function(err) {
@@ -73,6 +73,104 @@ module.exports = function(settings) {
      */
     self.emit('error', err);
   });
+
+  client.events.on('readProperty', function(data) {
+
+    /**
+     * @event bacstack.readProperty
+     * @param {object} data - The IP address of the detected device.
+     * @param {string} data.address - The IP address of the detected device.
+     * @param {number} data.invokeId - The IP address of the detected device.
+     * @param {object} data.request - The IP address of the detected device.
+     * @example
+     * var bacnet = require('bacstack');
+     * var client = new bacnet();
+     *
+     * client.on('error', function(err) {
+     *   console.log('Error occurred: ', err);
+     *   client.close();
+     * });
+     */
+    self.emit('readProperty', data);
+  });
+
+  client.events.on('whoIs', function(data) {
+    self.emit('whoIs', data);
+  });
+  client.events.on('whoHas', function(data) {
+    self.emit('whoHas', data);
+  });
+  client.events.on('covNotify', function(data) {
+    self.emit('covNotify', data);
+  });
+  client.events.on('timeSync', function(data) {
+    self.emit('timeSync', data);
+  });
+  client.events.on('timeSyncUTC', function(data) {
+    self.emit('timeSyncUTC', data);
+  });
+  client.events.on('eventNotify', function(data) {
+    self.emit('eventNotify', data);
+  });
+
+  client.events.on('writeProperty', function(data) {
+    self.emit('writeProperty', data);
+  });
+  client.events.on('readPropertyMultiple', function(data) {
+    self.emit('readPropertyMultiple', data);
+  });
+  client.events.on('writePropertyMultiple', function(data) {
+    self.emit('writePropertyMultiple', data);
+  });
+  client.events.on('covNotifyUnconfirmed', function(data) {
+    self.emit('covNotifyUnconfirmed', data);
+  });
+  client.events.on('atomicWriteFile', function(data) {
+    self.emit('atomicWriteFile', data);
+  });
+  client.events.on('atomicReadFile', function(data) {
+    self.emit('atomicReadFile', data);
+  });
+  client.events.on('subscribeCOV', function(data) {
+    self.emit('subscribeCOV', data);
+  });
+  client.events.on('subscribeProperty', function(data) {
+    self.emit('subscribeProperty', data);
+  });
+  client.events.on('deviceCommunicationControl', function(data) {
+    self.emit('deviceCommunicationControl', data);
+  });
+  client.events.on('reinitializeDevice', function(data) {
+    self.emit('reinitializeDevice', data);
+  });
+  client.events.on('eventNotifyData', function(data) {
+    self.emit('eventNotifyData', data);
+  });
+  client.events.on('readRange', function(data) {
+    self.emit('readRange', data);
+  });
+  client.events.on('createObject', function(data) {
+    self.emit('createObject', data);
+  });
+  client.events.on('deleteObject', function(data) {
+    self.emit('deleteObject', data);
+  });
+
+  self.readPropertyMultipleResponse = function(receiver, invokeId, values) {
+    client.readPropertyMultipleResponse(receiver, invokeId, values);
+  };
+
+  self.iAmResponse = function(deviceId, segmentation, vendorId) {
+    client.iAmResponse(deviceId, segmentation, vendorId);
+  };
+
+  self.simpleAckResponse = function(receiver, service, invokeId) {
+    client.simpleAckResponse(receiver, service, invokeId);
+  };
+
+  self.iHaveResponse = function(deviceId, objId, objName) {
+    self.iHaveResponse(deviceId, objId, objName);
+  };
 
   /**
    * The whoIs command discovers all BACNET devices in a network.
@@ -251,6 +349,45 @@ module.exports = function(settings) {
    */
   self.reinitializeDevice = function(address, state, password, next) {
     client.reinitializeDevice(address, state, password, next);
+  };
+
+  /**
+   * The reinitializeDevice command initiates a restart of the target device.
+   * @function bacstack.errorResponse
+   * @param {string} address - IP address of the target device.
+   * @param {BacnetReinitializedStates} state - The type of restart to be initiated.
+   * @param {string=} password - The optional password used to restart the device.
+   * @param {function} next - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
+   * client.reinitializeDevice('192.168.1.43', bacnet.enum.BacnetReinitializedStates.BACNET_REINIT_COLDSTART, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.errorResponse = function(receiver, service, invokeId, errorClass, errorCode) {
+    client.errorResponse(receiver, service, invokeId, errorClass, errorCode);
+  };
+
+  /**
+   * The reinitializeDevice command initiates a restart of the target device.
+   * @function bacstack.readPropertyResponse
+   * @param {string} receiver - IP address of the target device.
+   * @param {number} invokeId - The type of restart to be initiated.
+   * @param {object} objectId - The optional password used to restart the device.
+   * @param {object} property - The callback containing an error, in case of a failure and value object in case of success.
+   * @param {object} value - The callback containing an error, in case of a failure and value object in case of success.
+   * @example
+   * var bacnet = require('bacstack');
+   * var client = new bacnet();
+   *
+   * client.reinitializeDevice('192.168.1.43', bacnet.enum.BacnetReinitializedStates.BACNET_REINIT_COLDSTART, 'Test1234$', function(err, value) {
+   *   console.log('value: ', value);
+   * });
+   */
+  self.readPropertyResponse = function(receiver, invokeId, objectId, property, value) {
+    client.readPropertyResponse(receiver, invokeId, objectId, property, value);
   };
 
   /**
