@@ -253,6 +253,42 @@ module.exports = function(settings) {
     client.reinitializeDevice(address, state, password, next);
   };
 
+  self.writeFile = function(address, objectId, position, count, fileBuffer, next) {
+    client.writeFile(address, objectId, position, count, fileBuffer, next);
+  };
+
+  self.readFile = function(address, objectId, position, count, next) {
+    client.readFile(address, objectId, position, count, next);
+  };
+
+  self.readRange = function(address, objectId, idxBegin, quantity, next) {
+    client.readRange(address, objectId, idxBegin, quantity, next);
+  };
+
+  self.subscribeCOV = function(address, objectId, subscribeId, cancel, issueConfirmedNotifications, lifetime, next) {
+    client.subscribeCOV(address, objectId, subscribeId, cancel, issueConfirmedNotifications, lifetime, next);
+  };
+
+  self.subscribeProperty = function(address, objectId, monitoredProperty, subscribeId, cancel, issueConfirmedNotifications, next) {
+    client.subscribeProperty(address, objectId, monitoredProperty, subscribeId, cancel, issueConfirmedNotifications, next);
+  };
+
+  self.createObject = function(address, objectId, valueList, next) {
+    client.createObject(address, objectId, valueList, next);
+  };
+
+  self.deleteObject = function(address, objectId, next) {
+    client.deleteObject(address, objectId, next);
+  };
+
+  self.removeListElement = function(address, objectId, reference, valueList, next) {
+    client.removeListElement(address, objectId, reference, valueList, next);
+  };
+
+  self.addListElement = function(address, objectId, reference, valueList, next) {
+    client.addListElement(address, objectId, reference, valueList, next);
+  };
+
   /**
    * Unloads the current BACstack instance and closes the underlying UDP socket.
    * @function bacstack.close
