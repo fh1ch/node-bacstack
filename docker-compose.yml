@@ -1,0 +1,9 @@
+version: '3'
+services:
+  bacnet-device:
+    image: fh1ch/bacstack-compliance-docker
+  bacnet-client:
+    build:
+      context: .
+    links:
+      - bacnet-device

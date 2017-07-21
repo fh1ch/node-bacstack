@@ -47,6 +47,23 @@ npm run integration
 It is expected that new features or fixes do not negatively impact the test
 results or the coverage.
 
+### Compliance Testing
+
+Besides the `unit` and `integration` test-sets, which are ensuring functionality
+using synthetical data, the  `compliance` test-set is using a well established
+3rd BACNET device emulator to test against. It uses the same test setup with
+[Mocha](https://mochajs.org/) and [Istanbul](https://istanbul.js.org/), but runs
+inside a Docker container, while using the [BACStack Compliance Docker](https://github.com/fh1ch/bacstack-compliance-docker)
+image to test against.
+
+The compliance tests can be executed locally and require Docker and
+Docker-Compose. To do so, simply run:
+
+``` sh
+docker-compose build
+docker-compose up --abort-on-container-exit --exit-code-from bacnet-client
+```
+
 ### Documentation
 
 The API documentation is generated using [JSDoc](http://usejsdoc.org/) and
