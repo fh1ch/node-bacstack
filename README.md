@@ -28,17 +28,37 @@ The BACNET standard defines a wide variety of services as part of it's
 specification. While Node BACstack tries to be as complete as possible,
 following services are already supported at this point in time:
 
-| Service                      | Execute |
-|------------------------------|:-------:|
-| Who Is                       | yes     |
-| Time Sync                    | yes     |
-| UTC Time Sync                | yes     |
-| Read Property                | yes     |
-| Read Property Multiple       | yes     |
-| Write Property               | yes     |
-| Write Property Multiple      | yes     |
-| Reinitialize Device          | yes     |
-| Device Communication Control | yes     |
+| Service                        | Execute | Handle |
+|--------------------------------|:-------:|:------:|
+| Who Is / I Am                  | yes     | yes¹   |
+| Who Has / I Have               | yes¹    | yes¹   |
+| Time Sync                      | yes     | yes¹   |
+| UTC Time Sync                  | yes     | yes¹   |
+| Read Property                  | yes     | yes¹   |
+| Read Property Multiple         | yes     | yes¹   |
+| Read Range                     | yes¹    | yes¹   |
+| Write Property                 | yes     | yes¹   |
+| Write Property Multiple        | yes     | yes¹   |
+| Add List Element               | yes¹    |        |
+| Remove List Element            | yes¹    |        |
+| Create Object                  | yes¹    | yes¹   |
+| Delete Object                  | yes¹    | yes¹   |
+| Subscribe COV                  | yes¹    | yes¹   |
+| Subscribe Property             | yes¹    | yes¹   |
+| Atomic Read File               | yes¹    | yes¹   |
+| Atomic Write File              | yes¹    | yes¹   |
+| Reinitialize Device            | yes     | yes¹   |
+| Device Communication Control   | yes     | yes¹   |
+| Get Alarm Summary              |         |        |
+| Get Event Information          |         |        |
+| Get Enrollment Summary         |         |        |
+| Acknowledge Alarm              |         |        |
+| Confirmed Event Notification   |         | yes¹   |
+| Unconfirmed Event Notification |         | yes¹   |
+| Unconfirmed Private Transfer   |         |        |
+| Confirmed Private Transfer     |         |        |
+
+¹ Support implemented as Beta (untested, undocumented, breaking interface)
 
 ### Example
 
