@@ -1584,4 +1584,17 @@ describe('bacstack - Services layer', function() {
       });
     });
   });
+
+  describe('DeleteObject', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeDeleteObject(buffer, {type: 1, instance: 10});
+      var result = baServices.decodeDeleteObject(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectType: 1,
+        instance: 10
+      });
+    });
+  });
 });
