@@ -75,6 +75,87 @@ module.exports = function(settings) {
     self.emit('error', err);
   });
 
+  client.events.on('whoIs', function(data) {
+    self.emit('whoIs', data);
+  });
+  client.events.on('whoHas', function(data) {
+    self.emit('whoHas', data);
+  });
+  client.events.on('covNotify', function(data) {
+    self.emit('covNotify', data);
+  });
+  client.events.on('timeSync', function(data) {
+    self.emit('timeSync', data);
+  });
+  client.events.on('timeSyncUTC', function(data) {
+    self.emit('timeSyncUTC', data);
+  });
+  client.events.on('eventNotify', function(data) {
+    self.emit('eventNotify', data);
+  });
+
+  client.events.on('readProperty', function(data) {
+    self.emit('readProperty', data);
+  });
+  client.events.on('writeProperty', function(data) {
+    self.emit('writeProperty', data);
+  });
+  client.events.on('readPropertyMultiple', function(data) {
+    self.emit('readPropertyMultiple', data);
+  });
+  client.events.on('writePropertyMultiple', function(data) {
+    self.emit('writePropertyMultiple', data);
+  });
+  client.events.on('covNotifyUnconfirmed', function(data) {
+    self.emit('covNotifyUnconfirmed', data);
+  });
+  client.events.on('atomicWriteFile', function(data) {
+    self.emit('atomicWriteFile', data);
+  });
+  client.events.on('atomicReadFile', function(data) {
+    self.emit('atomicReadFile', data);
+  });
+  client.events.on('subscribeCOV', function(data) {
+    self.emit('subscribeCOV', data);
+  });
+  client.events.on('subscribeProperty', function(data) {
+    self.emit('subscribeProperty', data);
+  });
+  client.events.on('deviceCommunicationControl', function(data) {
+    self.emit('deviceCommunicationControl', data);
+  });
+  client.events.on('reinitializeDevice', function(data) {
+    self.emit('reinitializeDevice', data);
+  });
+  client.events.on('eventNotifyData', function(data) {
+    self.emit('eventNotifyData', data);
+  });
+  client.events.on('readRange', function(data) {
+    self.emit('readRange', data);
+  });
+  client.events.on('createObject', function(data) {
+    self.emit('createObject', data);
+  });
+  client.events.on('deleteObject', function(data) {
+    self.emit('deleteObject', data);
+  });
+
+  self.readPropertyMultipleResponse = function(receiver, invokeId, values) {
+    client.readPropertyMultipleResponse(receiver, invokeId, values);
+  };
+
+  self.iAmResponse = function(deviceId, segmentation, vendorId) {
+    client.iAmResponse(deviceId, segmentation, vendorId);
+  };
+
+  self.simpleAckResponse = function(receiver, service, invokeId) {
+    client.simpleAckResponse(receiver, service, invokeId);
+  };
+
+  self.iHaveResponse = function(deviceId, objId, objName) {
+    self.iHaveResponse(deviceId, objId, objName);
+  };
+
   /**
    * The whoIs command discovers all BACNET devices in a network.
    * @function bacstack.whoIs
@@ -288,6 +369,14 @@ module.exports = function(settings) {
 
   self.addListElement = function(address, objectId, reference, valueList, next) {
     client.addListElement(address, objectId, reference, valueList, next);
+  };
+
+  self.errorResponse = function(receiver, service, invokeId, errorClass, errorCode) {
+    client.errorResponse(receiver, service, invokeId, errorClass, errorCode);
+  };
+
+  self.readPropertyResponse = function(receiver, invokeId, objectId, property, value) {
+    client.readPropertyResponse(receiver, invokeId, objectId, property, value);
   };
 
   /**
