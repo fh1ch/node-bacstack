@@ -37,24 +37,25 @@ module.exports = function(settings) {
 
   var client = new baClient(options);
 
-  client.events.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+  client.events.on('iAm', function(device) {
 
     /**
      * @event bacstack.iAm
-     * @param {string} address - The IP address of the detected device.
-     * @param {number} deviceId - The BACNET device-id of the detected device.
-     * @param {number} maxAdpu - The max ADPU size the detected device is supporting.
-     * @param {number} segmentation - The type of segmentation the detected device is supporting.
-     * @param {number} vendorId - The BACNET vendor-id of the detected device.
+     * @param {object} device - An object representing the detected device.
+     * @param {string} device.address - The IP address of the detected device.
+     * @param {number} device.deviceId - The BACNET device-id of the detected device.
+     * @param {number} device.maxAdpu - The max ADPU size the detected device is supporting.
+     * @param {number} device.segmentation - The type of segmentation the detected device is supporting.
+     * @param {number} device.vendorId - The BACNET vendor-id of the detected device.
      * @example
      * var bacnet = require('bacstack');
      * var client = new bacnet();
      *
-     * client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
-     *   console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
+     * client.on('iAm', function(device) {
+     *   console.log('address: ', device.address, ' - deviceId: ', device.deviceId, ' - maxAdpu: ', device.maxAdpu, ' - segmentation: ', device.segmentation, ' - vendorId: ', device.vendorId);
      * });
      */
-    self.emit('iAm', address, deviceId, maxAdpu, segmentation, vendorId);
+    self.emit('iAm', device);
   });
 
   client.events.on('error', function(err) {

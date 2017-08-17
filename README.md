@@ -49,8 +49,8 @@ var bacnet = require('bacstack');
 var client = new bacnet({adpuTimeout: 6000});
 
 // Discover Devices
-client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
-  console.log('address: ', address, ' - deviceId: ', deviceId, ' - maxAdpu: ', maxAdpu, ' - segmentation: ', segmentation, ' - vendorId: ', vendorId);
+client.on('iAm', function(device) {
+  console.log('address: ', device.address, ' - deviceId: ', device.deviceId, ' - maxAdpu: ', device.maxAdpu, ' - segmentation: ', device.segmentation, ' - vendorId: ', device.vendorId);
 });
 client.whoIs();
 
