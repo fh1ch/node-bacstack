@@ -17,7 +17,7 @@ interact with building automation devices defined by ASHRAE.
 Add Node BACstack to your project by using:
 
 ``` sh
-$ npm install --save bacstack
+npm install --save bacstack
 ```
 
 The API documentation is available under **[fh1ch.github.io/node-bacstack](https://fh1ch.github.io/node-bacstack)**.
@@ -50,14 +50,19 @@ var client = new bacnet({adpuTimeout: 6000});
 
 // Discover Devices
 client.on('iAm', function(device) {
-  console.log('address: ', device.address, ' - deviceId: ', device.deviceId, ' - maxAdpu: ', device.maxAdpu, ' - segmentation: ', device.segmentation, ' - vendorId: ', device.vendorId);
+  console.log('address: ', device.address);
+  console.log('deviceId: ', device.deviceId);
+  console.log('maxAdpu: ', device.maxAdpu);
+  console.log('segmentation: ', device.segmentation);
+  console.log('vendorId: ', device.vendorId);
 });
 client.whoIs();
 
 // Read Device Object
-var requestArray = [
-  {objectIdentifier: {type: 8, instance: 4194303}, propertyReferences: [{propertyIdentifier: 8}]}
-];
+var requestArray = [{
+  objectIdentifier: {type: 8, instance: 4194303},
+  propertyReferences: [{propertyIdentifier: 8}]
+}];
 client.readPropertyMultiple('192.168.1.43', requestArray, function(err, value) {
   console.log('value: ', value);
 });
@@ -80,7 +85,7 @@ and enforces it using [JSCS](http://jscs.info/) as additional linter beneath
 style by executing:
 
 ``` sh
-$ npm run lint
+npm run lint
 ```
 
 ### Testing and Coverage
@@ -94,8 +99,8 @@ For both sets, the test-coverage is calculated using [Istanbul](https://istanbul
 Running the tests and calculating the coverage can be done locally by executing:
 
 ``` sh
-$ npm run test
-$ npm run integration
+npm run test
+npm run integration
 ```
 
 It is expected that new features or fixes do not negatively impact the test
@@ -108,7 +113,7 @@ relies on in-line JSDoc3 syntax. The documentation can also be built locally by
 executing:
 
 ``` sh
-$ npm run docs
+npm run docs
 ```
 
 It is expected that new features or changes are reflected in the documentation
