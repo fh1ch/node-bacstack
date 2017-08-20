@@ -23,7 +23,7 @@ module.exports.transportStub = function() {
 
 module.exports.propertyFormater = function(object) {
   var converted = {};
-  object.forEach((property) => {
+  object.forEach(function(property) {
     converted[property.propertyIdentifier] = property.value;
   });
   return converted;

@@ -4,7 +4,7 @@
   "description": "A BACnet protocol stack written in pure JavaScript.",
   "main": "index.js",
   "scripts": {
-    "lint": "jshint lib/ index.js && jscs lib/ index.js",
+    "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
     "test": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/unit/*.spec.js",
     "integration": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/integration/*.spec.js",
     "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
