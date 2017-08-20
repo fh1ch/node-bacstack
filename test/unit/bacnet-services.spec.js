@@ -385,7 +385,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
         {type: 12, value: {type: 3, instance: 0}},
-        {type: 12, value: {type: 3, instance: 50000}},
+        {type: 12, value: {type: 3, instance: 50000}}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -453,7 +453,7 @@ describe('bacstack - Services layer', function() {
             monitoredObjectIdentifier: {type: 2, instance: 1},
             monitoredProperty: {propertyIdentifier: 85, propertyArrayIndex: 5},
             issueConfirmedNotifications: true,
-            timeRemaining: 5,
+            timeRemaining: 5
           }, len: 27}
         ]
       });
@@ -466,7 +466,7 @@ describe('bacstack - Services layer', function() {
         {type: 115, value: {objectIdentifier: {type: 3, instance: 50000}, propertyReferences: [
           {propertyIdentifier: 85},
           {propertyIdentifier: 1, propertyArrayIndex: 2}
-        ]}},
+        ]}}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -511,12 +511,10 @@ describe('bacstack - Services layer', function() {
             {type: 3, value: -1000000000},
             {type: 4, value: 0.1},
             {type: 5, value: 100.121212},
-            // FIXME: correct octet-string implementation
-            // {type: 6, value: [1, 2, 100, 200]},
+            {type: 6, value: [1, 2, 100, 200]},
             {type: 7, value: 'Test1234$'},
-            // FIXME: correct bit-string implementation
-            // {type: 8, value: {bitsUsed: 0, value: []}},
-            // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+            {type: 8, value: {bitsUsed: 0, value: []}},
+            {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
             {type: 9, value: 4},
             {type: 10, value: date},
             {type: 11, value: time},
@@ -550,7 +548,10 @@ describe('bacstack - Services layer', function() {
               {type: 3, value: -1000000000},
               {type: 4, value: 0},
               {type: 5, value: 100.121212},
+              {type: 6, value: [1, 2, 100, 200]},
               {type: 7, value: 'Test1234$', encoding: 0},
+              {type: 8, value: {bitsUsed: 0, value: []}},
+              {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
               {type: 9, value: 4},
               {type: 10, value: date},
               {type: 11, value: time},
@@ -764,12 +765,10 @@ describe('bacstack - Services layer', function() {
           {type: 3, value: -1000000000},
           {type: 4, value: 0.1},
           {type: 5, value: 100.121212},
-          // FIXME: correct octet-string implementation
-          // {type: 6, value: [1, 2, 100, 200]},
+          {type: 6, value: [1, 2, 100, 200]},
           {type: 7, value: 'Test1234$'},
-          // FIXME: correct bit-string implementation
-          // {type: 8, value: {bitsUsed: 0, value: []}},
-          // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+          {type: 8, value: {bitsUsed: 0, value: []}},
+          {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
           {type: 9, value: 4},
           {type: 10, value: date},
           {type: 11, value: time},
@@ -804,12 +803,10 @@ describe('bacstack - Services layer', function() {
               {type: 3, value: -1000000000, len: 5},
               {type: 4, value: 0.1, len: 5},
               {type: 5, value: 100.121212, len: 10},
-              // FIXME: correct octet-string implementation
-              // {type: 6, value: [1, 2, 100, 200]},
+              {type: 6, value: [1, 2, 100, 200], len: 5},
               {type: 7, value: 'Test1234$', encoding: 0, len: 12},
-              // FIXME: correct bit-string implementation
-              // {type: 8, value: {bitsUsed: 0, value: []}},
-              // {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}},
+              {type: 8, value: {bitsUsed: 0, value: []}, len: 2},
+              {type: 8, value: {bitsUsed: 24, value: [0xAA, 0xAA, 0xAA]}, len: 5},
               {type: 9, value: 4, len: 2},
               {type: 10, value: date, len: 5},
               {type: 11, value: time, len: 5},
@@ -942,7 +939,7 @@ describe('bacstack - Services layer', function() {
       var result = baServices.decodeTimeSync(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
-        value: date,
+        value: date
       });
     });
   });
