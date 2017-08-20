@@ -9,3 +9,7 @@ engines:
     enabled: false
 exclude_paths:
 - "CHANGELOG.md"
+ratings:
+  paths:
+  - "lib/**/*"
+  - "index.js"
