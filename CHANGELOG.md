@@ -1,3 +1,22 @@
+<a name="0.0.1-beta.10"></a>
+# [0.0.1-beta.10](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.9...v0.0.1-beta.10) (2017-09-19)
+
+### Features
+
+* **bacnet-client:** implement handling of confirmed functions ([3e29ab0](https://github.com/fh1ch/node-bacstack/commit/3e29ab0a3b84a40f5e037d35e35929ec1602f5ba))
+* **bacnet-service:** implement decoding functionality for COV and CreateObject ([635e419](https://github.com/fh1ch/node-bacstack/commit/635e41954ffd95a4b0cff252581f380981d4d278))
+* **encoding:** add full read/write support for ISO 8859-1 charset ([e50b005](https://github.com/fh1ch/node-bacstack/commit/e50b005dcc4abdaf6aa233781816bc5d510fc439))
+* implemented more BACNET functions ([2721232](https://github.com/fh1ch/node-bacstack/commit/2721232a5c71f560b5e629004f1d6c73e626fd90))
+
+### BREAKING CHANGES
+
+* bacnet-asn1: requires renaming the `tag` parameter for all write commands to `type`
+
+* encoding: rename enum BacnetCharacterStringEncodings value CHARACTER_ISO8859 to CHARACTER_ISO8859_1 which conforms with the BACnet
+
+* index: the iAm event no longer passes multiple parameters but a single nested object
+
+
 <a name="0.0.1-beta.9"></a>
 # [0.0.1-beta.9](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.8...v0.0.1-beta.9) (2017-07-12)
 
