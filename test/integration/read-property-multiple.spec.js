@@ -8,7 +8,7 @@ describe('bacstack - readPropertyMultiple integration', function() {
       {objectIdentifier: {type: 8, instance: 4194303}, propertyReferences: [{propertyIdentifier: 8}]}
     ];
     client.readPropertyMultiple('127.0.0.1', requestArray, function(err, value) {
-      expect(err).to.eql(new Error('ERR_TIMEOUT'));
+      expect(err.message).to.eql('ERR_TIMEOUT');
       expect(value).to.eql(undefined);
       client.close();
       next();

@@ -7,7 +7,7 @@ describe('bacstack - addListElement integration', function() {
     client.addListElement('127.0.0.1', {type: 19, instance: 101}, {propertyIdentifier: 80, propertyArrayIndex: 0}, [
       {type: 1, value: true}
     ], function(err, value) {
-      expect(err).to.eql(new Error('ERR_TIMEOUT'));
+      expect(err.message).to.eql('ERR_TIMEOUT');
       expect(value).to.eql(undefined);
       client.close();
       next();
