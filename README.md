@@ -1,4 +1,6 @@
 # Node BACstack
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffh1ch%2Fnode-bacstack.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffh1ch%2Fnode-bacstack?ref=badge_shield)
+
 
 A BACnet protocol stack written in pure JavaScript. BACnet is a protocol to
 interact with building automation devices defined by ASHRAE.
@@ -124,3 +126,6 @@ as well.
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2017 Fabio Huser <fabio@fh1.ch>
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffh1ch%2Fnode-bacstack.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffh1ch%2Fnode-bacstack?ref=badge_large)
