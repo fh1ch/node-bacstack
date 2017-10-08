@@ -1,3 +1,11 @@
+<a name="0.0.1-beta.11"></a>
+# [0.0.1-beta.11](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.10...v0.0.1-beta.11) (2017-10-08)
+
+### Features
+
+* **bacnet-asn1:** implement all BACNET string encodings ([14699e2](https://github.com/fh1ch/node-bacstack/commit/14699e20b11cef5b3dc98fb465e602b6a31298fe))
+
+
 <a name="0.0.1-beta.10"></a>
 # [0.0.1-beta.10](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.9...v0.0.1-beta.10) (2017-09-19)
 
