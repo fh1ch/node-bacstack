@@ -286,6 +286,78 @@ describe('bacstack - Services layer', function() {
       });
     });
 
+    it('should successfully encode and decode a character-string value with UCS2 encoding', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2}
+      ]);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2, len: 27}
+        ]
+      });
+    });
+
+    it('should successfully encode and decode a character-string value with Codepage850 encoding', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS}
+      ]);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS, len: 2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS, len: 15}
+        ]
+      });
+    });
+
+    it('should successfully encode and decode a character-string value with JISX-0208 encoding', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
+        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208},
+        {type: 7, value: 'できます', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208}
+      ]);
+      var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {
+          type: 8,
+          instance: 40000
+        },
+        property: {
+          propertyArrayIndex: 0xFFFFFFFF,
+          propertyIdentifier: 81
+        },
+        valueList: [
+          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208, len: 2},
+          {type: 7, value: 'できます', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208, len: 11}
+        ]
+      });
+    });
+
     it('should successfully encode and decode a bit-string value', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
