@@ -1,3 +1,11 @@
+<a name="0.0.1-beta.12"></a>
+# [0.0.1-beta.12](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.11...v0.0.1-beta.12) (2017-12-05)
+
+### Bug Fixes
+
+* **bacnet-asn1:** correct behaviour for releasing priority / writing of null ([d6c893b](https://github.com/fh1ch/node-bacstack/commit/d6c893bed497f3fbdabc4fb9697fffb57dceeb5f)), closes [#65](https://github.com/fh1ch/node-bacstack/issues/65)  
+
+
 <a name="0.0.1-beta.11"></a>
 # [0.0.1-beta.11](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.10...v0.0.1-beta.11) (2017-10-08)
 
