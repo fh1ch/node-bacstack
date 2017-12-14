@@ -97,6 +97,17 @@ issues and adding new features.
 Please follow the best-practice contribution guidelines as mentioned below when
 submitting any changes.
 
+### Conventional Changelog
+
+This module has a changelog which is automatically generated based on Git commit
+messages. This mechanism requires that all commit messages comply with the
+[Conventional Changelog](https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md).
+You can check if your commit messages complies with those guidelines by using:
+
+``` sh
+npm run changelog
+```
+
 ### Code Style
 
 This module uses the [Google JavaScript Code-Style](https://google.github.io/styleguide/javascriptguide.xml)

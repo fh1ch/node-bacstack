@@ -4,6 +4,7 @@
   "description": "A BACnet protocol stack written in pure JavaScript.",
   "main": "index.js",
   "scripts": {
+    "changelog": "commitlint --from=master",
     "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
     "test": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/unit/*.spec.js",
     "integration": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/integration/*.spec.js",
@@ -26,6 +27,11 @@
   "engines": {
     "node": ">= 0.12.0"
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fh1ch/node-bacstack/issues"
@@ -36,6 +42,9 @@
     "iconv-lite": "^0.4.19"
   },
   "devDependencies": {
+    "@commitlint/cli": "^5.2.5",
+    "@commitlint/config-conventional": "^5.2.3",
+    "@commitlint/travis-cli": "^5.2.5",
     "chai": "^4.1.2",
     "docdash": "^0.4.0",
     "istanbul": "^0.4.5",
