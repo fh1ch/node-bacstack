@@ -49,10 +49,10 @@ following services are already supported at this point in time:
 | Atomic Write File              | yes¹    | yes¹   |
 | Reinitialize Device            | yes     | yes¹   |
 | Device Communication Control   | yes     | yes¹   |
-| Get Alarm Summary              |         |        |
-| Get Event Information          |         |        |
+| Get Alarm Summary              | yes¹    |        |
+| Get Event Information          | yes¹    |        |
 | Get Enrollment Summary         |         |        |
-| Acknowledge Alarm              |         |        |
+| Acknowledge Alarm              | yes¹    |        |
 | Confirmed Event Notification   |         | yes¹   |
 | Unconfirmed Event Notification |         | yes¹   |
 | Unconfirmed Private Transfer   |         |        |

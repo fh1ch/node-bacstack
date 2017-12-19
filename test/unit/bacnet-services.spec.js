@@ -1866,4 +1866,187 @@ describe('bacstack - Services layer', function() {
       });
     });
   });
+
+  describe('AlarmSummary', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeAlarmSummary(buffer, [
+        {objectId: {type: 12, instance: 12}, alarmState: 12, acknowledgedTransitions: {value: [12], bitsUsed: 5}},
+        {objectId: {type: 13, instance: 13}, alarmState: 13, acknowledgedTransitions: {value: [13], bitsUsed: 6}}
+      ]);
+      var result = baServices.decodeAlarmSummary(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        alarms: [
+          {objectId: {type: 12, instance: 12}, alarmState: 12, acknowledgedTransitions: {value: [12], bitsUsed: 5}},
+          {objectId: {type: 13, instance: 13}, alarmState: 13, acknowledgedTransitions: {value: [13], bitsUsed: 6}}
+        ]
+      });
+    });
+  });
+
+  describe('EventInformation', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      var date1 = new Date();
+      date1.setMilliseconds(990);
+      var date2 = new Date();
+      date2.setMilliseconds(990);
+      var date3 = new Date();
+      date3.setMilliseconds(990);
+      baServices.encodeEventInformation(buffer, [
+        {objectId: {type: 0, instance: 32}, eventState: 12, ackedTransitions: {value: [14], bitsUsed: 6}, eventTimeStamps: [date1, date2, date3], notifyType: 5, eventEnable: {value: [15], bitsUsed: 7}, eventPriorities: [2, 3, 4]}
+      ], false);
+      var result = baServices.decodeEventInformation(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        alarms: [
+          {
+            objectIdentifier: {
+              type: 0,
+              instance: 32
+            },
+            eventState: 12,
+            acknowledgedTransitions: {
+              bitsUsed: 6,
+              value: [14]
+            },
+            eventTimeStamps: [
+              date1,
+              date2,
+              date3
+            ],
+            notifyType: 5,
+            eventEnable: {
+              bitsUsed: 7,
+              value: [15]
+            },
+            eventPriorities: [2, 3, 4]
+          }
+        ],
+        moreEvents: false
+      });
+    });
+  });
+
+  describe('AlarmAcknowledge', function() {
+    it('should successfully encode and decode with time timestamp', function() {
+      var buffer = utils.getBuffer();
+      var eventTime = new Date(1, 1, 1);
+      eventTime.setMilliseconds(990);
+      var ackTime = new Date(1, 1, 1);
+      ackTime.setMilliseconds(880);
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_TIME}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_TIME});
+      var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        ackProcessIdentifier: 57,
+        eventObjectIdentifier: {
+          type: 0,
+          instance: 33
+        },
+        eventStateAcked: 5,
+        ackSource: 'Alarm Acknowledge Test',
+        eventTimeStamp: eventTime,
+        ackTimeStamp: ackTime
+      });
+    });
+
+    it('should successfully encode and decode with sequence timestamp', function() {
+      var buffer = utils.getBuffer();
+      var eventTime = 5;
+      var ackTime = 6;
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_SEQUENCE}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_SEQUENCE});
+      var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        ackProcessIdentifier: 57,
+        eventObjectIdentifier: {
+          type: 0,
+          instance: 33
+        },
+        eventStateAcked: 5,
+        ackSource: 'Alarm Acknowledge Test',
+        eventTimeStamp: eventTime,
+        ackTimeStamp: ackTime
+      });
+    });
+
+    it('should successfully encode and decode with datetime timestamp', function() {
+      var buffer = utils.getBuffer();
+      var eventTime = new Date(1, 1, 1);
+      eventTime.setMilliseconds(990);
+      var ackTime = new Date(1, 1, 2);
+      ackTime.setMilliseconds(880);
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_DATETIME}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_DATETIME});
+      var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        ackProcessIdentifier: 57,
+        eventObjectIdentifier: {
+          type: 0,
+          instance: 33
+        },
+        eventStateAcked: 5,
+        ackSource: 'Alarm Acknowledge Test',
+        eventTimeStamp: eventTime,
+        ackTimeStamp: ackTime
+      });
+    });
+  });
+
+  describe('PrivateTransfer', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodePrivateTransfer(buffer, 255, 8, [1, 2, 3, 4, 5]);
+      var result = baServices.decodePrivateTransfer(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        vendorID: 255,
+        serviceNumber: 8,
+        data: [1, 2, 3, 4, 5]
+      });
+    });
+  });
+
+  describe('GetEventInformation', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeGetEventInformation(buffer, {type: 8, instance: 15});
+      var result = baServices.decodeGetEventInformation(buffer.buffer, 0);
+      delete result.len;
+      expect(result).to.deep.equal({
+        lastReceivedObjectIdentifier: {type: 8, instance: 15}
+      });
+    });
+  });
+
+  describe('IhaveBroadcast', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeIhaveBroadcast(buffer, {type: 8, instance: 443}, {type: 0, instance: 4}, 'LgtCmd01');
+      var result = baServices.decodeIhaveBroadcast(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        deviceId: {type: 8, instance: 443},
+        objectId: {type: 0, instance: 4},
+        objectName: 'LgtCmd01'
+      });
+    });
+  });
+
+  describe('LifeSafetyOperation', function() {
+    it('should successfully encode and decode', function() {
+      var buffer = utils.getBuffer();
+      baServices.encodeLifeSafetyOperation(buffer, 8, 'User01', 7, {type: 0, instance: 77});
+      var result = baServices.decodeLifeSafetyOperation(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        processId: 8,
+        requestingSrc: 'User01',
+        operation: 7,
+        targetObject: {type: 0, instance: 77}
+      });
+    });
+  });
 });
