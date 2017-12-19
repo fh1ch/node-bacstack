@@ -24,7 +24,7 @@ module.exports.transportStub = function() {
 module.exports.propertyFormater = function(object) {
   var converted = {};
   object.forEach(function(property) {
-    converted[property.propertyIdentifier] = property.value;
+    converted[property.id] = property.value;
   });
   return converted;
 };
