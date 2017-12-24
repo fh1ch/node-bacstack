@@ -1,14 +1,16 @@
-var expect = require('chai').expect;
-var utils = require('./utils');
+'use strict';
 
-describe('bacstack - whoIs integration', function() {
-  it('should not invoke a event if no device is available', function(next) {
-    var client = new utils.bacnetClient({adpuTimeout: 200});
-    client.on('iAm', function(address, deviceId, maxAdpu, segmentation, vendorId) {
+const expect      = require('chai').expect;
+const utils       = require('./utils');
+
+describe('bacstack - whoIs integration', () => {
+  it('should not invoke a event if no device is available', (next) => {
+    const client = new utils.bacnetClient({adpuTimeout: 200});
+    client.on('iAm', (address, deviceId, maxAdpu, segmentation, vendorId) => {
       client.close();
       next(new Error('Unallowed Callback'));
     });
-    setTimeout(function() {
+    setTimeout(() => {
       client.close();
       next();
     }, 300);

@@ -1,30 +1,28 @@
-var bacnet = require('../../');
+'use strict';
+
+const EventEmitter      = require('events').EventEmitter;
+const bacnet            = require('../../');
 
 module.exports.bacnetClient = bacnet;
 
-module.exports.transportStub = function() {
-  var self = this;
-  self.handler = function() {};
-  self.setMessageHandler = function(handler) {
-    self.handler = handler;
-  };
-  self.setErrorHandler = function(handler) {};
-  self.getBroadcastAddress = function() {
+class Transport extends EventEmitter {
+  constructor() {
+    super();
+  }
+  getBroadcastAddress() {
     return '255.255.255.255';
-  };
-  self.getMaxPayload = function() {
+  }
+  getMaxPayload() {
     return 1482;
-  };
-  self.send = function() {};
-  self.open = function() {};
-  self.close = function() {};
-  return self;
-};
+  }
+  send() { }
+  open() { }
+  close() { }
+}
+module.exports.transportStub = Transport;
 
-module.exports.propertyFormater = function(object) {
-  var converted = {};
-  object.forEach(function(property) {
-    converted[property.id] = property.value;
-  });
+module.exports.propertyFormater = (object) => {
+  const converted = {};
+  object.forEach(property => converted[property.id] = property.value);
   return converted;
 };
