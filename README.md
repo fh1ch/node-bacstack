@@ -80,8 +80,8 @@ client.whoIs();
 
 // Read Device Object
 var requestArray = [{
-  objectIdentifier: {type: 8, instance: 4194303},
-  propertyReferences: [{propertyIdentifier: 8}]
+  objectId: {type: 8, instance: 4194303},
+  properties: [{id: 8}]
 }];
 client.readPropertyMultiple('192.168.1.43', requestArray, function(err, value) {
   console.log('value: ', value);
