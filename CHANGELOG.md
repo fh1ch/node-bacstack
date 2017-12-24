@@ -1,3 +1,50 @@
+<a name="0.0.1-beta.13"></a>
+# [0.0.1-beta.13](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.12...v0.0.1-beta.13) (2017-12-24)
+
+### Features
+
+* **bacnet-client:** implement alarming and eventing ([fbf120c](https://github.com/fh1ch/node-bacstack/commit/fbf120c0cc11861b994f51a7fa06e2160d58b1c5))
+
+### Bug Fixes
+
+* **bacnet-client:** use decodeCOVNotify for COV handling ([967f154](https://github.com/fh1ch/node-bacstack/commit/967f1544d4e88b185961571624e70d6d616ffed2)), closes [#69](https://github.com/fh1ch/node-bacstack/issues/69)  
+* **bacnet-node-type:** correct enum according to BACnet spec ([3c271fc](https://github.com/fh1ch/node-bacstack/commit/3c271fc49764962d54150109117986ee2c7d824a))
+
+### BREAKING CHANGES
+
+* bacnet-client: various function parameters changed. Adapt according latest documentation.
+
+* bacnet-client: `isUTC` parameter has been omitted and was replaced by the `timeSyncUTC` function
+
+* bacnet-enum: `Bacnet` prefix for all enumerators has been dropped
+
+* client: `objectType` and `objectInstance` parameters for all functions have been replaced by a single `obejctId` parameter, expecting an object with `type` and `instance` attribute.
+
+* `objId` renamed to `objectId`
+
+* `objName` renamed to `objectName`
+
+* `propertyIdentifier` renamed to `propertyId`
+
+* `propertyArrayIndex` renamed to `index`
+
+* `valueList` renamed to `values`
+
+* `objectIdentifier` renamed to `objectId`
+
+* `propertyReferences` renamed to `properties`
+
+* `Recipient.net` renamed to `recipient.network`
+
+* `Recipient.adr` renamed to `recipient.address`
+
+* `subscriptionProcessId` renamed to `subscriptionProcessIdentifier`
+
+* `objectIdentifier` renamed to `objectId`
+
+* drop of `len` parameter for properties
+
+
 <a name="0.0.1-beta.12"></a>
 # [0.0.1-beta.12](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.11...v0.0.1-beta.12) (2017-12-05)
 
