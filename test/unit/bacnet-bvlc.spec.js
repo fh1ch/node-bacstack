@@ -1,6 +1,6 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
-var baBvlc        = require('../../lib/bacnet-bvlc');
+var baBvlc        = require('../../lib/bvlc');
 
 describe('bacstack - BVLC layer', function() {
   it('should successfuly encode and decode a package', function() {

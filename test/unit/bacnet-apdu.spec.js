@@ -1,6 +1,6 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
-var baApdu        = require('../../lib/bacnet-adpu');
+var baApdu        = require('../../lib/adpu');
 
 describe('bacstack - APDU layer', function() {
   describe('decodedType', function() {
