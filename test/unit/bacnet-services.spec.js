@@ -265,8 +265,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -280,8 +280,8 @@ describe('bacstack - Services layer', function() {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_ISO8859_1}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1}
         ]
       });
     });
@@ -289,8 +289,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value with UCS2 encoding', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -304,8 +304,8 @@ describe('bacstack - Services layer', function() {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_UCS2}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2}
         ]
       });
     });
@@ -313,8 +313,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value with Codepage850 encoding', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -328,8 +328,8 @@ describe('bacstack - Services layer', function() {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_MS_DBCS}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS}
         ]
       });
     });
@@ -337,8 +337,8 @@ describe('bacstack - Services layer', function() {
     it('should successfully encode and decode a character-string value with JISX-0208 encoding', function() {
       var buffer = utils.getBuffer();
       baServices.encodeReadPropertyAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208},
-        {type: 7, value: 'できます', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208},
+        {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208}
       ]);
       var result = baServices.decodeReadPropertyAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -352,8 +352,8 @@ describe('bacstack - Services layer', function() {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208},
-          {type: 7, value: 'できます', encoding: baEnum.BacnetCharacterStringEncodings.CHARACTER_JISX_0208}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208},
+          {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208}
         ]
       });
     });
@@ -1936,7 +1936,7 @@ describe('bacstack - Services layer', function() {
       eventTime.setMilliseconds(990);
       var ackTime = new Date(1, 1, 1);
       ackTime.setMilliseconds(880);
-      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_TIME}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_TIME});
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_TIME}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_TIME});
       var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1956,7 +1956,7 @@ describe('bacstack - Services layer', function() {
       var buffer = utils.getBuffer();
       var eventTime = 5;
       var ackTime = 6;
-      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_SEQUENCE}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_SEQUENCE});
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE});
       var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1978,7 +1978,7 @@ describe('bacstack - Services layer', function() {
       eventTime.setMilliseconds(990);
       var ackTime = new Date(1, 1, 2);
       ackTime.setMilliseconds(880);
-      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_DATETIME}, {value: ackTime, type: baEnum.BacnetTimestampTags.TIME_STAMP_DATETIME});
+      baServices.encodeAlarmAcknowledge(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_DATETIME});
       var result = baServices.decodeAlarmAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
