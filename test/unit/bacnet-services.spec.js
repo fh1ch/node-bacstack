@@ -1,7 +1,7 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
-var baServices    = require('../../lib/bacnet-services');
-var baEnum        = require('../../lib/bacnet-enum');
+var baServices    = require('../../lib/services');
+var baEnum        = require('../../lib/enum');
 
 describe('bacstack - Services layer', function() {
   describe('Iam', function() {

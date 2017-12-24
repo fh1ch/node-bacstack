@@ -1,6 +1,6 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
-var baAsn1        = require('../../lib/bacnet-asn1');
+var baAsn1        = require('../../lib/asn1');
 
 describe('bacstack - ASN1 layer', function() {
   describe('decodeUnsigned', function() {

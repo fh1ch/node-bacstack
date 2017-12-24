@@ -1,6 +1,6 @@
 var expect        = require('chai').expect;
 var utils         = require('./utils');
-var baNpdu        = require('../../lib/bacnet-npdu');
+var baNpdu        = require('../../lib/npdu');
 
 describe('bacstack - NPDU layer', function() {
   it('should successfully decode the NPDU function', function() {
