@@ -8,7 +8,8 @@
     "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
     "test": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/unit/*.spec.js",
     "integration": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/integration/*.spec.js",
-    "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
+    "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md",
+    "repolinter": "repolinter ."
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,8 @@
   "homepage": "https://github.com/fh1ch/node-bacstack#readme",
   "dependencies": {
     "debug": "^3.1.0",
-    "iconv-lite": "^0.4.19"
+    "iconv-lite": "^0.4.19",
+    "repolinter": "bufferoverflow/repolinter#fix/reuse-software"
   },
   "devDependencies": {
     "@commitlint/cli": "^5.2.5",
