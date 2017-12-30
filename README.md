@@ -101,4 +101,4 @@ changes.
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2017 Fabio Huser <fabio@fh1.ch>
+Copyright (c) 2017-2018 Fabio Huser <fabio@fh1.ch>
