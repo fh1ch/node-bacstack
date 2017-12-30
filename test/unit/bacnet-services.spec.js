@@ -1243,33 +1243,30 @@ describe('bacstack - Services layer', () => {
     });
   });
 
-  // TODO: Correct test behaviour
-  describe.skip('AtomicWriteFile', () => {
+  describe('AtomicWriteFile', () => {
     it('should successfully encode and decode as stream', () => {
       const buffer = utils.getBuffer();
-      // (buffer, isStream, objectId, position, blockCount, blocks, counts);
-      baServices.encodeAtomicWriteFile(buffer, true, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      baServices.encodeAtomicWriteFile(buffer, true, {type: 12, instance: 51}, 5, [[12, 12]]);
       const result = baServices.decodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
-        objectId: {type: 51, instance: 2},
-        count: 12,
+        objectId: {type: 12, instance: 51},
         isStream: true,
-        position: -50
+        position: 5,
+        blocks: [[12, 12]]
       });
     });
 
     it('should successfully encode and decode as non-stream', () => {
       const buffer = utils.getBuffer();
-      // (buffer, isStream, objectId, position, blockCount, blocks, counts);
-      baServices.encodeAtomicWriteFile(buffer, false, {type: 51, instance: 2}, 0, 100, [12, 12], 2);
+      baServices.encodeAtomicWriteFile(buffer, false, {type: 12, instance: 88}, 10, [[12, 12], [12, 12]]);
       const result = baServices.decodeAtomicWriteFile(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
-        objectId: {type: 51, instance: 2},
-        count: 12,
-        isStream: true,
-        position: -50
+        objectId: {type: 12, instance: 88},
+        isStream: false,
+        position: 10,
+        blocks: [[12, 12], [12, 12]]
       });
     });
   });
