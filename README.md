@@ -94,61 +94,8 @@ Implementing and maintaining a protocol stack is a lot of work, therefore any
 help is appreciated, from creating issues, to contributing documentation, fixing
 issues and adding new features.
 
-Please follow the best-practice contribution guidelines as mentioned below when
-submitting any changes.
-
-### Conventional Changelog
-
-This module has a changelog which is automatically generated based on Git commit
-messages. This mechanism requires that all commit messages comply with the
-[Conventional Changelog](https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md).
-You can check if your commit messages complies with those guidelines by using:
-
-``` sh
-npm run changelog
-```
-
-### Code Style
-
-This module uses the [Google JavaScript Code-Style](https://google.github.io/styleguide/javascriptguide.xml)
-and enforces it using [JSCS](http://jscs.info/) as additional linter beneath
-[JSHint](http://jshint.com/). You can test if your changes comply with the code
-style by executing:
-
-``` sh
-npm run lint
-```
-
-### Testing and Coverage
-
-Testing is done using [Mocha](https://mochajs.org/) and is separated into two
-sets, `unit` and `integration`. While unit tries to test on function level,
-including synthetic decoding and encoding, the integration tests are using real
-recorded data and are only mocking the transport layer.
-
-For both sets, the test-coverage is calculated using [Istanbul](https://istanbul.js.org/).
-Running the tests and calculating the coverage can be done locally by executing:
-
-``` sh
-npm run test
-npm run integration
-```
-
-It is expected that new features or fixes do not negatively impact the test
-results or the coverage.
-
-### Documentation
-
-The API documentation is generated using [JSDoc](http://usejsdoc.org/) and
-relies on in-line JSDoc3 syntax. The documentation can also be built locally by
-executing:
-
-``` sh
-npm run docs
-```
-
-It is expected that new features or changes are reflected in the documentation
-as well.
+Please follow the [Contribution Guide](CONTRIBUTING.md) when submitting any
+changes.
 
 ## License
 
