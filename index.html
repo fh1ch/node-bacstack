@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="bacstack.html">bacstack</a><ul class='methods'><li data-type='method'><a href="bacstack.html#.close">close</a></li><li data-type='method'><a href="bacstack.html#.deviceCommunicationControl">deviceCommunicationControl</a></li><li data-type='method'><a href="bacstack.html#.readProperty">readProperty</a></li><li data-type='method'><a href="bacstack.html#.readPropertyMultiple">readPropertyMultiple</a></li><li data-type='method'><a href="bacstack.html#.reinitializeDevice">reinitializeDevice</a></li><li data-type='method'><a href="bacstack.html#.timeSync">timeSync</a></li><li data-type='method'><a href="bacstack.html#.timeSyncUTC">timeSyncUTC</a></li><li data-type='method'><a href="bacstack.html#.whoIs">whoIs</a></li><li data-type='method'><a href="bacstack.html#.writeProperty">writeProperty</a></li><li data-type='method'><a href="bacstack.html#.writePropertyMultiple">writePropertyMultiple</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="bacstack.html#.event:error">error</a></li><li><a href="bacstack.html#.event:iAm">iAm</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ApplicationTags">ApplicationTags</a></li><li><a href="global.html#EnableDisable">EnableDisable</a></li><li><a href="global.html#MaxAdpu">MaxAdpu</a></li><li><a href="global.html#MaxSegments">MaxSegments</a></li><li><a href="global.html#ReinitializedStates">ReinitializedStates</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Node BACstack</h1><p>A BACnet protocol stack written in pure JavaScript. BACnet is a protocol to
+interact with building automation devices defined by ASHRAE.</p>
+<p><a href="http://badge.fury.io/js/bacstack"><img src="https://badge.fury.io/js/bacstack.svg" alt=""></a>
+<a href="https://travis-ci.org/fh1ch/node-bacstack"><img src="https://travis-ci.org/fh1ch/node-bacstack.svg?branch=master" alt=""></a>
+<a href="https://coveralls.io/r/fh1ch/node-bacstack?branch=master"><img src="https://coveralls.io/repos/fh1ch/node-bacstack/badge.svg?branch=master" alt=""></a>
+<a href="https://codeclimate.com/github/fh1ch/node-bacstack"><img src="https://codeclimate.com/github/fh1ch/node-bacstack/badges/gpa.svg" alt=""></a>
+<a href="https://david-dm.org/fh1ch/node-bacstack"><img src="https://david-dm.org/fh1ch/node-bacstack/status.svg" alt=""></a></p>
+<blockquote>
+<p><strong>Note:</strong> This is an early prototype and shall not be considered as stable.
+Use it with caution and at your own risk!</p>
+</blockquote>
+<h2>Usage</h2><p>Add Node BACstack to your project by using:</p>
+<pre class="prettyprint source lang-sh"><code>npm install --save bacstack</code></pre><p>The API documentation is available under <strong><a href="https://fh1ch.github.io/node-bacstack">fh1ch.github.io/node-bacstack</a></strong>.</p>
+<h3>Features</h3><p>The BACNET standard defines a wide variety of services as part of it's
+specification. While Node BACstack tries to be as complete as possible,
+following services are already supported at this point in time:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th style="text-align:center">Execute</th>
+<th style="text-align:center">Handle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who Is / I Am</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Who Has / I Have</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Time Sync</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>UTC Time Sync</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Read Property</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Read Property Multiple</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Read Range</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Write Property</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Write Property Multiple</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Add List Element</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Remove List Element</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Create Object</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Delete Object</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Subscribe COV</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Subscribe Property</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Atomic Read File</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Atomic Write File</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Reinitialize Device</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Device Communication Control</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Get Alarm Summary</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Get Event Information</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Get Enrollment Summary</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Acknowledge Alarm</td>
+<td style="text-align:center">yes¹</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Confirmed Event Notification</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Unconfirmed Event Notification</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">yes¹</td>
+</tr>
+<tr>
+<td>Unconfirmed Private Transfer</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>Confirmed Private Transfer</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>¹ Support implemented as Beta (untested, undocumented, breaking interface)</p>
+<h3>Example</h3><pre class="prettyprint source lang-js"><code>const bacnet = require('bacstack');
+
+// Initialize BACStack
+const client = new bacnet({adpuTimeout: 6000});
+
+// Discover Devices
+client.on('iAm', (device) => {
+  console.log('address: ', device.address);
+  console.log('deviceId: ', device.deviceId);
+  console.log('maxAdpu: ', device.maxAdpu);
+  console.log('segmentation: ', device.segmentation);
+  console.log('vendorId: ', device.vendorId);
+});
+client.whoIs();
+
+// Read Device Object
+const requestArray = [{
+  objectId: {type: 8, instance: 4194303},
+  properties: [{id: 8}]
+}];
+client.readPropertyMultiple('192.168.1.43', requestArray, (err, value) => {
+  console.log('value: ', value);
+});</code></pre><h2>Contributing</h2><p>Implementing and maintaining a protocol stack is a lot of work, therefore any
+help is appreciated, from creating issues, to contributing documentation, fixing
+issues and adding new features.</p>
+<p>Please follow the <a href="CONTRIBUTING.md">Contribution Guide</a> when submitting any
+changes.</p>
+<h2>License</h2><p><a href="http://opensource.org/licenses/MIT">The MIT License</a></p>
+<p>Copyright (c) 2017 Fabio Huser <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x66;&#97;&#98;&#x69;&#x6f;&#64;&#102;&#104;&#x31;&#46;&#x63;&#104;">&#x66;&#97;&#98;&#x69;&#x6f;&#64;&#102;&#104;&#x31;&#46;&#x63;&#104;</a></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 30 2017 14:16:03 GMT+0000 (UTC) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
