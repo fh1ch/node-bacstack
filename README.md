@@ -63,13 +63,13 @@ following services are already supported at this point in time:
 ### Example
 
 ``` js
-var bacnet = require('bacstack');
+const bacnet = require('bacstack');
 
 // Initialize BACStack
-var client = new bacnet({adpuTimeout: 6000});
+const client = new bacnet({adpuTimeout: 6000});
 
 // Discover Devices
-client.on('iAm', function(device) {
+client.on('iAm', (device) => {
   console.log('address: ', device.address);
   console.log('deviceId: ', device.deviceId);
   console.log('maxAdpu: ', device.maxAdpu);
@@ -79,11 +79,11 @@ client.on('iAm', function(device) {
 client.whoIs();
 
 // Read Device Object
-var requestArray = [{
+const requestArray = [{
   objectId: {type: 8, instance: 4194303},
   properties: [{id: 8}]
 }];
-client.readPropertyMultiple('192.168.1.43', requestArray, function(err, value) {
+client.readPropertyMultiple('192.168.1.43', requestArray, (err, value) => {
   console.log('value: ', value);
 });
 ```

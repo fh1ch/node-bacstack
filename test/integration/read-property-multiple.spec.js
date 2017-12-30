@@ -1,13 +1,15 @@
-var expect = require('chai').expect;
-var utils = require('./utils');
+'use strict';
 
-describe('bacstack - readPropertyMultiple integration', function() {
-  it('should return a timeout error if no device is available', function(next) {
-    var client = new utils.bacnetClient({adpuTimeout: 200});
-    var requestArray = [
+const expect      = require('chai').expect;
+const utils       = require('./utils');
+
+describe('bacstack - readPropertyMultiple integration', () => {
+  it('should return a timeout error if no device is available', (next) => {
+    const client = new utils.bacnetClient({adpuTimeout: 200});
+    const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, function(err, value) {
+    client.readPropertyMultiple('127.0.0.1', requestArray, (err, value) => {
       expect(err.message).to.eql('ERR_TIMEOUT');
       expect(value).to.eql(undefined);
       client.close();
@@ -15,16 +17,16 @@ describe('bacstack - readPropertyMultiple integration', function() {
     });
   });
 
-  it('should successfully decode a structured view', function(next) {
-    var transport = utils.transportStub();
-    var client = utils.bacnetClient({transport: transport});
-    var data = Buffer.from('810a0109010030000e0c0740001f1e291c4e752900436f6c6c656374696f6e206f66206c69676874696e672070726573656e6365206465746563746f724f294b4ec40740001f4f294d4e7531005ac3a4686c657277656727466c6f6f72203427525365675456274c6774275073634f70274c6774507363446574436f6c4f294f4e911d4f29a84e751800372d42412d524453312d3034312d5342437631332e32304f29cf4e71004f29d04e91084f29d24e750c004c67745073634465745273750a00507363446574282a294f29d34e1c014000001c00c000004f2a13424e91004f2a134d4e91064f2a13a64e21004f2a13bd4e91004f2a13de4e8207808207004f2a13ee4e91294f1f', 'hex');  // jscs:ignore maximumLineLength
-    var requestArray = [
+  it('should successfully decode a structured view', (next) => {
+    const transport = new utils.transportStub();
+    const client = new utils.bacnetClient({transport: transport});
+    const data = Buffer.from('810a0109010030000e0c0740001f1e291c4e752900436f6c6c656374696f6e206f66206c69676874696e672070726573656e6365206465746563746f724f294b4ec40740001f4f294d4e7531005ac3a4686c657277656727466c6f6f72203427525365675456274c6774275073634f70274c6774507363446574436f6c4f294f4e911d4f29a84e751800372d42412d524453312d3034312d5342437631332e32304f29cf4e71004f29d04e91084f29d24e750c004c67745073634465745273750a00507363446574282a294f29d34e1c014000001c00c000004f2a13424e91004f2a134d4e91064f2a13a64e21004f2a13bd4e91004f2a13de4e8207808207004f2a13ee4e91294f1f', 'hex');  // jscs:ignore maximumLineLength
+    const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, function(err, response) {
+    client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
       expect(err).to.equal(null);
-      var object = utils.propertyFormater(response.values[0].values);
+      const object = utils.propertyFormater(response.values[0].values);
       expect(response.values[0].objectId).to.deep.equal({type: 29, instance: 31});
       expect(object[28]).to.deep.equal([{value: 'Collection of lighting presence detector', type: 7, encoding: 0}]);
       expect(object[75]).to.deep.equal([{value: {type: 29, instance: 31}, type: 12}]);
@@ -53,20 +55,20 @@ describe('bacstack - readPropertyMultiple integration', function() {
       client.close();
       next();
     });
-    transport.handler(data, '127.0.0.1');
+    transport.emit('message', data, '127.0.0.1');
   });
 
-  it('should successfully decode a value object', function(next) {
-    var transport = utils.transportStub();
-    var client = utils.bacnetClient({transport: transport});
-    var data = Buffer.from('810a01eb010030000e0c04c0000a1e291c4e75070053656e736f724f29244e91004f294a4e21084f294b4ec404c0000a4f294d4e7525005ac3a4686c657277656727466c6f6f722034275253656754562753656e4465762753656e4f294f4e91134f29514e104f29554e21014f29674e91004f296e4e750c004f7065726174696f6e616c750f004465766963652073746f70706564751400446576696365206e6f742061737369676e6564750f00446576696365206d697373696e67751300436f6e6669677572696e6720646576696365750700556e75736564751f004d697373696e67206f722077726f6e6720636f6e66696775726174696f6e750a00536561726368696e674f296f4e8204004f29a84e751800372d42412d524453312d3032342d5342437631332e32304f2a13424e91004f2a134d4e91054f2a13884e91004f2a13894e91004f2a13af4e750800302e322e3234394f2a13df4e750e00355747313235382d32444231324f2a13e44e750b00504c2d313a444c3d313b4f2a13e64e21034f2a13ec4e750d003030303130303433656464634f2a13ed4e752d00504c3a4444543d303538362e303030312e30302e30312e30303b46573d302e312e31333b4d4f44453d504c3b4f2a13ee4e91184f2a13ef4e71004f2a13f04e91004f2a13f34e21014f1f', 'hex');  // jscs:ignore maximumLineLength
-    var requestArray = [
+  it('should successfully decode a value object', (next) => {
+    const transport = new utils.transportStub();
+    const client = new utils.bacnetClient({transport: transport});
+    const data = Buffer.from('810a01eb010030000e0c04c0000a1e291c4e75070053656e736f724f29244e91004f294a4e21084f294b4ec404c0000a4f294d4e7525005ac3a4686c657277656727466c6f6f722034275253656754562753656e4465762753656e4f294f4e91134f29514e104f29554e21014f29674e91004f296e4e750c004f7065726174696f6e616c750f004465766963652073746f70706564751400446576696365206e6f742061737369676e6564750f00446576696365206d697373696e67751300436f6e6669677572696e6720646576696365750700556e75736564751f004d697373696e67206f722077726f6e6720636f6e66696775726174696f6e750a00536561726368696e674f296f4e8204004f29a84e751800372d42412d524453312d3032342d5342437631332e32304f2a13424e91004f2a134d4e91054f2a13884e91004f2a13894e91004f2a13af4e750800302e322e3234394f2a13df4e750e00355747313235382d32444231324f2a13e44e750b00504c2d313a444c3d313b4f2a13e64e21034f2a13ec4e750d003030303130303433656464634f2a13ed4e752d00504c3a4444543d303538362e303030312e30302e30312e30303b46573d302e312e31333b4d4f44453d504c3b4f2a13ee4e91184f2a13ef4e71004f2a13f04e91004f2a13f34e21014f1f', 'hex');  // jscs:ignore maximumLineLength
+    const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, function(err, response) {
+    client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
       expect(err).to.equal(null);
       expect(response.values[0].objectId).to.deep.equal({type: 19, instance: 10});
-      var object = utils.propertyFormater(response.values[0].values);
+      const object = utils.propertyFormater(response.values[0].values);
       expect(object[28]).to.deep.equal([{value: 'Sensor', type: 7, encoding: 0}]);
       expect(object[36]).to.deep.equal([{value: 0, type: 9}]);
       expect(object[74]).to.deep.equal([{value: 8, type: 2}]);
@@ -105,6 +107,6 @@ describe('bacstack - readPropertyMultiple integration', function() {
       client.close();
       next();
     });
-    transport.handler(data, '127.0.0.1');
+    transport.emit('message', data, '127.0.0.1');
   });
 });
