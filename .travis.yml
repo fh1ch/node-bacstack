@@ -24,7 +24,8 @@ jobs:
         provider: pages
         local_dir: ./docs
         github_token: $GITHUB_API_KEY
+        skip_cleanup: true
         on:
-          branch: master
+          tags: true
 
 sudo: false
