@@ -39,8 +39,8 @@ following services are already supported at this point in time:
 | Read Range                     | yes¹    | yes¹   |
 | Write Property                 | yes     | yes¹   |
 | Write Property Multiple        | yes     | yes¹   |
-| Add List Element               | yes¹    |        |
-| Remove List Element            | yes¹    |        |
+| Add List Element               | yes¹    | yes¹   |
+| Remove List Element            | yes¹    | yes¹   |
 | Create Object                  | yes¹    | yes¹   |
 | Delete Object                  | yes¹    | yes¹   |
 | Subscribe COV                  | yes¹    | yes¹   |
@@ -49,14 +49,14 @@ following services are already supported at this point in time:
 | Atomic Write File              | yes¹    | yes¹   |
 | Reinitialize Device            | yes     | yes¹   |
 | Device Communication Control   | yes     | yes¹   |
-| Get Alarm Summary              | yes¹    |        |
-| Get Event Information          | yes¹    |        |
-| Get Enrollment Summary         |         |        |
-| Acknowledge Alarm              | yes¹    |        |
-| Confirmed Event Notification   |         | yes¹   |
-| Unconfirmed Event Notification |         | yes¹   |
-| Unconfirmed Private Transfer   |         |        |
-| Confirmed Private Transfer     |         |        |
+| Get Alarm Summary              | yes¹    | yes¹   |
+| Get Event Information          | yes¹    | yes¹   |
+| Get Enrollment Summary         | yes¹    | yes¹   |
+| Acknowledge Alarm              | yes¹    | yes¹   |
+| Confirmed Event Notification   | yes¹    | yes¹   |
+| Unconfirmed Event Notification | yes¹    | yes¹   |
+| Unconfirmed Private Transfer   | yes¹    | yes¹   |
+| Confirmed Private Transfer     | yes¹    | yes¹   |
 
 ¹ Support implemented as Beta (untested, undocumented, breaking interface)
 

@@ -2048,4 +2048,110 @@ describe('bacstack - Services layer', () => {
       });
     });
   });
+
+  describe('AddListElement', () => {
+    it('should successfully encode and decode', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeAddListElement(buffer, {type: 11, instance: 560}, 85, 2, [
+        {type: 1, value: false},
+        {type: 2, value: 1}
+      ]);
+      const result = baServices.decodeAddListElement(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        objectId: {type: 11, instance: 560},
+        property: {id: 85, index: 2},
+        values: [
+          {type: 1, value: false},
+          {type: 2, value: 1}
+        ]
+      });
+    });
+  });
+
+  describe('GetEventInformationAcknowledge', () => {
+    it('should successfully encode and decode', () => {
+      const timeStamp = new Date(1, 1, 1);
+      timeStamp.setMilliseconds(990);
+      const buffer = utils.getBuffer();
+      baServices.encodeGetEventInformationAcknowledge(buffer, [
+        {
+          objectId: {type: 2, instance: 17},
+          eventState: 3,
+          acknowledgedTransitions: {value: [14], bitsUsed: 6},
+          eventTimeStamps: [{value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: 5, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_TIME}],
+          notifyType: 12,
+          eventEnable: {value: [14], bitsUsed: 6},
+          eventPriorities: [1, 2, 3]
+        }
+      ], false);
+      const result = baServices.decodeGetEventInformationAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        events: [
+          {
+            objectId: {type: 2, instance: 17},
+            eventState: 3,
+            acknowledgedTransitions: {value: [14], bitsUsed: 6}, eventTimeStamps: [{value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: 5, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_TIME}],
+            notifyType: 12,
+            eventEnable: {value: [14], bitsUsed: 6},
+            eventPriorities: [1, 2, 3]
+          }
+        ],
+        moreEvents: false
+      });
+    });
+
+    it('should successfully encode and decode empty payload', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeGetEventInformationAcknowledge(buffer, [], true);
+      const result = baServices.decodeGetEventInformationAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        events: [],
+        moreEvents: true
+      });
+    });
+  });
+
+  describe('GetEnrollmentSummary', () => {
+    it('should successfully encode and decode', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeGetEnrollmentSummary(buffer, 2);
+      const result = baServices.decodeGetEnrollmentSummary(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        acknowledgmentFilter: 2
+      });
+    });
+
+    it('should successfully encode and decode full payload', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeGetEnrollmentSummary(buffer, 2, {objectId: {type: 5, instance: 33}, processId: 7}, 1, 3, {min: 1, max: 65}, 5);
+      const result = baServices.decodeGetEnrollmentSummary(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        acknowledgmentFilter: 2,
+        enrollmentFilter: {objectId: {type: 5, instance: 33}, processId: 7},
+        eventStateFilter: 1,
+        eventTypeFilter: 3,
+        priorityFilter: {min: 1, max: 65},
+        notificationClassFilter: 5
+      });
+    });
+  });
+
+  describe('GetEnrollmentSummaryAcknowledge', () => {
+    it('should successfully encode and decode', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeGetEnrollmentSummaryAcknowledge(buffer, [
+        {objectId: {type: 12, instance: 120}, eventType: 3, eventState: 2, priority: 18, notificationClass: 11}
+      ]);
+      const result = baServices.decodeGetEnrollmentSummaryAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        enrollmentSummaries: [{objectId: {type: 12, instance: 120}, eventType: 3, eventState: 2, priority: 18, notificationClass: 11}]
+      });
+    });
+  });
 });
