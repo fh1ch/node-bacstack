@@ -639,6 +639,38 @@ describe('bacstack - Services layer', () => {
         }]
       });
     });
+
+    it('should successfully encode and decode an error', () => {
+      const buffer = utils.getBuffer();
+      baServices.encodeReadPropertyMultipleAcknowledge(buffer, [
+        {objectId: {type: 9, instance: 50000}, values: [
+          {property: {id: 81, index: 0xFFFFFFFF}, value: [
+            {type: 0, value: {type: 'BacnetError', errorClass: 12, errorCode: 13}}
+          ]}
+        ]}
+      ]);
+      const result = baServices.decodeReadPropertyMultipleAcknowledge(buffer.buffer, 0, buffer.offset);
+      delete result.len;
+      expect(result).to.deep.equal({
+        values: [{
+          objectId: {
+            type: 9,
+            instance: 50000
+          },
+          values: [{
+            index: 4294967295,
+            id: 81,
+            value: {
+              type: 105,
+              value: {
+                errorClass: 12,
+                errorCode: 13
+              }
+            }
+          }]
+        }]
+      });
+    });
   });
 
   describe('WriteProperty', () => {
