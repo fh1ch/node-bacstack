@@ -28,35 +28,37 @@ The BACNET standard defines a wide variety of services as part of it's
 specification. While Node BACstack tries to be as complete as possible,
 following services are already supported at this point in time:
 
-| Service                        | Execute | Handle |
-|--------------------------------|:-------:|:------:|
-| Who Is / I Am                  | yes     | yes¹   |
-| Who Has / I Have               | yes¹    | yes¹   |
-| Time Sync                      | yes     | yes¹   |
-| UTC Time Sync                  | yes     | yes¹   |
-| Read Property                  | yes     | yes¹   |
-| Read Property Multiple         | yes     | yes¹   |
-| Read Range                     | yes¹    | yes¹   |
-| Write Property                 | yes     | yes¹   |
-| Write Property Multiple        | yes     | yes¹   |
-| Add List Element               | yes¹    | yes¹   |
-| Remove List Element            | yes¹    | yes¹   |
-| Create Object                  | yes¹    | yes¹   |
-| Delete Object                  | yes¹    | yes¹   |
-| Subscribe COV                  | yes¹    | yes¹   |
-| Subscribe Property             | yes¹    | yes¹   |
-| Atomic Read File               | yes¹    | yes¹   |
-| Atomic Write File              | yes¹    | yes¹   |
-| Reinitialize Device            | yes     | yes¹   |
-| Device Communication Control   | yes     | yes¹   |
-| Get Alarm Summary              | yes¹    | yes¹   |
-| Get Event Information          | yes¹    | yes¹   |
-| Get Enrollment Summary         | yes¹    | yes¹   |
-| Acknowledge Alarm              | yes¹    | yes¹   |
-| Confirmed Event Notification   | yes¹    | yes¹   |
-| Unconfirmed Event Notification | yes¹    | yes¹   |
-| Unconfirmed Private Transfer   | yes¹    | yes¹   |
-| Confirmed Private Transfer     | yes¹    | yes¹   |
+| Service                        | Execute                                                                                | Handle                                                                |
+|--------------------------------|:--------------------------------------------------------------------------------------:|:---------------------------------------------------------------------:|
+| Who Is                         | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.whoIs)                      | yes¹                                                                  |
+| I Am                           | yes¹                                                                                   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.event:iAm) |
+| Who Has                        | yes¹                                                                                   | yes¹                                                                  |
+| I Have                         | yes¹                                                                                   | yes¹                                                                  |
+| Time Sync                      | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.timeSync)                   | yes¹                                                                  |
+| UTC Time Sync                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.timeSyncUTC)                | yes¹                                                                  |
+| Read Property                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readProperty)               | yes¹                                                                  |
+| Read Property Multiple         | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readPropertyMultiple)       | yes¹                                                                  |
+| Read Range                     | yes¹                                                                                   | yes¹                                                                  |
+| Write Property                 | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writeProperty)              | yes¹                                                                  |
+| Write Property Multiple        | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writePropertyMultiple)      | yes¹                                                                  |
+| Add List Element               | yes¹                                                                                   | yes¹                                                                  |
+| Remove List Element            | yes¹                                                                                   | yes¹                                                                  |
+| Create Object                  | yes¹                                                                                   | yes¹                                                                  |
+| Delete Object                  | yes¹                                                                                   | yes¹                                                                  |
+| Subscribe COV                  | yes¹                                                                                   | yes¹                                                                  |
+| Subscribe Property             | yes¹                                                                                   | yes¹                                                                  |
+| Atomic Read File               | yes¹                                                                                   | yes¹                                                                  |
+| Atomic Write File              | yes¹                                                                                   | yes¹                                                                  |
+| Reinitialize Device            | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.reinitializeDevice)         | yes¹                                                                  |
+| Device Communication Control   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deviceCommunicationControl) | yes¹                                                                  |
+| Get Alarm Summary              | yes¹                                                                                   | yes¹                                                                  |
+| Get Event Information          | yes¹                                                                                   | yes¹                                                                  |
+| Get Enrollment Summary         | yes¹                                                                                   | yes¹                                                                  |
+| Acknowledge Alarm              | yes¹                                                                                   | yes¹                                                                  |
+| Confirmed Event Notification   | yes¹                                                                                   | yes¹                                                                  |
+| Unconfirmed Event Notification | yes¹                                                                                   | yes¹                                                                  |
+| Unconfirmed Private Transfer   | yes¹                                                                                   | yes¹                                                                  |
+| Confirmed Private Transfer     | yes¹                                                                                   | yes¹                                                                  |
 
 ¹ Support implemented as Beta (untested, undocumented, breaking interface)
 
