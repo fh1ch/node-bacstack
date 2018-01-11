@@ -1652,23 +1652,18 @@ describe('bacstack - Services layer', () => {
     });
   });
 
-  // TODO: Correct test behaviour
-  describe.skip('ReadRangeAcknowledge', () => {
+  describe('ReadRangeAcknowledge', () => {
     it('should successfully encode and decode', () => {
       const buffer = utils.getBuffer();
       baServices.encodeReadRangeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bitsUsed: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
       const result = baServices.decodeReadRangeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
-        count: 0,
-        objectId: {type: 61, instance: 35},
-        position: 10,
-        property: {
-          index: 0xFFFFFFFF,
-          id: 85
-        },
-        requestType: 1,
-        time: undefined
+        objectId: {type: 12, instance: 500},
+        itemCount: 12,
+        property: {id: 5048, index: 0xFFFFFFFF},
+        resultFlag: {bitsUsed: 24, value: [1, 2, 3]},
+        rangeBuffer: Buffer.from([1, 2, 3])
       });
     });
   });
