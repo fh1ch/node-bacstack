@@ -8,6 +8,7 @@ jobs:
         - "6"
         - "5"
         - "4"
+      sudo: false
       script:
         - "npm install coveralls"
         - "commitlint-travis"
@@ -16,8 +17,19 @@ jobs:
         - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
         - "npm run integration"
         - "npm run docs"
+    - stage: compliance
+      services: docker
+      sudo: false
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+      script:
+        - "docker-compose up --abort-on-container-exit --exit-code-from bacnet-client"
     - stage: pages
       node_js: "7"
+      sudo: false
       script:
         - "npm run docs"
       deploy:
@@ -27,5 +39,3 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
-
-sudo: false
