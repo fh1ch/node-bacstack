@@ -5,8 +5,8 @@ const utils       = require('./utils');
 
 describe('bacstack - whoIs integration', () => {
   it('should not invoke a event if no device is available', (next) => {
-    const client = new utils.bacnetClient({adpuTimeout: 200});
-    client.on('iAm', (address, deviceId, maxAdpu, segmentation, vendorId) => {
+    const client = new utils.bacnetClient({apduTimeout: 200});
+    client.on('iAm', (address, deviceId, maxApdu, segmentation, vendorId) => {
       client.close();
       next(new Error('Unallowed Callback'));
     });

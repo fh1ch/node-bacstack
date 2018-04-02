@@ -5,7 +5,7 @@ const utils       = require('./utils');
 
 describe('bacstack - readPropertyMultiple integration', () => {
   it('should return a timeout error if no device is available', (next) => {
-    const client = new utils.bacnetClient({adpuTimeout: 200});
+    const client = new utils.bacnetClient({apduTimeout: 200});
     const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
