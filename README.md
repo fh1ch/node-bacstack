@@ -68,13 +68,13 @@ following services are already supported at this point in time:
 const bacnet = require('bacstack');
 
 // Initialize BACStack
-const client = new bacnet({adpuTimeout: 6000});
+const client = new bacnet({apduTimeout: 6000});
 
 // Discover Devices
 client.on('iAm', (device) => {
   console.log('address: ', device.address);
   console.log('deviceId: ', device.deviceId);
-  console.log('maxAdpu: ', device.maxAdpu);
+  console.log('maxApdu: ', device.maxApdu);
   console.log('segmentation: ', device.segmentation);
   console.log('vendorId: ', device.vendorId);
 });

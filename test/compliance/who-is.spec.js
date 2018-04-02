@@ -6,7 +6,7 @@ const bacnet   = require('../../');
 describe('bacstack - whoIs compliance', () => {
   let client;
 
-  beforeEach(() => client = new bacnet({adpuTimeout: 1000}));
+  beforeEach(() => client = new bacnet({apduTimeout: 1000}));
   afterEach(() => client.close());
 
   it('should find the device simulator', (next) => {

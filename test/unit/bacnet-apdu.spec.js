@@ -2,7 +2,7 @@
 
 const expect      = require('chai').expect;
 const utils       = require('./utils');
-const baApdu      = require('../../lib/adpu');
+const baApdu      = require('../../lib/apdu');
 
 describe('bacstack - APDU layer', () => {
   describe('decodedType', () => {
@@ -37,7 +37,7 @@ describe('bacstack - APDU layer', () => {
         type: 0,
         service: 41,
         maxSegments: 176,
-        maxAdpu: 12,
+        maxApdu: 12,
         invokeId: 44,
         sequencenumber: 0,
         proposedWindowNumber: 0
@@ -53,7 +53,7 @@ describe('bacstack - APDU layer', () => {
         type: 8,
         service: 47,
         maxSegments: 208,
-        maxAdpu: 14,
+        maxApdu: 14,
         invokeId: 50,
         sequencenumber: 51,
         proposedWindowNumber: 52
