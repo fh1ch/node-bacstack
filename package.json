@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "changelog": "commitlint --from=master",
+    "license": "license-checker --onlyAllow '0BSD, MIT, WTFPL' --production",
     "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
     "test": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/unit/*.spec.js",
     "integration": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/integration/*.spec.js",
@@ -52,6 +53,7 @@
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
     "jshint": "^2.9.5",
+    "license-checker": "^16.0.0",
     "mocha": "^4.0.1"
   }
 }

@@ -12,6 +12,7 @@ jobs:
       script:
         - "npm install coveralls"
         - "commitlint-travis"
+        - "npm run license"
         - "npm run lint"
         - "npm run test"
         - "cat ./reports/coverage/lcov.info | ./node_modules/.bin/coveralls"
