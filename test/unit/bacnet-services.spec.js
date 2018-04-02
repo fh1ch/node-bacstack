@@ -267,8 +267,8 @@ describe('bacstack - Services layer', () => {
     it('should successfully encode and decode a character-string value with ISO-8859-1 encoding', () => {
       const buffer = utils.getBuffer();
       baServices.readProperty.encodeAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.ISO_8859_1},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.ISO_8859_1}
       ]);
       const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -282,8 +282,8 @@ describe('bacstack - Services layer', () => {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_ISO8859_1}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.ISO_8859_1},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.ISO_8859_1}
         ]
       });
     });
@@ -291,8 +291,8 @@ describe('bacstack - Services layer', () => {
     it('should successfully encode and decode a character-string value with UCS2 encoding', () => {
       const buffer = utils.getBuffer();
       baServices.readProperty.encodeAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.UCS_2},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.UCS_2}
       ]);
       const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -306,8 +306,8 @@ describe('bacstack - Services layer', () => {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_UCS2}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.UCS_2},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.UCS_2}
         ]
       });
     });
@@ -315,8 +315,8 @@ describe('bacstack - Services layer', () => {
     it('should successfully encode and decode a character-string value with Codepage850 encoding', () => {
       const buffer = utils.getBuffer();
       baServices.readProperty.encodeAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS},
-        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.MICROSOFT_DBCS},
+        {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.MICROSOFT_DBCS}
       ]);
       const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -330,8 +330,8 @@ describe('bacstack - Services layer', () => {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS},
-          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncodings.CHARACTER_MS_DBCS}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.MICROSOFT_DBCS},
+          {type: 7, value: 'Test1234$äöü', encoding: baEnum.CharacterStringEncoding.MICROSOFT_DBCS}
         ]
       });
     });
@@ -339,8 +339,8 @@ describe('bacstack - Services layer', () => {
     it('should successfully encode and decode a character-string value with JISX-0208 encoding', () => {
       const buffer = utils.getBuffer();
       baServices.readProperty.encodeAcknowledge(buffer, {type: 8, instance: 40000}, 81, 0xFFFFFFFF, [
-        {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208},
-        {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208}
+        {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.JIS_X_0208},
+        {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncoding.JIS_X_0208}
       ]);
       const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
       delete result.len;
@@ -354,8 +354,8 @@ describe('bacstack - Services layer', () => {
           id: 81
         },
         values: [
-          {type: 7, value: '', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208},
-          {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncodings.CHARACTER_JISX_0208}
+          {type: 7, value: '', encoding: baEnum.CharacterStringEncoding.JIS_X_0208},
+          {type: 7, value: 'できます', encoding: baEnum.CharacterStringEncoding.JIS_X_0208}
         ]
       });
     });
@@ -1306,7 +1306,7 @@ describe('bacstack - Services layer', () => {
   describe('ReadRange', () => {
     it('should successfully encode and decode by position', () => {
       const buffer = utils.getBuffer();
-      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 1, 10, null, 0);
+      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_POSITION, 10, null, 0);
       const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1317,14 +1317,14 @@ describe('bacstack - Services layer', () => {
           index: 0xFFFFFFFF,
           id: 85
         },
-        requestType: 1,
+        requestType: baEnum.ReadRangeType.BY_POSITION,
         time: undefined
       });
     });
 
     it('should successfully encode and decode by position with array index', () => {
       const buffer = utils.getBuffer();
-      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 12, 2, 1, 10, null, 0);
+      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 12, 2, baEnum.ReadRangeType.BY_SEQUENCE_NUMBER, 10, null, 0);
       const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1335,14 +1335,14 @@ describe('bacstack - Services layer', () => {
           index: 2,
           id: 12
         },
-        requestType: 1,
+        requestType: baEnum.ReadRangeType.BY_SEQUENCE_NUMBER,
         time: undefined
       });
     });
 
     it('should successfully encode and decode by sequence', () => {
       const buffer = utils.getBuffer();
-      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 2, 11, null, 1111);
+      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_SEQUENCE_NUMBER, 11, null, 1111);
       const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1353,7 +1353,7 @@ describe('bacstack - Services layer', () => {
           index: 0xFFFFFFFF,
           id: 85
         },
-        requestType: 2,
+        requestType: baEnum.ReadRangeType.BY_SEQUENCE_NUMBER,
         time: undefined
       });
     });
@@ -1362,7 +1362,7 @@ describe('bacstack - Services layer', () => {
       const buffer = utils.getBuffer();
       const date = new Date(1, 1, 1);
       date.setMilliseconds(990);
-      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, 4, null, date, -1111);
+      baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_TIME_REFERENCE_TIME_COUNT, null, date, -1111);
       const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1373,7 +1373,7 @@ describe('bacstack - Services layer', () => {
           index: 0xFFFFFFFF,
           id: 85
         },
-        requestType: 4,
+        requestType: baEnum.ReadRangeType.BY_TIME_REFERENCE_TIME_COUNT,
         time: date
       });
     });
@@ -1470,7 +1470,7 @@ describe('bacstack - Services layer', () => {
         eventType: 2,
         messageText: 'Test1234$',
         notifyType: 1,
-        changeOfValueTag: 1,
+        changeOfValueTag: baEnum.CovTypes.REAL,
         changeOfValueChangeValue: 90,
         changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
       });
@@ -1962,7 +1962,7 @@ describe('bacstack - Services layer', () => {
       eventTime.setMilliseconds(990);
       const ackTime = new Date(1, 1, 1);
       ackTime.setMilliseconds(880);
-      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_TIME}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_TIME});
+      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.TIME}, {value: ackTime, type: baEnum.TimeStamp.TIME});
       const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -1982,7 +1982,7 @@ describe('bacstack - Services layer', () => {
       const buffer = utils.getBuffer();
       const eventTime = 5;
       const ackTime = 6;
-      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE});
+      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.SEQUENCE_NUMBER}, {value: ackTime, type: baEnum.TimeStamp.SEQUENCE_NUMBER});
       const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -2004,7 +2004,7 @@ describe('bacstack - Services layer', () => {
       eventTime.setMilliseconds(990);
       const ackTime = new Date(1, 1, 2);
       ackTime.setMilliseconds(880);
-      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: ackTime, type: baEnum.TimestampTags.TIME_STAMP_DATETIME});
+      baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.DATETIME}, {value: ackTime, type: baEnum.TimeStamp.DATETIME});
       const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
       delete result.len;
       expect(result).to.deep.equal({
@@ -2106,7 +2106,7 @@ describe('bacstack - Services layer', () => {
           objectId: {type: 2, instance: 17},
           eventState: 3,
           acknowledgedTransitions: {value: [14], bitsUsed: 6},
-          eventTimeStamps: [{value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: 5, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_TIME}],
+          eventTimeStamps: [{value: timeStamp, type: baEnum.TimeStamp.DATETIME}, {value: 5, type: baEnum.TimeStamp.SEQUENCE_NUMBER}, {value: timeStamp, type: baEnum.TimeStamp.TIME}],
           notifyType: 12,
           eventEnable: {value: [14], bitsUsed: 6},
           eventPriorities: [1, 2, 3]
@@ -2119,7 +2119,7 @@ describe('bacstack - Services layer', () => {
           {
             objectId: {type: 2, instance: 17},
             eventState: 3,
-            acknowledgedTransitions: {value: [14], bitsUsed: 6}, eventTimeStamps: [{value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_DATETIME}, {value: 5, type: baEnum.TimestampTags.TIME_STAMP_SEQUENCE}, {value: timeStamp, type: baEnum.TimestampTags.TIME_STAMP_TIME}],
+            acknowledgedTransitions: {value: [14], bitsUsed: 6}, eventTimeStamps: [{value: timeStamp, type: baEnum.TimeStamp.DATETIME}, {value: 5, type: baEnum.TimeStamp.SEQUENCE_NUMBER}, {value: timeStamp, type: baEnum.TimeStamp.TIME}],
             notifyType: 12,
             eventEnable: {value: [14], bitsUsed: 6},
             eventPriorities: [1, 2, 3]

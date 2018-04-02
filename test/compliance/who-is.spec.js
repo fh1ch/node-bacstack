@@ -13,7 +13,7 @@ describe('bacstack - whoIs compliance', () => {
     client.on('iAm', (device) => {
       expect(device.deviceId).to.eql(1234);
       expect(device.maxApdu).to.eql(1476);
-      expect(device.segmentation).to.eql(bacnet.enum.Segmentations.SEGMENTATION_NONE);
+      expect(device.segmentation).to.eql(bacnet.enum.Segmentation.NO_SEGMENTATION);
       expect(device.vendorId).to.eql(260);
       next();
     });

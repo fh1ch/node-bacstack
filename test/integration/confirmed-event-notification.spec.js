@@ -18,7 +18,7 @@ describe('bacstack - confirmedEventNotification integration', () => {
       eventType: 2,
       messageText: 'Test1234$',
       notifyType: 1,
-      changeOfValueTag: 1,
+      changeOfValueTag: 0,
       changeOfValueChangeValue: 90,
       changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
     }, (err, value) => {
