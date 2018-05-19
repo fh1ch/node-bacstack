@@ -1,6 +1,6 @@
 {
-  "name": "bacstack",
-  "version": "0.0.1-beta.13",
+  "name": "@biancoroyal/bacstack",
+  "version": "0.0.1-beta.14",
   "description": "A BACnet protocol stack written in pure JavaScript.",
   "main": "index.js",
   "scripts": {
