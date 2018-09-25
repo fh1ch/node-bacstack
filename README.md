@@ -104,3 +104,7 @@ changes.
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2017-2018 Fabio Huser <fabio@fh1.ch>
+
+**Note:** This is not an official product of the BACnet Advocacy Group. BACnet®
+is a registered trademark of American Society of Heating, Refrigerating and
+Air-Conditioning Engineers (ASHRAE).
