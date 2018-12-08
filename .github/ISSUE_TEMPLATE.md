@@ -6,6 +6,9 @@ Node BACstack Version: `X.Y.Z`
 - [ ] Feature Request
 - [ ] Question
 
+**Note:** Make sure you have read the [FAQs](https://github.com/fh1ch/node-bacstack/blob/master/FAQ.md)
+before logging this issue.
+
 ### Feature Request / Question
 
 -
