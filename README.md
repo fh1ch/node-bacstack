@@ -9,9 +9,6 @@ interact with building automation devices defined by ASHRAE.
 [![](https://codeclimate.com/github/fh1ch/node-bacstack/badges/gpa.svg)](https://codeclimate.com/github/fh1ch/node-bacstack)
 [![](https://david-dm.org/fh1ch/node-bacstack/status.svg)](https://david-dm.org/fh1ch/node-bacstack)
 
-> **Note:** This is an early prototype and shall not be considered as stable.
-> Use it with caution and at your own risk!
-
 ## Usage
 
 Add Node BACstack to your project by using:
@@ -104,3 +101,7 @@ changes.
 [The MIT License](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2017-2018 Fabio Huser <fabio@fh1.ch>
+
+**Note:** This is not an official product of the BACnet Advocacy Group. BACnet®
+is a registered trademark of American Society of Heating, Refrigerating and
+Air-Conditioning Engineers (ASHRAE).

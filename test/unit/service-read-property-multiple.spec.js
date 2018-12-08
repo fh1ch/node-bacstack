@@ -118,13 +118,13 @@ describe('ReadPropertyMultipleAcknowledge', () => {
         values: [{
           index: 4294967295,
           id: 81,
-          value: {
+          value: [{
             type: 105,
             value: {
               errorClass: 12,
               errorCode: 13
             }
-          }
+          }]
         }]
       }]
     });
