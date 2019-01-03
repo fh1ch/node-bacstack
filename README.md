@@ -3,12 +3,6 @@
 A BACnet protocol stack written in pure JavaScript. BACnet is a protocol to
 interact with building automation devices defined by ASHRAE.
 
-[![](https://badge.fury.io/js/bacstack.svg)](http://badge.fury.io/js/bacstack)
-[![](https://travis-ci.org/fh1ch/node-bacstack.svg?branch=master)](https://travis-ci.org/fh1ch/node-bacstack)
-[![](https://coveralls.io/repos/fh1ch/node-bacstack/badge.svg?branch=master)](https://coveralls.io/r/fh1ch/node-bacstack?branch=master)
-[![](https://codeclimate.com/github/fh1ch/node-bacstack/badges/gpa.svg)](https://codeclimate.com/github/fh1ch/node-bacstack)
-[![](https://david-dm.org/fh1ch/node-bacstack/status.svg)](https://david-dm.org/fh1ch/node-bacstack)
-
 ## Usage
 
 Add Node BACstack to your project by using:
