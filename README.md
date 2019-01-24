@@ -56,6 +56,8 @@ following services are already supported at this point in time:
 | Unconfirmed Event Notification | yes¹                                                                                   | yes¹                                                                          |
 | Unconfirmed Private Transfer   | yes¹                                                                                   | yes¹                                                                          |
 | Confirmed Private Transfer     | yes¹                                                                                   | yes¹                                                                          |
+| Register Foreign Device        | no                                                                                     | yes¹                                                                          |
+| Distribute Broadcast to Network| no                                                                                     | yes¹                                                                          |
 
 ¹ Support implemented as Beta (untested, undocumented, breaking interface)
 
