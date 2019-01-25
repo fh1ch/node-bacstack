@@ -43,6 +43,7 @@ following services are already supported at this point in time:
 | Create Object                  | yes¹                                                                                   | yes¹                                                                          |
 | Delete Object                  | yes¹                                                                                   | yes¹                                                                          |
 | Subscribe COV                  | yes¹                                                                                   | yes¹                                                                          |
+| Confirmed COV Notification     | yes¹                                                                                   | yes¹                                                                          |
 | Subscribe Property             | yes¹                                                                                   | yes¹                                                                          |
 | Atomic Read File               | yes¹                                                                                   | yes¹                                                                          |
 | Atomic Write File              | yes¹                                                                                   | yes¹                                                                          |
