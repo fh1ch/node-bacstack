@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "changelog": "commitlint --from=master",
-    "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
+    "lint": "eslint .",
     "test": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-test mocha test/unit/*.spec.js",
     "integration": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-integration mocha test/integration/*.spec.js",
     "compliance": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-compliance mocha test/compliance/*.spec.js",
@@ -26,7 +26,7 @@
     "email": "fabio@fh1.ch"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 6.0.0"
   },
   "commitlint": {
     "extends": [
@@ -48,9 +48,9 @@
     "@commitlint/travis-cli": "^7.5.1",
     "chai": "^4.2.0",
     "docdash": "^1.0.2",
-    "jscs": "^3.0.7",
+    "eslint": "^5.13.0",
+    "eslint-config-google": "^0.12.0",
     "jsdoc": "^3.5.5",
-    "jshint": "^2.9.5",
     "mocha": "^5.2.0",
     "nyc": "^13.2.0"
   }

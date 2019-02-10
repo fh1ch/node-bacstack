@@ -4,10 +4,9 @@ jobs:
   include:
     - stage: test
       node_js:
-        - "7"
+        - "10"
+        - "8"
         - "6"
-        - "5"
-        - "4"
       sudo: false
       script:
         - "npm install coveralls"
@@ -28,7 +27,7 @@ jobs:
       script:
         - "docker-compose up --abort-on-container-exit --exit-code-from bacnet-client"
     - stage: pages
-      node_js: "7"
+      node_js: "10"
       sudo: false
       script:
         - "npm run docs"
