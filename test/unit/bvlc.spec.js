@@ -13,7 +13,7 @@ describe('bacstack - BVLC layer', () => {
       len: 4,
       func: 10,
       msgLength: 1482,
-      forwardedFrom: null,
+      originatingIP: null,
     });
   });
 
@@ -25,7 +25,7 @@ describe('bacstack - BVLC layer', () => {
       len: 10,
       func: 4,
       msgLength: 1482,
-      forwardedFrom: '1.2.255.0', // omit port if default
+      originatingIP: '1.2.255.0', // omit port if default
     });
   });
 
@@ -37,7 +37,7 @@ describe('bacstack - BVLC layer', () => {
       len: 10,
       func: 4,
       msgLength: 1482,
-      forwardedFrom: '1.2.255.0:47810', // include port if non-default
+      originatingIP: '1.2.255.0:47810', // include port if non-default
     });
   });
 
