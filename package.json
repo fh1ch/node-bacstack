@@ -1,6 +1,6 @@
 {
   "name": "@biancoroyal/bacstack",
-  "version": "0.0.1-beta.15",
+  "version": "0.0.1-beta.20",
   "description": "A BACnet protocol stack written in pure JavaScript.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fh1ch/node-bacstack.git"
+    "url": "git+https://github.com/NateZimmer/node-bacstack.git"
   },
   "keywords": [
     "bacnet",
@@ -37,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/fh1ch/node-bacstack/issues"
   },
-  "homepage": "https://github.com/fh1ch/node-bacstack#readme",
+  "homepage": "https://github.com/NateZimmer/node-bacstack#readme",
   "dependencies": {
     "debug": "^4.1.1",
     "iconv-lite": "^0.4.24"
