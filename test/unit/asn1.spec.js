@@ -30,4 +30,12 @@ describe('bacstack - ASN1 layer', () => {
       expect(result).to.deep.equal({len: 4, value: 4294967295});
     });
   });
+
+  describe('encodeBacnetObjectId', () => {
+    it('should successfully encode with object-type > 512', () => {
+      const buffer = {buffer: Buffer.alloc(4), offset: 0};
+      baAsn1.encodeBacnetObjectId(buffer, 600, 600);
+      expect(buffer).to.deep.equal({buffer: Buffer.from([150, 0, 2, 88]), offset: 4});
+    });
+  });
 });

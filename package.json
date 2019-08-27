@@ -6,9 +6,9 @@
   "scripts": {
     "changelog": "commitlint --from=master",
     "lint": "jshint lib/ test/ index.js && jscs lib/ test/ index.js",
-    "test": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/unit/*.spec.js",
-    "integration": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/integration/*.spec.js",
-    "compliance": "istanbul cover --dir reports/coverage node_modules/mocha/bin/_mocha -- test/compliance/*.spec.js",
+    "test": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-test mocha test/unit/*.spec.js",
+    "integration": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-integration mocha test/integration/*.spec.js",
+    "compliance": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-compliance mocha test/compliance/*.spec.js",
     "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
   },
   "repository": {
@@ -39,19 +39,19 @@
   },
   "homepage": "https://github.com/fh1ch/node-bacstack#readme",
   "dependencies": {
-    "debug": "^4.1.0",
+    "debug": "^4.1.1",
     "iconv-lite": "^0.4.24"
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.2.1",
-    "@commitlint/config-conventional": "^7.1.2",
-    "@commitlint/travis-cli": "^7.2.1",
+    "@commitlint/cli": "^7.5.1",
+    "@commitlint/config-conventional": "^7.5.0",
+    "@commitlint/travis-cli": "^7.5.1",
     "chai": "^4.2.0",
-    "docdash": "^1.0.0",
-    "istanbul": "^0.4.5",
+    "docdash": "^1.0.2",
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
-    "jshint": "^2.9.7",
-    "mocha": "^5.2.0"
+    "jshint": "^2.9.5",
+    "mocha": "^5.2.0",
+    "nyc": "^13.2.0"
   }
 }

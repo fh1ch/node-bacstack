@@ -17,6 +17,17 @@ describe('bacstack - Services layer ReadProperty unit', () => {
     });
   });
 
+  it('should successfully encode and decode with object-tye > 512', () => {
+    const buffer = utils.getBuffer();
+    baServices.readProperty.encode(buffer, 630, 5, 12, 0xFFFFFFFF);
+    const result = baServices.readProperty.decode(buffer.buffer, 0, buffer.offset);
+    delete result.len;
+    expect(result).to.deep.equal({
+      objectId: {type: 630, instance: 5},
+      property: {id: 12, index: 0xFFFFFFFF}
+    });
+  });
+
   it('should successfully encode and decode with array index', () => {
     const buffer = utils.getBuffer();
     baServices.readProperty.encode(buffer, 4, 630, 85, 2);
