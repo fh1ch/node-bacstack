@@ -5,10 +5,10 @@ WORKDIR /bacstack
 
 # Install dependencies
 COPY package.json .
-RUN npm install
+RUN yarn
 
 # Add node-bacstack
 Add . .
 
 # Run compliance tests
-CMD npm run compliance
+CMD yarn compliance

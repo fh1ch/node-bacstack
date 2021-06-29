@@ -15,7 +15,7 @@ messages. This mechanism requires that all commit messages comply with the
 You can check if your commit messages complies with those guidelines by using:
 
 ``` sh
-npm run changelog
+yarn changelog
 ```
 
 ### Code Style
@@ -26,7 +26,7 @@ and enforces it using [JSCS](http://jscs.info/) as additional linter beneath
 style by executing:
 
 ``` sh
-npm run lint
+yarn lint
 ```
 
 ### Testing and Coverage
@@ -40,8 +40,8 @@ For both sets, the test-coverage is calculated using [Istanbul](https://istanbul
 Running the tests and calculating the coverage can be done locally by executing:
 
 ``` sh
-npm run test
-npm run integration
+yarn test
+yarn integration
 ```
 
 It is expected that new features or fixes do not negatively impact the test
@@ -71,7 +71,7 @@ relies on in-line JSDoc3 syntax. The documentation can also be built locally by
 executing:
 
 ``` sh
-npm run docs
+yarn docs
 ```
 
 It is expected that new features or changes are reflected in the documentation
