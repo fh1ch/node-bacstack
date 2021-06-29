@@ -1,7 +1,7 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
+const expect = require('chai').expect;
+const utils = require('./utils');
 
 describe('bacstack - readFile integration', () => {
   it('should return a timeout error if no device is available', (next) => {

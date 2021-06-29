@@ -1,8 +1,8 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baBvlc      = require('../../lib/bvlc');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baBvlc = require('../../lib/bvlc');
 
 describe('bacstack - BVLC layer', () => {
   it('should successfuly encode and decode a package', () => {

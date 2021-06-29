@@ -1,8 +1,8 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baNpdu      = require('../../lib/npdu');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baNpdu = require('../../lib/npdu');
 
 describe('bacstack - NPDU layer', () => {
   it('should successfully decode the NPDU function', () => {

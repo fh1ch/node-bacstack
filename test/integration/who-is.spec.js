@@ -1,7 +1,6 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
+const utils = require('./utils');
 
 describe('bacstack - whoIs integration', () => {
   it('should not invoke a event if no device is available', (next) => {

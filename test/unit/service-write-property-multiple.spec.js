@@ -1,8 +1,8 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baServices  = require('../../lib/services');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baServices = require('../../lib/services');
 
 describe('bacstack - Services layer WritePropertyMultiple unit', () => {
   it('should successfully encode and decode', () => {
@@ -82,7 +82,6 @@ describe('bacstack - Services layer WritePropertyMultiple unit', () => {
 
   it('should successfully encode and decode with defined priority', () => {
     const buffer = utils.getBuffer();
-    const date = new Date(1, 1, 1);
     const time = new Date(1, 1, 1);
     time.setMilliseconds(990);
     baServices.writePropertyMultiple.encode(buffer, {type: 39, instance: 2400}, [
@@ -114,7 +113,6 @@ describe('bacstack - Services layer WritePropertyMultiple unit', () => {
 
   it('should successfully encode and decode with defined array index', () => {
     const buffer = utils.getBuffer();
-    const date = new Date(1, 1, 1);
     const time = new Date(1, 1, 1);
     time.setMilliseconds(990);
     baServices.writePropertyMultiple.encode(buffer, {type: 39, instance: 2400}, [

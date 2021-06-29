@@ -1,7 +1,6 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
+const utils = require('./utils');
 
 describe('bacstack - unconfirmedPrivateTransfer integration', () => {
   it('should correctly send a telegram', () => {

@@ -1,8 +1,8 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baServices  = require('../../lib/services');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baServices = require('../../lib/services');
 
 describe('bacstack - Services layer EventInformation unit', () => {
   it('should successfully encode and decode', () => {
