@@ -1,8 +1,0 @@
-{
-  "preset": "google",
-  "maximumLineLength": 320,
-  "requireSemicolons": true,
-  "requireCurlyBraces": false,
-  "requireCapitalizedConstructors": false,
-  "jsDoc": false
-}
