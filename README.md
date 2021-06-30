@@ -49,7 +49,7 @@ following services are already supported at this point in time:
 | Reinitialize Device            | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.reinitializeDevice)         | yes¹                                                                          |
 | Device Communication Control   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deviceCommunicationControl) | yes¹                                                                          |
 | Get Alarm Summary²             | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getAlarmSummary)            | yes¹                                                                          |
-| Get Event Information          | yes¹                                                                                   | yes¹                                                                          |
+| Get Event Information          | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getEventInformation)        | yes¹                                                                          |
 | Get Enrollment Summary         | yes¹                                                                                   | yes¹                                                                          |
 | Acknowledge Alarm              | yes¹                                                                                   | yes¹                                                                          |
 | Confirmed Event Notification   | yes¹                                                                                   | yes¹                                                                          |
