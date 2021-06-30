@@ -5,7 +5,8 @@ WORKDIR /bacstack
 
 # Install dependencies
 COPY package.json .
-RUN yarn
+COPY yarn.lock .
+RUN yarn --frozen-lockfile
 
 # Add node-bacstack
 Add . .
