@@ -21,7 +21,7 @@ The API documentation is available under **[fh1ch.github.io/node-bacstack](https
 
 ### Features
 
-The BACNET standard defines a wide variety of services as part of it's
+The BACnet standard defines a wide variety of services as part of it's
 specification. While Node BACstack tries to be as complete as possible,
 following services are already supported at this point in time:
 
@@ -48,7 +48,7 @@ following services are already supported at this point in time:
 | Atomic Write File              | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writeFile)                  | yes¹                                                                          |
 | Reinitialize Device            | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.reinitializeDevice)         | yes¹                                                                          |
 | Device Communication Control   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deviceCommunicationControl) | yes¹                                                                          |
-| Get Alarm Summary              | yes¹                                                                                   | yes¹                                                                          |
+| Get Alarm Summary²             | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getAlarmSummary)            | yes¹                                                                          |
 | Get Event Information          | yes¹                                                                                   | yes¹                                                                          |
 | Get Enrollment Summary         | yes¹                                                                                   | yes¹                                                                          |
 | Acknowledge Alarm              | yes¹                                                                                   | yes¹                                                                          |
@@ -58,6 +58,7 @@ following services are already supported at this point in time:
 | Confirmed Private Transfer     | yes¹                                                                                   | yes¹                                                                          |
 
 ¹ Support implemented as Beta (untested, undocumented, breaking interface)
+² Deprecated BACnet function, available for backwards compatibility
 
 ### Example
 
