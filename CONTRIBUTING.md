@@ -21,9 +21,8 @@ yarn changelog
 ### Code Style
 
 This module uses the [Google JavaScript Code-Style](https://google.github.io/styleguide/javascriptguide.xml)
-and enforces it using [JSCS](http://jscs.info/) as additional linter beneath
-[JSHint](http://jshint.com/). You can test if your changes comply with the code
-style by executing:
+and enforces it using [ESlint](https://eslint.org/) as primary. You can test if
+your changes comply with the code style by executing:
 
 ``` sh
 yarn lint
