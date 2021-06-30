@@ -41,7 +41,7 @@ following services are already supported at this point in time:
 | Add List Element               | yes¹                                                                                   | yes¹                                                                          |
 | Remove List Element            | yes¹                                                                                   | yes¹                                                                          |
 | Create Object                  | yes¹                                                                                   | yes¹                                                                          |
-| Delete Object                  | yes¹                                                                                   | yes¹                                                                          |
+| Delete Object                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deleteObject)               | yes¹                                                                          |
 | Subscribe COV                  | yes¹                                                                                   | yes¹                                                                          |
 | Subscribe Property             | yes¹                                                                                   | yes¹                                                                          |
 | Atomic Read File               | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readFile)                   | yes¹                                                                          |
