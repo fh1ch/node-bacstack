@@ -43,7 +43,7 @@ following services are already supported at this point in time:
 | Create Object                  | yes¹                                                                                   | yes¹                                                                          |
 | Delete Object                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deleteObject)               | yes¹                                                                          |
 | Subscribe COV                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.subscribeCOV)               | yes¹                                                                          |
-| Subscribe Property             | yes¹                                                                                   | yes¹                                                                          |
+| Subscribe Property             | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.subscribeProperty)          | yes¹                                                                          |
 | Atomic Read File               | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readFile)                   | yes¹                                                                          |
 | Atomic Write File              | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writeFile)                  | yes¹                                                                          |
 | Reinitialize Device            | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.reinitializeDevice)         | yes¹                                                                          |
