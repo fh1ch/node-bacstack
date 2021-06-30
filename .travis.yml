@@ -10,13 +10,13 @@ jobs:
         - "4"
       sudo: false
       script:
-        - "npm install coveralls"
+        - "yarn add coveralls"
         - "commitlint-travis"
-        - "npm run lint"
-        - "npm run test"
+        - "yarn lint"
+        - "yarn test"
         - "cat ./reports/coverage-test/lcov.info | ./node_modules/.bin/coveralls"
-        - "npm run integration"
-        - "npm run docs"
+        - "yarn integration"
+        - "yarn docs"
     - stage: compliance
       services: docker
       sudo: false
@@ -31,7 +31,7 @@ jobs:
       node_js: "7"
       sudo: false
       script:
-        - "npm run docs"
+        - "yarn docs"
       deploy:
         provider: pages
         local_dir: ./docs
