@@ -35,7 +35,7 @@ following services are already supported at this point in time:
 | UTC Time Sync                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.timeSyncUTC)                | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.event:timeSyncUTC) |
 | Read Property                  | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readProperty)               | yes¹                                                                          |
 | Read Property Multiple         | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readPropertyMultiple)       | yes¹                                                                          |
-| Read Range                     | yes¹                                                                                   | yes¹                                                                          |
+| Read Range                     | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readRange)                  | yes¹                                                                          |
 | Write Property                 | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writeProperty)              | yes¹                                                                          |
 | Write Property Multiple        | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writePropertyMultiple)      | yes¹                                                                          |
 | Add List Element               | yes¹                                                                                   | yes¹                                                                          |
