@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -10,7 +9,7 @@ describe('bacstack - Services layer Error unit', () => {
     baServices.error.encode(buffer, 15, 25);
     const result = baServices.error.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       class: 15,
       code: 25
     });

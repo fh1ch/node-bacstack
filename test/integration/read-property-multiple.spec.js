@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 
 describe('bacstack - readPropertyMultiple integration', () => {
@@ -10,8 +9,8 @@ describe('bacstack - readPropertyMultiple integration', () => {
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
     client.readPropertyMultiple('127.0.0.1', requestArray, (err, value) => {
-      expect(err.message).to.eql('ERR_TIMEOUT');
-      expect(value).to.eql(undefined);
+      expect(err.message).toEqual('ERR_TIMEOUT');
+      expect(value).toBeUndefined();
       client.close();
       next();
     });
@@ -25,33 +24,33 @@ describe('bacstack - readPropertyMultiple integration', () => {
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
     client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
-      expect(err).to.equal(null);
+      expect(err).toBeNull();
       const object = utils.propertyFormater(response.values[0].values);
-      expect(response.values[0].objectId).to.deep.equal({type: 29, instance: 31});
-      expect(object[28]).to.deep.equal([{value: 'Collection of lighting presence detector', type: 7, encoding: 0}]);
-      expect(object[75]).to.deep.equal([{value: {type: 29, instance: 31}, type: 12}]);
-      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'Lgt\'PscOp\'LgtPscDetCol', type: 7, encoding: 0}]);
-      expect(object[79]).to.deep.equal([{value: 29, type: 9}]);
-      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-041-SBCv13.20', type: 7, encoding: 0}]);
-      expect(object[207]).to.deep.equal([{value: '', type: 7, encoding: 0}]);
-      expect(object[208]).to.deep.equal([{value: 8, type: 9}]);
-      expect(object[210]).to.deep.equal([
+      expect(response.values[0].objectId).toEqual({type: 29, instance: 31});
+      expect(object[28]).toEqual([{value: 'Collection of lighting presence detector', type: 7, encoding: 0}]);
+      expect(object[75]).toEqual([{value: {type: 29, instance: 31}, type: 12}]);
+      expect(object[77]).toEqual([{value: 'Zählerweg\'Floor 4\'RSegTV\'Lgt\'PscOp\'LgtPscDetCol', type: 7, encoding: 0}]);
+      expect(object[79]).toEqual([{value: 29, type: 9}]);
+      expect(object[168]).toEqual([{value: '7-BA-RDS1-041-SBCv13.20', type: 7, encoding: 0}]);
+      expect(object[207]).toEqual([{value: '', type: 7, encoding: 0}]);
+      expect(object[208]).toEqual([{value: 8, type: 9}]);
+      expect(object[210]).toEqual([
         {value: 'LgtPscDetRs', type: 7, encoding: 0},
         {value: 'PscDet(*)', type: 7, encoding: 0}
       ]);
-      expect(object[211]).to.deep.equal([
+      expect(object[211]).toEqual([
         {value: {value: {type: 5, instance: 0}, type: 12}, type: 118},
         {value: {value: {type: 3, instance: 0}, type: 12}, type: 118}
       ]);
-      expect(object[4930]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[4941]).to.deep.equal([{value: 6, type: 9}]);
-      expect(object[5030]).to.deep.equal([{value: 0, type: 2}]);
-      expect(object[5053]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[5086]).to.deep.equal([
+      expect(object[4930]).toEqual([{value: 0, type: 9}]);
+      expect(object[4941]).toEqual([{value: 6, type: 9}]);
+      expect(object[5030]).toEqual([{value: 0, type: 2}]);
+      expect(object[5053]).toEqual([{value: 0, type: 9}]);
+      expect(object[5086]).toEqual([
         {value: {value: [1], bitsUsed: 1}, type: 8},
         {value: {value: [0], bitsUsed: 1}, type: 8}
       ]);
-      expect(object[5102]).to.deep.equal([{value: 41, type: 9}]);
+      expect(object[5102]).toEqual([{value: 41, type: 9}]);
       client.close();
       next();
     });
@@ -66,19 +65,19 @@ describe('bacstack - readPropertyMultiple integration', () => {
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
     client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
-      expect(err).to.equal(null);
-      expect(response.values[0].objectId).to.deep.equal({type: 19, instance: 10});
+      expect(err).toBeNull();
+      expect(response.values[0].objectId).toEqual({type: 19, instance: 10});
       const object = utils.propertyFormater(response.values[0].values);
-      expect(object[28]).to.deep.equal([{value: 'Sensor', type: 7, encoding: 0}]);
-      expect(object[36]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[74]).to.deep.equal([{value: 8, type: 2}]);
-      expect(object[75]).to.deep.equal([{value: {type: 19, instance: 10}, type: 12}]);
-      expect(object[77]).to.deep.equal([{value: 'Zählerweg\'Floor 4\'RSegTV\'SenDev\'Sen', type: 7, encoding: 0}]);
-      expect(object[79]).to.deep.equal([{value: 19, type: 9}]);
-      expect(object[81]).to.deep.equal([{value: false, type: 1}]);
-      expect(object[85]).to.deep.equal([{value: 1, type: 2}]);
-      expect(object[103]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[110]).to.deep.equal([
+      expect(object[28]).toEqual([{value: 'Sensor', type: 7, encoding: 0}]);
+      expect(object[36]).toEqual([{value: 0, type: 9}]);
+      expect(object[74]).toEqual([{value: 8, type: 2}]);
+      expect(object[75]).toEqual([{value: {type: 19, instance: 10}, type: 12}]);
+      expect(object[77]).toEqual([{value: 'Zählerweg\'Floor 4\'RSegTV\'SenDev\'Sen', type: 7, encoding: 0}]);
+      expect(object[79]).toEqual([{value: 19, type: 9}]);
+      expect(object[81]).toEqual([{value: false, type: 1}]);
+      expect(object[85]).toEqual([{value: 1, type: 2}]);
+      expect(object[103]).toEqual([{value: 0, type: 9}]);
+      expect(object[110]).toEqual([
         {value: 'Operational', type: 7, encoding: 0},
         {value: 'Device stopped', type: 7, encoding: 0},
         {value: 'Device not assigned', type: 7, encoding: 0},
@@ -88,22 +87,22 @@ describe('bacstack - readPropertyMultiple integration', () => {
         {value: 'Missing or wrong configuration', type: 7, encoding: 0},
         {value: 'Searching', type: 7, encoding: 0}
       ]);
-      expect(object[111]).to.deep.equal([{value: {value: [0], bitsUsed: 4}, type: 8}]);
-      expect(object[168]).to.deep.equal([{value: '7-BA-RDS1-024-SBCv13.20', type: 7, encoding: 0}]);
-      expect(object[4930]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[4941]).to.deep.equal([{value: 5, type: 9}]);
-      expect(object[5000]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[5001]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[5039]).to.deep.equal([{value: '0.2.249', type: 7, encoding: 0}]);
-      expect(object[5087]).to.deep.equal([{value: '5WG1258-2DB12', type: 7, encoding: 0}]);
-      expect(object[5092]).to.deep.equal([{value: 'PL-1:DL=1;', type: 7, encoding: 0}]);
-      expect(object[5094]).to.deep.equal([{value: 3, type: 2}]);
-      expect(object[5100]).to.deep.equal([{value: '00010043eddc', type: 7, encoding: 0}]);
-      expect(object[5101]).to.deep.equal([{value: 'PL:DDT=0586.0001.00.01.00;FW=0.1.13;MODE=PL;', type: 7, encoding: 0}]);
-      expect(object[5102]).to.deep.equal([{value: 24, type: 9}]);
-      expect(object[5103]).to.deep.equal([{value: '', type: 7, encoding: 0}]);
-      expect(object[5104]).to.deep.equal([{value: 0, type: 9}]);
-      expect(object[5107]).to.deep.equal([{value: 1, type: 2}]);
+      expect(object[111]).toEqual([{value: {value: [0], bitsUsed: 4}, type: 8}]);
+      expect(object[168]).toEqual([{value: '7-BA-RDS1-024-SBCv13.20', type: 7, encoding: 0}]);
+      expect(object[4930]).toEqual([{value: 0, type: 9}]);
+      expect(object[4941]).toEqual([{value: 5, type: 9}]);
+      expect(object[5000]).toEqual([{value: 0, type: 9}]);
+      expect(object[5001]).toEqual([{value: 0, type: 9}]);
+      expect(object[5039]).toEqual([{value: '0.2.249', type: 7, encoding: 0}]);
+      expect(object[5087]).toEqual([{value: '5WG1258-2DB12', type: 7, encoding: 0}]);
+      expect(object[5092]).toEqual([{value: 'PL-1:DL=1;', type: 7, encoding: 0}]);
+      expect(object[5094]).toEqual([{value: 3, type: 2}]);
+      expect(object[5100]).toEqual([{value: '00010043eddc', type: 7, encoding: 0}]);
+      expect(object[5101]).toEqual([{value: 'PL:DDT=0586.0001.00.01.00;FW=0.1.13;MODE=PL;', type: 7, encoding: 0}]);
+      expect(object[5102]).toEqual([{value: 24, type: 9}]);
+      expect(object[5103]).toEqual([{value: '', type: 7, encoding: 0}]);
+      expect(object[5104]).toEqual([{value: 0, type: 9}]);
+      expect(object[5107]).toEqual([{value: 1, type: 2}]);
       client.close();
       next();
     });

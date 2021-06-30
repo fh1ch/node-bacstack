@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 const baEnum = require('../../lib/enum');
@@ -15,7 +14,7 @@ describe('bacstack - Services layer AlarmAcknowledge unit', () => {
     baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.TIME}, {value: ackTime, type: baEnum.TimeStamp.TIME});
     const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       acknowledgedProcessId: 57,
       eventObjectId: {
         type: 0,
@@ -35,7 +34,7 @@ describe('bacstack - Services layer AlarmAcknowledge unit', () => {
     baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.SEQUENCE_NUMBER}, {value: ackTime, type: baEnum.TimeStamp.SEQUENCE_NUMBER});
     const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       acknowledgedProcessId: 57,
       eventObjectId: {
         type: 0,
@@ -57,7 +56,7 @@ describe('bacstack - Services layer AlarmAcknowledge unit', () => {
     baServices.alarmAcknowledge.encode(buffer, 57, {type: 0, instance: 33}, 5, 'Alarm Acknowledge Test', {value: eventTime, type: baEnum.TimeStamp.DATETIME}, {value: ackTime, type: baEnum.TimeStamp.DATETIME});
     const result = baServices.alarmAcknowledge.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       acknowledgedProcessId: 57,
       eventObjectId: {
         type: 0,

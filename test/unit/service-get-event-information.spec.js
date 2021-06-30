@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 const baEnum = require('../../lib/enum');
@@ -11,7 +10,7 @@ describe('bacstack - Services layer GetEventInformation unit', () => {
     baServices.getEventInformation.encode(buffer, {type: 8, instance: 15});
     const result = baServices.getEventInformation.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       lastReceivedObjectId: {type: 8, instance: 15}
     });
   });
@@ -35,7 +34,7 @@ describe('GetEventInformationAcknowledge', () => {
     ], false);
     const result = baServices.getEventInformation.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       events: [
         {
           objectId: {type: 2, instance: 17},
@@ -55,7 +54,7 @@ describe('GetEventInformationAcknowledge', () => {
     baServices.getEventInformation.encodeAcknowledge(buffer, [], true);
     const result = baServices.getEventInformation.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       events: [],
       moreEvents: true
     });

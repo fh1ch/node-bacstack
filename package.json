@@ -6,9 +6,9 @@
   "scripts": {
     "changelog": "commitlint --from=origin/master",
     "lint": "eslint lib/ test/ index.js",
-    "test": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-test mocha test/unit/*.spec.js",
-    "integration": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-integration mocha test/integration/*.spec.js",
-    "compliance": "nyc --reporter=lcov --reporter=text-summary --report-dir reports/coverage-compliance mocha test/compliance/*.spec.js",
+    "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.js",
+    "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.js",
+    "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.js",
     "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
   },
   "repository": {
@@ -28,6 +28,18 @@
   "engines": {
     "node": ">= 12.0.0"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text-summary",
+      "cobertura",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.js"
+    ]
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -45,12 +57,10 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "chai": "^4.3.4",
     "docdash": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
-    "jsdoc": "^3.6.7",
-    "mocha": "^9.0.1",
-    "nyc": "^15.1.0"
+    "jest": "^27.0.6",
+    "jsdoc": "^3.6.7"
   }
 }

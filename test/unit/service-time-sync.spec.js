@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -12,7 +11,7 @@ describe('bacstack - Services layer TimeSync unit', () => {
     baServices.timeSync.encode(buffer, date);
     const result = baServices.timeSync.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       value: date
     });
   });

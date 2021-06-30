@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 const baEnum = require('../../lib/enum');
@@ -11,7 +10,7 @@ describe('bacstack - Services layer ReadProperty unit', () => {
     baServices.readProperty.encode(buffer, 4, 630, 85, 0xFFFFFFFF);
     const result = baServices.readProperty.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 4, instance: 630},
       property: {id: 85, index: 0xFFFFFFFF}
     });
@@ -22,7 +21,7 @@ describe('bacstack - Services layer ReadProperty unit', () => {
     baServices.readProperty.encode(buffer, 630, 5, 12, 0xFFFFFFFF);
     const result = baServices.readProperty.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 630, instance: 5},
       property: {id: 12, index: 0xFFFFFFFF}
     });
@@ -33,7 +32,7 @@ describe('bacstack - Services layer ReadProperty unit', () => {
     baServices.readProperty.encode(buffer, 4, 630, 85, 2);
     const result = baServices.readProperty.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 4, instance: 630},
       property: {id: 85, index: 2}
     });
@@ -49,7 +48,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -72,7 +71,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -97,7 +96,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -125,7 +124,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -151,9 +150,9 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(Math.floor(0.1 * 10000)).to.equal(Math.floor(result.values[1].value * 10000));
+    expect(Math.floor(0.1 * 10000)).toEqual(Math.floor(result.values[1].value * 10000));
     result.values[1].value = 0;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -177,7 +176,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -201,7 +200,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -225,7 +224,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -249,7 +248,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -273,7 +272,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -297,7 +296,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -321,7 +320,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -345,7 +344,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -369,7 +368,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -393,7 +392,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -417,7 +416,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -440,7 +439,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 8,
         instance: 40000
@@ -479,7 +478,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 222,
         instance: 3
@@ -521,7 +520,7 @@ describe('ReadPropertyAcknowledge', () => {
     ]);
     const result = baServices.readProperty.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 223,
         instance: 90000

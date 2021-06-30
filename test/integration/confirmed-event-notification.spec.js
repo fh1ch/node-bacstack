@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 
 describe('bacstack - confirmedEventNotification integration', () => {
@@ -22,8 +21,8 @@ describe('bacstack - confirmedEventNotification integration', () => {
       changeOfValueChangeValue: 90,
       changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
     }, (err, value) => {
-      expect(err.message).to.eql('ERR_TIMEOUT');
-      expect(value).to.eql(undefined);
+      expect(err.message).toEqual('ERR_TIMEOUT');
+      expect(value).toBeUndefined();
       client.close();
       next();
     });

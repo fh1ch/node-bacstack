@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -13,7 +12,7 @@ describe('bacstack - Services layer AddListElement unit', () => {
     ]);
     const result = baServices.addListElement.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 11, instance: 560},
       property: {id: 85, index: 2},
       values: [

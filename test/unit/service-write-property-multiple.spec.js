@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -39,7 +38,7 @@ describe('bacstack - Services layer WritePropertyMultiple unit', () => {
     const result = baServices.writePropertyMultiple.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
     result.values[0].value[12].value = Math.floor(result.values[0].value[12].value * 1000) / 1000;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 39,
         instance: 2400
@@ -91,7 +90,7 @@ describe('bacstack - Services layer WritePropertyMultiple unit', () => {
     ]);
     const result = baServices.writePropertyMultiple.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 39,
         instance: 2400
@@ -122,7 +121,7 @@ describe('bacstack - Services layer WritePropertyMultiple unit', () => {
     ]);
     const result = baServices.writePropertyMultiple.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 39,
         instance: 2400
