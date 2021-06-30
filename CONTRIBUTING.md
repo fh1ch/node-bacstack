@@ -30,7 +30,7 @@ yarn lint
 
 ### Testing and Coverage
 
-Testing is done using [Mocha](https://mochajs.org/) and is separated into two
+Testing is done using [Jest](https://jestjs.io/) and is separated into two
 sets, `unit` and `integration`. While unit tries to test on function level,
 including synthetic decoding and encoding, the integration tests are using real
 recorded data and are only mocking the transport layer.
@@ -51,7 +51,7 @@ results or the coverage.
 Besides the `unit` and `integration` test-sets, which are ensuring functionality
 using synthetical data, the  `compliance` test-set is using a well established
 3rd BACNET device emulator to test against. It uses the same test setup with
-[Mocha](https://mochajs.org/) and [Istanbul](https://istanbul.js.org/), but runs
+[Jest](https://jestjs.io/) and [Istanbul](https://istanbul.js.org/), but runs
 inside a Docker container, while using the [BACStack Compliance Docker](https://github.com/fh1ch/bacstack-compliance-docker)
 image to test against.
 
