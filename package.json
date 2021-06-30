@@ -45,7 +45,6 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@commitlint/travis-cli": "^12.1.4",
     "chai": "^4.3.4",
     "docdash": "^1.2.0",
     "eslint": "^7.29.0",
