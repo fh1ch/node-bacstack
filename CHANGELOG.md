@@ -1,3 +1,37 @@
+<a name="0.0.1-beta.14"></a>
+# [0.0.1-beta.14](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.13...v0.0.1-beta.14) (2021-06-30)
+
+### Features
+
+* **client:** implement missing un/confirmed event handler ([070d407](https://github.com/fh1ch/node-bacstack/commit/070d4076fcc3bd4cfb7621f56f8ea69672134056))
+* **services:** implement EventEnrollmentSummary service ([fc40313](https://github.com/fh1ch/node-bacstack/commit/fc403137b395cbaac53ad1afb93b7aaf7a776006))
+
+### Bug Fixes
+
+* **apdu:** rename wrongly named `adpu` modules and files to `apdu` ([f4ab0e3](https://github.com/fh1ch/node-bacstack/commit/f4ab0e39608f92273f123278999ffa73ef8c0e35))
+* **asn1:** correct encoding of object-types > 512 ([3103ad5](https://github.com/fh1ch/node-bacstack/commit/3103ad51fab5eb56b0ed68d702787c4223990d7a)), closes [#122](https://github.com/fh1ch/node-bacstack/issues/122)  
+* **asn1:** correct error object structure ([e3647da](https://github.com/fh1ch/node-bacstack/commit/e3647da3289c7fbfaceb58d225525d21207ec930))
+* **client:** correct deviceCommunicationControl example ([955211b](https://github.com/fh1ch/node-bacstack/commit/955211bfa48e7626559e16b35bfad5d0042f836b))
+* **service:** correct atomicWriteFile service functionality ([8a28088](https://github.com/fh1ch/node-bacstack/commit/8a28088f12f21041dcd09f2d4c6123fe1d747fe4))
+* **services:** correct readRangeAcknowledge implementation ([52c6d02](https://github.com/fh1ch/node-bacstack/commit/52c6d02fe82ea226152e6caa689a8321500cfdfa))
+
+### BREAKING CHANGES
+
+* **apdu:** The `adpuTimeout` constructor parameter has been renamed to `apduTimeout`. See docs.
+
+* **apdu:** The `maxAdpu` callback parameter inside the `iAm` event has been renamed to `maxApdu`. See docs.
+
+* **enum:** The optional input parameter type `MaxSegments` has been renamed to `MaxSegmentsAccepted` and has renamed values. See documentation.
+
+* **enum:** The optional input parameter type `MaxApdu` has been renamed to `MaxApduLengthAccepted` and has renamed values. See documentation.
+
+* **enum:** The values of the input parameter type `ApplicationTags` has changed by dropping it's `BACNET_APPLICATION_TAG_*` prefix. See documentation.
+
+* **enum:** The values of the input parameter type `ReinitializedStates` has changed by dropping it's `BACNET_REINIT_*` prefix. See documentation.
+
+* 
+
+
 <a name="0.0.1-beta.13"></a>
 # [0.0.1-beta.13](https://github.com/fh1ch/node-bacstack/compare/v0.0.1-beta.12...v0.0.1-beta.13) (2017-12-24)
 
