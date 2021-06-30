@@ -1,0 +1,39 @@
+name: CI
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12, 14, 16]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: yarn --frozen-lockfile
+      - run: yarn changelog
+      - run: yarn lint
+      - run: yarn test
+      # TODO: deploy coverage results
+      - run: yarn integration
+      - run: yarn docs
+
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker-compose up --abort-on-container-exit --exit-code-from bacnet-client
+
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: yarn --frozen-lockfile
+      - run: yarn docs
+      # TODO: deploy pages
