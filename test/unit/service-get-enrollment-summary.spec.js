@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -10,7 +9,7 @@ describe('bacstack - Services layer GetEnrollmentSummary unit', () => {
     baServices.getEnrollmentSummary.encode(buffer, 2);
     const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       acknowledgmentFilter: 2
     });
   });
@@ -20,7 +19,7 @@ describe('bacstack - Services layer GetEnrollmentSummary unit', () => {
     baServices.getEnrollmentSummary.encode(buffer, 2, {objectId: {type: 5, instance: 33}, processId: 7}, 1, 3, {min: 1, max: 65}, 5);
     const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       acknowledgmentFilter: 2,
       enrollmentFilter: {objectId: {type: 5, instance: 33}, processId: 7},
       eventStateFilter: 1,
@@ -39,7 +38,7 @@ describe('GetEnrollmentSummaryAcknowledge', () => {
     ]);
     const result = baServices.getEnrollmentSummary.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       enrollmentSummaries: [{objectId: {type: 12, instance: 120}, eventType: 3, eventState: 2, priority: 18, notificationClass: 11}]
     });
   });

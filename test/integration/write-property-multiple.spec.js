@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 
 describe('bacstack - writePropertyMultiple integration', () => {
@@ -12,8 +11,8 @@ describe('bacstack - writePropertyMultiple integration', () => {
       ]}
     ];
     client.writePropertyMultiple('127.0.0.1', values, (err, value) => {
-      expect(err.message).to.eql('ERR_TIMEOUT');
-      expect(value).to.eql(undefined);
+      expect(err.message).toEqual('ERR_TIMEOUT');
+      expect(value).toBeUndefined();
       client.close();
       next();
     });

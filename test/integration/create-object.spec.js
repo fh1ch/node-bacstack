@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 
 describe('bacstack - createObject integration', () => {
@@ -9,8 +8,8 @@ describe('bacstack - createObject integration', () => {
     client.createObject('127.0.0.1', {type: 2, instance: 300}, [
       {property: {id: 85, index: 1}, value: [{type: 1, value: true}]}
     ], (err, value) => {
-      expect(err.message).to.eql('ERR_TIMEOUT');
-      expect(value).to.eql(undefined);
+      expect(err.message).toEqual('ERR_TIMEOUT');
+      expect(value).toBeUndefined();
       client.close();
       next();
     });

@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -10,7 +9,7 @@ describe('bacstack - Services layer DeviceCommunicationControl unit', () => {
     baServices.deviceCommunicationControl.encode(buffer, 30, 1);
     const result = baServices.deviceCommunicationControl.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       timeDuration: 30,
       enableDisable: 1
     });
@@ -21,7 +20,7 @@ describe('bacstack - Services layer DeviceCommunicationControl unit', () => {
     baServices.deviceCommunicationControl.encode(buffer, 30, 1, 'Test1234!');
     const result = baServices.deviceCommunicationControl.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       timeDuration: 30,
       enableDisable: 1,
       password: 'Test1234!'

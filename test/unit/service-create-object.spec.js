@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -41,7 +40,7 @@ describe('bacstack - Services layer CreateObject unit', () => {
     const result = baServices.createObject.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
     result.values[0].value[12].value = Math.floor(result.values[0].value[12].value * 1000) / 1000;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {
         type: 1,
         instance: 10

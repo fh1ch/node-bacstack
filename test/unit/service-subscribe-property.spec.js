@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -10,7 +9,7 @@ describe('bacstack - Services layer SubscribeProperty unit', () => {
     baServices.subscribeProperty.encode(buffer, 7, {type: 148, instance: 362}, true, false, 1, {id: 85, index: 0xFFFFFFFF}, true, 1);
     const result = baServices.subscribeProperty.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       cancellationRequest: true,
       covIncrement: 1,
       issueConfirmedNotifications: false,
@@ -32,7 +31,7 @@ describe('bacstack - Services layer SubscribeProperty unit', () => {
     baServices.subscribeProperty.encode(buffer, 8, {type: 149, instance: 363}, false, true, 2, {id: 86, index: 3}, false, 10);
     const result = baServices.subscribeProperty.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       cancellationRequest: false,
       covIncrement: 0,
       issueConfirmedNotifications: true,

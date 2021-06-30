@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 const baEnum = require('../../lib/enum');
@@ -28,7 +27,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 60, instance: 12},
       eventObjectId: {type: 61, instance: 1121},
@@ -66,7 +65,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -102,7 +101,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -142,7 +141,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -179,7 +178,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -216,7 +215,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -257,7 +256,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},
@@ -293,7 +292,7 @@ describe('bacstack - Services layer EventNotifyData unit', () => {
     });
     const result = baServices.eventNotifyData.decode(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       processId: 3,
       initiatingObjectId: {type: 0, instance: 0},
       eventObjectId: {type: 0, instance: 0},

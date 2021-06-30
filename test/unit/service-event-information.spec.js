@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -18,7 +17,7 @@ describe('bacstack - Services layer EventInformation unit', () => {
     ], false);
     const result = baServices.eventInformation.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       alarms: [
         {
           objectId: {

@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const bacnet = require('../../');
 
 describe('bacstack - whoIs compliance', () => {
@@ -11,10 +10,10 @@ describe('bacstack - whoIs compliance', () => {
 
   it('should find the device simulator', (next) => {
     client.on('iAm', (device) => {
-      expect(device.deviceId).to.eql(1234);
-      expect(device.maxApdu).to.eql(1476);
-      expect(device.segmentation).to.eql(bacnet.enum.Segmentation.NO_SEGMENTATION);
-      expect(device.vendorId).to.eql(260);
+      expect(device.deviceId).toEqual(1234);
+      expect(device.maxApdu).toEqual(1476);
+      expect(device.segmentation).toEqual(bacnet.enum.Segmentation.NO_SEGMENTATION);
+      expect(device.vendorId).toEqual(260);
       next();
     });
     client.whoIs();
@@ -22,7 +21,7 @@ describe('bacstack - whoIs compliance', () => {
 
   it('should find the device simulator with provided min device ID', (next) => {
     client.on('iAm', (device) => {
-      expect(device.deviceId).to.eql(1234);
+      expect(device.deviceId).toEqual(1234);
       next();
     });
     client.whoIs(1233);
@@ -30,7 +29,7 @@ describe('bacstack - whoIs compliance', () => {
 
   it('should find the device simulator with provided min/max device ID and IP', (next) => {
     client.on('iAm', (device) => {
-      expect(device.deviceId).to.eql(1234);
+      expect(device.deviceId).toEqual(1234);
       next();
     });
     client.whoIs(1233, 1235, 'bacnet-device');

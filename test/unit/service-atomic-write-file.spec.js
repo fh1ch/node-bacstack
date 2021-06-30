@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -10,7 +9,7 @@ describe('bacstack - Services layer AtomicWriteFile unit', () => {
     baServices.atomicWriteFile.encode(buffer, true, {type: 12, instance: 51}, 5, [[12, 12]]);
     const result = baServices.atomicWriteFile.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 12, instance: 51},
       isStream: true,
       position: 5,
@@ -23,7 +22,7 @@ describe('bacstack - Services layer AtomicWriteFile unit', () => {
     baServices.atomicWriteFile.encode(buffer, false, {type: 12, instance: 88}, 10, [[12, 12], [12, 12]]);
     const result = baServices.atomicWriteFile.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 12, instance: 88},
       isStream: false,
       position: 10,
@@ -38,7 +37,7 @@ describe('AtomicWriteFileAcknowledge', () => {
     baServices.atomicWriteFile.encodeAcknowledge(buffer, true, -10);
     const result = baServices.atomicWriteFile.decodeAcknowledge(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       isStream: true,
       position: -10
     });
@@ -49,7 +48,7 @@ describe('AtomicWriteFileAcknowledge', () => {
     baServices.atomicWriteFile.encodeAcknowledge(buffer, false, 10);
     const result = baServices.atomicWriteFile.decodeAcknowledge(buffer.buffer, 0);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       isStream: false,
       position: 10
     });

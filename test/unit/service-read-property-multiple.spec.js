@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 
@@ -15,7 +14,7 @@ describe('bacstack - Services layer ReadPropertyMultiple unit', () => {
     ]);
     const result = baServices.readPropertyMultiple.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({properties: [{objectId: {type: 51, instance: 1}, properties: [
+    expect(result).toEqual({properties: [{objectId: {type: 51, instance: 1}, properties: [
       {id: 85, index: 0xFFFFFFFF},
       {id: 85, index: 4}
     ]}]});
@@ -58,9 +57,9 @@ describe('ReadPropertyMultipleAcknowledge', () => {
     ]);
     const result = baServices.readPropertyMultiple.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(Math.floor(0.1 * 10000)).to.equal(Math.floor(result.values[0].values[0].value[12].value * 10000));
+    expect(Math.floor(0.1 * 10000)).toEqual(Math.floor(result.values[0].values[0].value[12].value * 10000));
     result.values[0].values[0].value[12].value = 0;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       values: [{
         objectId: {
           type: 9,
@@ -109,7 +108,7 @@ describe('ReadPropertyMultipleAcknowledge', () => {
     ]);
     const result = baServices.readPropertyMultiple.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       values: [{
         objectId: {
           type: 9,

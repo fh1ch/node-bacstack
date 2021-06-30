@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const utils = require('./utils');
 const baServices = require('../../lib/services');
 const baEnum = require('../../lib/enum');
@@ -11,7 +10,7 @@ describe('bacstack - Services layer ReadRange unit', () => {
     baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_POSITION, 10, null, 0);
     const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       count: 0,
       objectId: {type: 61, instance: 35},
       position: 10,
@@ -29,7 +28,7 @@ describe('bacstack - Services layer ReadRange unit', () => {
     baServices.readRange.encode(buffer, {type: 61, instance: 35}, 12, 2, baEnum.ReadRangeType.BY_SEQUENCE_NUMBER, 10, null, 0);
     const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       count: 0,
       objectId: {type: 61, instance: 35},
       position: 10,
@@ -47,7 +46,7 @@ describe('bacstack - Services layer ReadRange unit', () => {
     baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_SEQUENCE_NUMBER, 11, null, 1111);
     const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       count: 1111,
       objectId: {type: 61, instance: 35},
       position: 11,
@@ -67,7 +66,7 @@ describe('bacstack - Services layer ReadRange unit', () => {
     baServices.readRange.encode(buffer, {type: 61, instance: 35}, 85, 0xFFFFFFFF, baEnum.ReadRangeType.BY_TIME_REFERENCE_TIME_COUNT, null, date, -1111);
     const result = baServices.readRange.decode(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       count: -1111,
       objectId: {type: 61, instance: 35},
       position: undefined,
@@ -87,7 +86,7 @@ describe('ReadRangeAcknowledge', () => {
     baServices.readRange.encodeAcknowledge(buffer, {type: 12, instance: 500}, 5048, 0xFFFFFFFF, {bitsUsed: 24, value: [1, 2, 3]}, 12, Buffer.from([1, 2, 3]), 2, 2);
     const result = baServices.readRange.decodeAcknowledge(buffer.buffer, 0, buffer.offset);
     delete result.len;
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       objectId: {type: 12, instance: 500},
       itemCount: 12,
       property: {id: 5048, index: 0xFFFFFFFF},
