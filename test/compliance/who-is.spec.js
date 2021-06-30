@@ -1,7 +1,7 @@
 'use strict';
 
-const expect  = require('chai').expect;
-const bacnet   = require('../../');
+const expect = require('chai').expect;
+const bacnet = require('../../');
 
 describe('bacstack - whoIs compliance', () => {
   let client;

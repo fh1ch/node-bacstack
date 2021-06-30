@@ -1,0 +1,13 @@
+extends:
+  - eslint:recommended
+  - google
+env:
+  node: true
+  mocha: true
+parserOptions:
+  ecmaVersion: 2020
+rules:
+  comma-dangle: [error, never]
+  max-len: [error, 320]
+  require-jsdoc: 0
+  new-cap: 0

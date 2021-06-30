@@ -1,8 +1,8 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baApdu      = require('../../lib/apdu');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baApdu = require('../../lib/apdu');
 
 describe('bacstack - APDU layer', () => {
   describe('decodedType', () => {

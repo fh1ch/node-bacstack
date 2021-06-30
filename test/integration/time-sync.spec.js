@@ -1,7 +1,6 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
+const utils = require('./utils');
 
 describe('bacstack - timeSync integration', () => {
   it('should send a time sync package', () => {

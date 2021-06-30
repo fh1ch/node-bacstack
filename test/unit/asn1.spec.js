@@ -1,8 +1,7 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baAsn1      = require('../../lib/asn1');
+const expect = require('chai').expect;
+const baAsn1 = require('../../lib/asn1');
 
 describe('bacstack - ASN1 layer', () => {
   describe('decodeUnsigned', () => {

@@ -1,9 +1,9 @@
 'use strict';
 
-const expect      = require('chai').expect;
-const utils       = require('./utils');
-const baServices  = require('../../lib/services');
-const baEnum      = require('../../lib/enum');
+const expect = require('chai').expect;
+const utils = require('./utils');
+const baServices = require('../../lib/services');
+const baEnum = require('../../lib/enum');
 
 describe('bacstack - Services layer ReadProperty unit', () => {
   it('should successfully encode and decode', () => {

@@ -1,7 +1,7 @@
 'use strict';
 
-const EventEmitter      = require('events').EventEmitter;
-const bacnet            = require('../../');
+const EventEmitter = require('events').EventEmitter;
+const bacnet = require('../../');
 
 module.exports.bacnetClient = bacnet;
 
@@ -23,6 +23,6 @@ module.exports.transportStub = Transport;
 
 module.exports.propertyFormater = (object) => {
   const converted = {};
-  object.forEach(property => converted[property.id] = property.value);
+  object.forEach((property) => converted[property.id] = property.value);
   return converted;
 };
