@@ -26,7 +26,7 @@
     "email": "fabio@fh1.ch"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 12.0.0"
   },
   "commitlint": {
     "extends": [

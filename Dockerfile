@@ -1,4 +1,4 @@
-FROM node:carbon-alpine
+FROM node:16-alpine
 
 # Set working directory
 WORKDIR /bacstack
