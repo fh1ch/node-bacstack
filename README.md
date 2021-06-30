@@ -54,7 +54,7 @@ following services are already supported at this point in time:
 | Acknowledge Alarm              | yes¹                                                                                   | yes¹                                                                          |
 | Confirmed Event Notification   | yes¹                                                                                   | yes¹                                                                          |
 | Unconfirmed Event Notification | yes¹                                                                                   | yes¹                                                                          |
-| Unconfirmed Private Transfer   | yes¹                                                                                   | yes¹                                                                          |
+| Unconfirmed Private Transfer   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.unconfirmedPrivateTransfer) | yes¹                                                                          |
 | Confirmed Private Transfer     | yes¹                                                                                   | yes¹                                                                          |
 
 ¹ Support implemented as Beta (untested, undocumented, breaking interface)
