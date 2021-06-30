@@ -50,7 +50,7 @@ following services are already supported at this point in time:
 | Device Communication Control   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deviceCommunicationControl) | yes¹                                                                          |
 | Get Alarm Summary²             | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getAlarmSummary)            | yes¹                                                                          |
 | Get Event Information          | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getEventInformation)        | yes¹                                                                          |
-| Get Enrollment Summary         | yes¹                                                                                   | yes¹                                                                          |
+| Get Enrollment Summary²        | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.getEnrollmentSummary)       | yes¹                                                                          |
 | Acknowledge Alarm              | yes¹                                                                                   | yes¹                                                                          |
 | Confirmed Event Notification   | yes¹                                                                                   | yes¹                                                                          |
 | Unconfirmed Event Notification | yes¹                                                                                   | yes¹                                                                          |
