@@ -39,19 +39,19 @@
   },
   "homepage": "https://github.com/fh1ch/node-bacstack#readme",
   "dependencies": {
-    "debug": "^4.1.1",
-    "iconv-lite": "^0.4.24"
+    "debug": "^4.3.1",
+    "iconv-lite": "^0.6.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.5.1",
-    "@commitlint/config-conventional": "^7.5.0",
-    "@commitlint/travis-cli": "^7.5.1",
-    "chai": "^4.2.0",
-    "docdash": "^1.0.2",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/travis-cli": "^12.1.4",
+    "chai": "^4.3.4",
+    "docdash": "^1.2.0",
     "jscs": "^3.0.7",
-    "jsdoc": "^3.5.5",
-    "jshint": "^2.9.5",
-    "mocha": "^5.2.0",
-    "nyc": "^13.2.0"
+    "jsdoc": "^3.6.4",
+    "jshint": "^2.11.0",
+    "mocha": "^9.0.1",
+    "nyc": "^15.1.0"
   }
 }
