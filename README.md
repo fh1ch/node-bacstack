@@ -44,7 +44,7 @@ following services are already supported at this point in time:
 | Delete Object                  | yes¹                                                                                   | yes¹                                                                          |
 | Subscribe COV                  | yes¹                                                                                   | yes¹                                                                          |
 | Subscribe Property             | yes¹                                                                                   | yes¹                                                                          |
-| Atomic Read File               | yes¹                                                                                   | yes¹                                                                          |
+| Atomic Read File               | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.readFile)                   | yes¹                                                                          |
 | Atomic Write File              | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.writeFile)                  | yes¹                                                                          |
 | Reinitialize Device            | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.reinitializeDevice)         | yes¹                                                                          |
 | Device Communication Control   | [yes](https://fh1ch.github.io/node-bacstack/bacstack.html#.deviceCommunicationControl) | yes¹                                                                          |
