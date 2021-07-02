@@ -1,6 +1,7 @@
 'use strict';
 
-const baEnum = require('./enum');
+import * as baEnum from './enum';
+import { EncodeBuffer, BACNetAddress } from './types';
 
 const BACNET_PROTOCOL_VERSION = 1;
 const BacnetAddressTypes = {
@@ -8,9 +9,9 @@ const BacnetAddressTypes = {
   IP: 1
 };
 
-const decodeTarget = (buffer, offset) => {
+const decodeTarget = (buffer: Buffer, offset: number) => {
   let len = 0;
-  const target = {type: BacnetAddressTypes.NONE, net: (buffer[offset + len++] << 8) | (buffer[offset + len++] << 0)};
+  const target: BACNetAddress = {type: BacnetAddressTypes.NONE, net: (buffer[offset + len++] << 8) | (buffer[offset + len++] << 0)};
   const adrLen = buffer[offset + len++];
   if (adrLen > 0) {
     target.adr = [];
@@ -24,7 +25,7 @@ const decodeTarget = (buffer, offset) => {
   };
 };
 
-const encodeTarget = (buffer, target) => {
+const encodeTarget = (buffer: EncodeBuffer, target: BACNetAddress) => {
   buffer.buffer[buffer.offset++] = (target.net & 0xFF00) >> 8;
   buffer.buffer[buffer.offset++] = (target.net & 0x00FF) >> 0;
   if (target.net === 0xFFFF || !target.adr) {
@@ -39,22 +40,22 @@ const encodeTarget = (buffer, target) => {
   }
 };
 
-module.exports.decodeFunction = (buffer, offset) => {
+export const decodeFunction = (buffer: Buffer, offset: number) => {
   if (buffer[offset + 0] !== BACNET_PROTOCOL_VERSION) return;
   return buffer[offset + 1];
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   offset++;
   const funct = buffer[offset++];
-  let destination;
+  let destination: BACNetAddress;
   if (funct & baEnum.NpduControlBits.DESTINATION_SPECIFIED) {
     const tmpDestination = decodeTarget(buffer, offset);
     offset += tmpDestination.len;
     destination = tmpDestination.target;
   }
-  let source;
+  let source: BACNetAddress;
   if (funct & baEnum.NpduControlBits.SOURCE_SPECIFIED) {
     const tmpSource = decodeTarget(buffer, offset);
     offset += tmpSource.len;
@@ -86,7 +87,7 @@ module.exports.decode = (buffer, offset) => {
   };
 };
 
-module.exports.encode = (buffer, funct, destination, source, hopCount, networkMsgType, vendorId) => {
+export const encode = (buffer: EncodeBuffer, funct: number, destination?: any, source?: BACNetAddress, hopCount?: number, networkMsgType?: number, vendorId?: number) => {
   const hasDestination = destination && destination.net > 0;
   const hasSource = source && source.net > 0 && source.net !== 0xFFFF;
 
