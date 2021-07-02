@@ -1,16 +1,17 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, time) => {
+export const encode = (buffer: EncodeBuffer, time: Date) => {
   baAsn1.encodeApplicationDate(buffer, time);
   baAsn1.encodeApplicationTime(buffer, time);
 };
 
-module.exports.decode = (buffer, offset, length) => {
+export const decode = (buffer: Buffer, offset: number, length: number) => {
   let len = 0;
-  let result;
+  let result: any;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== baEnum.ApplicationTags.DATE) return;
