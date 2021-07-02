@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID } from '../types';
 
-module.exports.encode = (buffer, objectId, values) => {
+export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID, values: any[]) => {
   baAsn1.encodeOpeningTag(buffer, 0);
   baAsn1.encodeContextObjectId(buffer, 1, objectId.type, objectId.instance);
   baAsn1.encodeClosingTag(buffer, 0);
@@ -14,7 +15,7 @@ module.exports.encode = (buffer, objectId, values) => {
       baAsn1.encodeContextUnsigned(buffer, 1, propertyValue.property.index);
     }
     baAsn1.encodeOpeningTag(buffer, 2);
-    propertyValue.value.forEach((value) => {
+    propertyValue.value.forEach((value: any) => {
       baAsn1.bacappEncodeApplicationData(buffer, value);
     });
     baAsn1.encodeClosingTag(buffer, 2);
@@ -25,11 +26,11 @@ module.exports.encode = (buffer, objectId, values) => {
   baAsn1.encodeClosingTag(buffer, 1);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  let objectId;
+  let result: any;
+  let decodedValue: any;
+  let objectId: {type: number, instance: number};
   const valueList = [];
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
@@ -48,7 +49,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   if (!baAsn1.decodeIsOpeningTagNumber(buffer, offset + len, 1)) return;
   len++;
   while ((apduLen - len) > 1) {
-    const newEntry = {};
+    const newEntry: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     if (result.tagNumber !== 0) return;
@@ -91,6 +92,6 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, objectId) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, objectId: BACNetObjectID) => {
   baAsn1.encodeApplicationObjectId(buffer, objectId.type, objectId.instance);
 };
