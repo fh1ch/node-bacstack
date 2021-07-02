@@ -1,9 +1,16 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID, BACNetPropertyID, BACNetAppData } from '../types';
 
-const encode = module.exports.encode = (buffer, objectId, values) => {
+interface BACNETWPM {
+  property: BACNetPropertyID;
+  value: BACNetAppData[];
+  priority: number;
+}
+
+export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID, values: BACNETWPM[]) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectId.type, objectId.instance);
   baAsn1.encodeOpeningTag(buffer, 1);
   values.forEach((pValue) => {
@@ -12,9 +19,7 @@ const encode = module.exports.encode = (buffer, objectId, values) => {
       baAsn1.encodeContextUnsigned(buffer, 1, pValue.property.index);
     }
     baAsn1.encodeOpeningTag(buffer, 2);
-    pValue.value.forEach((value) => {
-      baAsn1.bacappEncodeApplicationData(buffer, value);
-    });
+    pValue.value.forEach((value) => baAsn1.bacappEncodeApplicationData(buffer, value));
     baAsn1.encodeClosingTag(buffer, 2);
     if (pValue.priority !== baEnum.ASN1_NO_PRIORITY) {
       baAsn1.encodeContextUnsigned(buffer, 3, pValue.priority);
@@ -23,10 +28,10 @@ const encode = module.exports.encode = (buffer, objectId, values) => {
   baAsn1.encodeClosingTag(buffer, 1);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
+  let result: any;
+  let decodedValue: any;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if ((result.tagNumber !== 0) || (apduLen <= len)) return;
@@ -42,7 +47,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   len++;
   const _values = [];
   while ((apduLen - len) > 1) {
-    const newEntry = {};
+    const newEntry: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     if (result.tagNumber !== 0) return;
@@ -93,8 +98,6 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeObject = (buffer, values) => {
-  values.forEach((object) => {
-    encode(buffer, object.objectId, object.values);
-  });
+export const encodeObject = (buffer: EncodeBuffer, values: any[]) => {
+  values.forEach((object) => encode(buffer, object.objectId, object.values));
 };
