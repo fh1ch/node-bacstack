@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, acknowledgmentFilter, enrollmentFilter, eventStateFilter, eventTypeFilter, priorityFilter, notificationClassFilter) => {
+export const encode = (buffer: EncodeBuffer, acknowledgmentFilter: number, enrollmentFilter?: any, eventStateFilter?: number, eventTypeFilter?: number, priorityFilter?: any, notificationClassFilter?: number) => {
   baAsn1.encodeContextEnumerated(buffer, 0, acknowledgmentFilter);
   if (enrollmentFilter) {
     baAsn1.encodeOpeningTag(buffer, 1);
@@ -36,11 +37,11 @@ module.exports.encode = (buffer, acknowledgmentFilter, enrollmentFilter, eventSt
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  const value = {};
+  let result: any;
+  let decodedValue: any;
+  const value: any = {};
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   decodedValue = baAsn1.decodeEnumerated(buffer, offset + len, result.value);
@@ -110,7 +111,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   return value;
 };
 
-module.exports.encodeAcknowledge = (buffer, enrollmentSummaries) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, enrollmentSummaries: any[]) => {
   enrollmentSummaries.forEach((enrollmentSummary) => {
     baAsn1.encodeApplicationObjectId(buffer, enrollmentSummary.objectId.type, enrollmentSummary.objectId.instance);
     baAsn1.encodeApplicationEnumerated(buffer, enrollmentSummary.eventType);
@@ -120,12 +121,12 @@ module.exports.encodeAcknowledge = (buffer, enrollmentSummaries) => {
   });
 };
 
-module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
+  let result: any;
   const enrollmentSummaries = [];
   while ((apduLen - len) > 0) {
-    const enrollmentSummary = {};
+    const enrollmentSummary: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     if (result.tagNumber !== baEnum.ApplicationTags.OBJECTIDENTIFIER) return;
