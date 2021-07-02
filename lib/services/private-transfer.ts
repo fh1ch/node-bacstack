@@ -1,8 +1,9 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
+import * as baAsn1 from '../asn1';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, vendorId, serviceNumber, data) => {
+export const encode = (buffer: EncodeBuffer, vendorId: number, serviceNumber: number, data: number[]) => {
   baAsn1.encodeContextUnsigned(buffer, 0, vendorId);
   baAsn1.encodeContextUnsigned(buffer, 1, serviceNumber);
   baAsn1.encodeOpeningTag(buffer, 2);
@@ -12,11 +13,11 @@ module.exports.encode = (buffer, vendorId, serviceNumber, data) => {
   baAsn1.encodeClosingTag(buffer, 2);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  const value = {};
+  let result: any;
+  let decodedValue: any;
+  const value: any = {};
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   decodedValue = baAsn1.decodeUnsigned(buffer, offset + len, result.value);
