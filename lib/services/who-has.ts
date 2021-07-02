@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { BACNetObjectID, EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, lowLimit, highLimit, objectId, objectName) => {
+export const encode = (buffer: EncodeBuffer, lowLimit: number, highLimit: number, objectId: BACNetObjectID, objectName: string) => {
   if ((lowLimit >= 0) && (lowLimit <= baEnum.ASN1_MAX_INSTANCE) && (highLimit >= 0) && (highLimit <= baEnum.ASN1_MAX_INSTANCE)) {
     baAsn1.encodeContextUnsigned(buffer, 0, lowLimit);
     baAsn1.encodeContextUnsigned(buffer, 1, highLimit);
@@ -15,10 +16,10 @@ module.exports.encode = (buffer, lowLimit, highLimit, objectId, objectName) => {
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  const value = {};
-  let decodedValue;
+  const value: any = {};
+  let decodedValue: any;
   let result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber === 0) {
