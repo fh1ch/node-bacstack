@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID } from '../types';
 
-module.exports.encode = (buffer, isStream, objectId, position, count) => {
+export const encode = (buffer: EncodeBuffer, isStream: boolean, objectId: BACNetObjectID, position: number, count: number) => {
   baAsn1.encodeApplicationObjectId(buffer, objectId.type, objectId.instance);
   if (isStream) {
     baAsn1.encodeOpeningTag(buffer, 0);
@@ -18,7 +19,7 @@ module.exports.encode = (buffer, isStream, objectId, position, count) => {
   }
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len = 0;
   let result;
   let decodedValue;
@@ -78,7 +79,7 @@ module.exports.decode = (buffer, offset) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, isStream, endOfFile, position, blockCount, blocks, counts) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, isStream: boolean, endOfFile: boolean, position: number, blockCount: number, blocks: number[][], counts: number[]) => {
   baAsn1.encodeApplicationBoolean(buffer, endOfFile);
   if (isStream) {
     baAsn1.encodeOpeningTag(buffer, 0);
@@ -96,13 +97,13 @@ module.exports.encodeAcknowledge = (buffer, isStream, endOfFile, position, block
   }
 };
 
-module.exports.decodeAcknowledge = (buffer, offset) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  let isStream;
-  let position;
-  let targetBuffer;
+  let result: any;
+  let decodedValue: any;
+  let isStream: boolean;
+  let position: number;
+  let targetBuffer: Buffer;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== baEnum.ApplicationTags.BOOLEAN) return;
