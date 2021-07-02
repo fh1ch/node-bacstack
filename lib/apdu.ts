@@ -1,16 +1,17 @@
 'use strict';
 
-const baEnum = require('./enum');
+import * as baEnum from './enum';
+import { EncodeBuffer } from './types';
 
-const getDecodedType = module.exports.getDecodedType = (buffer, offset) => {
+export const getDecodedType = (buffer: Buffer, offset: number) => {
   return buffer[offset];
 };
 
-module.exports.setDecodedType = (buffer, offset, type) => {
+export const setDecodedType = (buffer: Buffer, offset: number, type: number) => {
   buffer[offset] = type;
 };
 
-module.exports.getDecodedInvokeId = (buffer, offset) => {
+export const getDecodedInvokeId = (buffer: Buffer, offset: number) => {
   const type = getDecodedType(buffer, offset);
   switch (type & baEnum.PDU_TYPE_MASK) {
     case baEnum.PduTypes.SIMPLE_ACK:
@@ -26,7 +27,7 @@ module.exports.getDecodedInvokeId = (buffer, offset) => {
   }
 };
 
-module.exports.encodeConfirmedServiceRequest = (buffer, type, service, maxSegments, maxApdu, invokeId, sequencenumber, proposedWindowSize) => {
+export const encodeConfirmedServiceRequest = (buffer: EncodeBuffer, type: number, service: number, maxSegments: number, maxApdu: number, invokeId: number, sequencenumber?: number, proposedWindowSize?: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = maxSegments | maxApdu;
   buffer.buffer[buffer.offset++] = invokeId;
@@ -37,7 +38,7 @@ module.exports.encodeConfirmedServiceRequest = (buffer, type, service, maxSegmen
   buffer.buffer[buffer.offset++] = service;
 };
 
-module.exports.decodeConfirmedServiceRequest = (buffer, offset) => {
+export const decodeConfirmedServiceRequest = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const maxSegments = buffer[offset] & 0xF0;
@@ -62,12 +63,12 @@ module.exports.decodeConfirmedServiceRequest = (buffer, offset) => {
   };
 };
 
-module.exports.encodeUnconfirmedServiceRequest = (buffer, type, service) => {
+export const encodeUnconfirmedServiceRequest = (buffer: EncodeBuffer, type: number, service: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = service;
 };
 
-module.exports.decodeUnconfirmedServiceRequest = (buffer, offset) => {
+export const decodeUnconfirmedServiceRequest = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const service = buffer[offset++];
@@ -78,13 +79,13 @@ module.exports.decodeUnconfirmedServiceRequest = (buffer, offset) => {
   };
 };
 
-module.exports.encodeSimpleAck = (buffer, type, service, invokeId) => {
+export const encodeSimpleAck = (buffer: EncodeBuffer, type: number, service: number, invokeId: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = invokeId;
   buffer.buffer[buffer.offset++] = service;
 };
 
-module.exports.decodeSimpleAck = (buffer, offset) => {
+export const decodeSimpleAck = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const invokeId = buffer[offset++];
@@ -97,7 +98,7 @@ module.exports.decodeSimpleAck = (buffer, offset) => {
   };
 };
 
-module.exports.encodeComplexAck = (buffer, type, service, invokeId, sequencenumber, proposedWindowNumber) => {
+export const encodeComplexAck = (buffer: EncodeBuffer, type: number, service: number, invokeId: number, sequencenumber?: number, proposedWindowNumber?: number) => {
   let len = 3;
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = invokeId;
@@ -110,7 +111,7 @@ module.exports.encodeComplexAck = (buffer, type, service, invokeId, sequencenumb
   return len;
 };
 
-module.exports.decodeComplexAck = (buffer, offset) => {
+export const decodeComplexAck = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const invokeId = buffer[offset++];
@@ -131,14 +132,14 @@ module.exports.decodeComplexAck = (buffer, offset) => {
   };
 };
 
-module.exports.encodeSegmentAck = (buffer, type, originalInvokeId, sequencenumber, actualWindowSize) => {
+export const encodeSegmentAck = (buffer: EncodeBuffer, type: number, originalInvokeId: number, sequencenumber: number, actualWindowSize: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = originalInvokeId;
   buffer.buffer[buffer.offset++] = sequencenumber;
   buffer.buffer[buffer.offset++] = actualWindowSize;
 };
 
-module.exports.decodeSegmentAck = (buffer, offset) => {
+export const decodeSegmentAck = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const originalInvokeId = buffer[offset++];
@@ -153,13 +154,13 @@ module.exports.decodeSegmentAck = (buffer, offset) => {
   };
 };
 
-module.exports.encodeError = (buffer, type, service, invokeId) => {
+export const encodeError = (buffer: EncodeBuffer, type: number, service: number, invokeId: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = invokeId;
   buffer.buffer[buffer.offset++] = service;
 };
 
-module.exports.decodeError = (buffer, offset) => {
+export const decodeError = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const invokeId = buffer[offset++];
@@ -172,13 +173,13 @@ module.exports.decodeError = (buffer, offset) => {
   };
 };
 
-module.exports.encodeAbort = (buffer, type, invokeId, reason) => {
+export const encodeAbort = (buffer: EncodeBuffer, type: number, invokeId: number, reason: number) => {
   buffer.buffer[buffer.offset++] = type;
   buffer.buffer[buffer.offset++] = invokeId;
   buffer.buffer[buffer.offset++] = reason;
 };
 
-module.exports.decodeAbort = (buffer, offset) => {
+export const decodeAbort = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
   const type = buffer[offset++];
   const invokeId = buffer[offset++];
