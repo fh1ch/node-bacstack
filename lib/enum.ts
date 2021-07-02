@@ -1,22 +1,22 @@
 'use strict';
 
-module.exports.PDU_TYPE_MASK = 0xF0;
-module.exports.ASN1_MAX_OBJECT = 0x3FF;
-module.exports.ASN1_INSTANCE_BITS = 22;
-module.exports.ASN1_MAX_INSTANCE = 0x3FFFFF;
-module.exports.ASN1_MAX_BITSTRING_BYTES = 15;
-module.exports.ASN1_ARRAY_ALL = 0xFFFFFFFF;
-module.exports.ASN1_NO_PRIORITY = 0;
-module.exports.ASN1_MIN_PRIORITY = 1;
-module.exports.ASN1_MAX_PRIORITY = 16;
-module.exports.ASN1_MAX_APPLICATION_TAG = 16;
-module.exports.ASN1_MAX_OBJECT_TYPE = 1024;
-module.exports.ASN1_MAX_PROPERTY_ID = 4194303;
-module.exports.BVLL_TYPE_BACNET_IP = 0x81;
-module.exports.BVLC_HEADER_LENGTH = 4;
+export const PDU_TYPE_MASK = 0xF0;
+export const ASN1_MAX_OBJECT = 0x3FF;
+export const ASN1_INSTANCE_BITS = 22;
+export const ASN1_MAX_INSTANCE = 0x3FFFFF;
+export const ASN1_MAX_BITSTRING_BYTES = 15;
+export const ASN1_ARRAY_ALL = 0xFFFFFFFF;
+export const ASN1_NO_PRIORITY = 0;
+export const ASN1_MIN_PRIORITY = 1;
+export const ASN1_MAX_PRIORITY = 16;
+export const ASN1_MAX_APPLICATION_TAG = 16;
+export const ASN1_MAX_OBJECT_TYPE = 1024;
+export const ASN1_MAX_PROPERTY_ID = 4194303;
+export const BVLL_TYPE_BACNET_IP = 0x81;
+export const BVLC_HEADER_LENGTH = 4;
 
 // ASHRE 135-2016 - 21 FORMAL DESCRIPTION OF APPLICATION PROTOCOL DATA UNITS - Enumerators
-module.exports.ConfirmedServiceChoice = {
+export const ConfirmedServiceChoice = {
   ACKNOWLEDGE_ALARM: 0,
   CONFIRMED_COV_NOTIFICATION: 1,
   CONFIRMED_EVENT_NOTIFICATION: 2,
@@ -48,7 +48,7 @@ module.exports.ConfirmedServiceChoice = {
   CONFIRMED_COV_NOTIFICATION_MULTIPLE: 31
 };
 
-module.exports.UnconfirmedServiceChoice = {
+export const UnconfirmedServiceChoice = {
   I_AM: 0,
   I_HAVE: 1,
   UNCONFIRMED_COV_NOTIFICATION: 2,
@@ -63,7 +63,7 @@ module.exports.UnconfirmedServiceChoice = {
   UNCONFIRMED_COV_NOTIFICATION_MULTIPLE: 11
 };
 
-module.exports.AbortReason = {
+export const AbortReason = {
   OTHER: 0,
   BUFFER_OVERFLOW: 1,
   INVALID_APDU_IN_THIS_STATE: 2,
@@ -78,7 +78,7 @@ module.exports.AbortReason = {
   APDU_TOO_LONG: 11
 };
 
-module.exports.RejectReason = {
+export const RejectReason = {
   OTHER: 0,
   BUFFER_OVERFLOW: 1,
   INCONSISTENT_PARAMETERS: 2,
@@ -91,7 +91,7 @@ module.exports.RejectReason = {
   UNRECOGNIZED_SERVICE: 9
 };
 
-module.exports.ErrorClass = {
+export const ErrorClass = {
   DEVICE: 0,
   OBJECT: 1,
   PROPERTY: 2,
@@ -102,7 +102,7 @@ module.exports.ErrorClass = {
   COMMUNICATION: 7
 };
 
-module.exports.ErrorCode = {
+export const ErrorCode = {
   ABORT_APDU_TOO_LONG: 123,
   ABORT_APPLICATION_EXCEEDED_REPLY_TIME: 124,
   ABORT_BUFFER_OVERFLOW: 51,
@@ -238,7 +238,7 @@ module.exports.ErrorCode = {
   WRITE_BDT_FAILED: 116
 };
 
-module.exports.AccessAuthenticationFactorDisable = {
+export const AccessAuthenticationFactorDisable = {
   NONE: 0,
   DISABLED: 1,
   DISABLED_LOST: 2,
@@ -247,14 +247,14 @@ module.exports.AccessAuthenticationFactorDisable = {
   DISABLED_DESTROYED: 5
 };
 
-module.exports.AccessCredentialDisable = {
+export const AccessCredentialDisable = {
   NONE: 0,
   DISABLE: 1,
   DISABLE_MANUAL: 2,
   DISABLE_LOCKOUT: 3
 };
 
-module.exports.AccessCredentialDisableReason = {
+export const AccessCredentialDisableReason = {
   DISABLED: 0,
   DISABLED_NEEDS_PROVISIONING: 1,
   DISABLED_UNASSIGNED: 2,
@@ -267,7 +267,7 @@ module.exports.AccessCredentialDisableReason = {
   DISABLED_MANUAL: 9
 };
 
-module.exports.AccessEvent = {
+export const AccessEvent = {
   NONE: 0,
   GRANTED: 1,
   MUSTER: 2,
@@ -324,19 +324,19 @@ module.exports.AccessEvent = {
   DENIED_OTHER: 164
 };
 
-module.exports.AccessPassbackMode = {
+export const AccessPassbackMode = {
   PASSBACK_OFF: 0,
   HARD_PASSBACK: 1,
   SOFT_PASSBACK: 2
 };
 
-module.exports.AccessUserType = {
+export const AccessUserType = {
   ASSET: 0,
   GROUP: 1,
   PERSON: 2
 };
 
-module.exports.AccessZoneOccupancyState = {
+export const AccessZoneOccupancyState = {
   NORMAL: 0,
   BELOW_LOWER_LIMIT: 1,
   AT_LOWER_LIMIT: 2,
@@ -346,12 +346,12 @@ module.exports.AccessZoneOccupancyState = {
   NOT_SUPPORTED: 6
 };
 
-module.exports.Action = {
+export const Action = {
   DIRECT: 0,
   REVERSE: 1
 };
 
-module.exports.AuthenticationFactorType = {
+export const AuthenticationFactorType = {
   UNDEFINED: 0,
   ERROR: 1,
   CUSTOM: 2,
@@ -379,7 +379,7 @@ module.exports.AuthenticationFactorType = {
   USER_PASSWORD: 24
 };
 
-module.exports.AuthenticationStatus = {
+export const AuthenticationStatus = {
   NOT_READY: 0,
   READY: 1, DISABLED: 2,
   WAITING_FOR_AUTHENTICATION_FACTOR: 3,
@@ -388,7 +388,7 @@ module.exports.AuthenticationStatus = {
   IN_PROGRESS: 6
 };
 
-module.exports.AuthorizationExemption = {
+export const AuthorizationExemption = {
   PASSBACK: 0,
   OCCUPANCY_CHECK: 1,
   ACCESS_RIGHTS: 2,
@@ -398,7 +398,7 @@ module.exports.AuthorizationExemption = {
   AUTHORIZATION_DELAY: 6
 };
 
-module.exports.AuthorizationMode = {
+export const AuthorizationMode = {
   AUTHORIZE: 0,
   GRANT_ACTIVE: 1,
   DENY_ALL: 2,
@@ -407,7 +407,7 @@ module.exports.AuthorizationMode = {
   NONE: 5
 };
 
-module.exports.BackupState = {
+export const BackupState = {
   IDLE: 0,
   PREPARING_FOR_BACKUP: 1,
   PREPARING_FOR_RESTORE: 2,
@@ -417,7 +417,7 @@ module.exports.BackupState = {
   RESTORE_FAILURE: 6
 };
 
-module.exports.BinaryLightingPV = {
+export const BinaryLightingPV = {
   OFF: 0,
   ON: 1,
   WARN: 2,
@@ -426,12 +426,12 @@ module.exports.BinaryLightingPV = {
   STOP: 5
 };
 
-module.exports.BinaryPV = {
+export const BinaryPV = {
   INACTIVE: 0,
   ACTIVE: 1
 };
 
-module.exports.DeviceStatus = {
+export const DeviceStatus = {
   OPERATIONAL: 0,
   OPERATIONAL_READ_ONLY: 1,
   DOWNLOAD_REQUIRED: 2,
@@ -440,7 +440,7 @@ module.exports.DeviceStatus = {
   BACKUP_IN_PROGRESS: 5
 };
 
-module.exports.DoorAlarmState = {
+export const DoorAlarmState = {
   NORMAL: 0,
   ALARM: 1,
   DOOR_OPEN_TOO_LONG: 2,
@@ -452,13 +452,13 @@ module.exports.DoorAlarmState = {
   EGRESS_OPEN: 8
 };
 
-module.exports.DoorSecuredStatus = {
+export const DoorSecuredStatus = {
   SECURED: 0,
   UNSECURED: 1,
   UNKNOWN: 2
 };
 
-module.exports.DoorStatus = {
+export const DoorStatus = {
   CLOSED: 0,
   OPENED: 1,
   UNKNOWN: 2,
@@ -471,14 +471,14 @@ module.exports.DoorStatus = {
   LIMITED_OPENED: 9
 };
 
-module.exports.DoorValue = {
+export const DoorValue = {
   LOCK: 0,
   UNLOCK: 1,
   PULSE_UNLOCK: 2,
   EXTENDED_PULSE_UNLOCK: 3
 };
 
-module.exports.EngineeringUnits = {
+export const EngineeringUnits = {
   METERS_PER_SECOND_PER_SECOND: 166,
   SQUARE_METERS: 0,
   SQUARE_CENTIMETERS: 116,
@@ -743,7 +743,7 @@ module.exports.EngineeringUnits = {
   MINUTES_PER_DEGREE_KELVIN: 236
 };
 
-module.exports.EscalatorFault = {
+export const EscalatorFault = {
   CONTROLLER_FAULT: 0,
   DRIVE_AND_MOTOR_FAULT: 1,
   MECHANICAL_COMPONENT_FAULT: 2,
@@ -755,7 +755,7 @@ module.exports.EscalatorFault = {
   COMB_PLATE_FAULT: 8
 };
 
-module.exports.EscalatorMode = {
+export const EscalatorMode = {
   UNKNOWN: 0,
   STOP: 1,
   UP: 2,
@@ -764,7 +764,7 @@ module.exports.EscalatorMode = {
   OUT_OF_SERVICE: 5
 };
 
-module.exports.EscalatorOperationDirection = {
+export const EscalatorOperationDirection = {
   UNKNOWN: 0,
   STOPPED: 1,
   UP_RATED_SPEED: 2,
@@ -773,7 +773,7 @@ module.exports.EscalatorOperationDirection = {
   DOWN_REDUCED_SPEED: 5
 };
 
-module.exports.EventState = {
+export const EventState = {
   NORMAL: 0,
   FAULT: 1,
   OFFNORMAL: 2,
@@ -782,7 +782,7 @@ module.exports.EventState = {
   LIFE_SAFETY_ALARM: 5
 };
 
-module.exports.EventType = {
+export const EventType = {
   CHANGE_OF_BITSTRING: 0,
   CHANGE_OF_STATE: 1,
   CHANGE_OF_VALUE: 2,
@@ -806,7 +806,7 @@ module.exports.EventType = {
   CHANGE_OF_TIMER: 22
 };
 
-module.exports.FaultType = {
+export const FaultType = {
   NONE: 0,
   FAULT_CHARACTERSTRING: 1,
   FAULT_EXTENDED: 2,
@@ -817,18 +817,18 @@ module.exports.FaultType = {
   FAULT_LISTED: 7
 };
 
-module.exports.FileAccessMethod = {
+export const FileAccessMethod = {
   RECORD_ACCESS: 0,
   STREAM_ACCESS: 1
 };
 
-module.exports.IPMode = {
+export const IPMode = {
   NORMAL: 0,
   FOREIGN: 1,
   BBMD: 2
 };
 
-module.exports.LifeSafetyMode = {
+export const LifeSafetyMode = {
   OFF: 0,
   ON: 1,
   TEST: 2,
@@ -846,7 +846,7 @@ module.exports.LifeSafetyMode = {
   DEFAULT: 14
 };
 
-module.exports.LifeSafetyOperation = {
+export const LifeSafetyOperation = {
   NONE: 0,
   SILENCE: 1,
   SILENCE_AUDIBLE: 2,
@@ -859,7 +859,7 @@ module.exports.LifeSafetyOperation = {
   UNSILENCE_VISUAL: 9
 };
 
-module.exports.LifeSafetyState = {
+export const LifeSafetyState = {
   QUIET: 0,
   PRE_ALARM: 1,
   ALARM: 2,
@@ -886,7 +886,7 @@ module.exports.LifeSafetyState = {
   TEST_SUPERVISORY: 23
 };
 
-module.exports.LiftCarDirection = {
+export const LiftCarDirection = {
   UNKNOWN: 0,
   NONE: 1,
   STOPPED: 2,
@@ -895,13 +895,13 @@ module.exports.LiftCarDirection = {
   UP_AND_DOWN: 5
 };
 
-module.exports.LiftCarDoorCommand = {
+export const LiftCarDoorCommand = {
   NONE: 0,
   OPEN: 1,
   CLOSE: 2
 };
 
-module.exports.LiftCarDriveStatus = {
+export const LiftCarDriveStatus = {
   UNKNOWN: 0,
   STATIONARY: 1,
   BRAKING: 2,
@@ -914,7 +914,7 @@ module.exports.LiftCarDriveStatus = {
   MULTI_FLOOR_JUMP: 9
 };
 
-module.exports.LiftCarMode = {
+export const LiftCarMode = {
   UNKNOWN: 0,
   NORMAL: 1,
   VIP: 2,
@@ -931,7 +931,7 @@ module.exports.LiftCarMode = {
   OCCUPANT_EVACUATION: 13
 };
 
-module.exports.LiftFault = {
+export const LiftFault = {
   CONTROLLER_FAULT: 0,
   DRIVE_AND_MOTOR_FAULT: 1,
   GOVERNOR_AND_SAFETY_GEAR_FAULT: 2,
@@ -951,7 +951,7 @@ module.exports.LiftFault = {
   LOAD_MEASUREMENT_FAULT: 16
 };
 
-module.exports.LiftGroupMode = {
+export const LiftGroupMode = {
   UNKNOWN: 0,
   NORMAL: 1,
   DOWN_PEAK: 2,
@@ -961,7 +961,7 @@ module.exports.LiftGroupMode = {
   UP_PEAK: 6
 };
 
-module.exports.LightingInProgress = {
+export const LightingInProgress = {
   IDLE: 0,
   FADE_ACTIVE: 1,
   RAMP_ACTIVE: 2,
@@ -969,7 +969,7 @@ module.exports.LightingInProgress = {
   OTHER: 4
 };
 
-module.exports.LightingOperation = {
+export const LightingOperation = {
   NONE: 0,
   FADE_TO: 1,
   RAMP_TO: 2,
@@ -983,13 +983,13 @@ module.exports.LightingOperation = {
   STOP: 10
 };
 
-module.exports.LightingTransition = {
+export const LightingTransition = {
   NONE: 0,
   FADE: 1,
   RAMP: 2
 };
 
-module.exports.LockStatus = {
+export const LockStatus = {
   LOCKED: 0,
   UNLOCKED: 1,
   LOCK_FAULT: 2,
@@ -997,27 +997,27 @@ module.exports.LockStatus = {
   UNKNOWN: 4
 };
 
-module.exports.LoggingType = {
+export const LoggingType = {
   POLLED: 0,
   COV: 1,
   TRIGGERED: 2
 };
 
-module.exports.Maintenance = {
+export const Maintenance = {
   NONE: 0,
   PERIODIC_TEST: 1,
   NEED_SERVICE_OPERATIONAL: 2,
   NEED_SERVICE_INOPERATIVE: 3
 };
 
-module.exports.NetworkNumberQuality = {
+export const NetworkNumberQuality = {
   UNKNOWN: 0,
   LEARNED: 1,
   LEARNED_CONFIGURED: 2,
   CONFIGURED: 3
 };
 
-module.exports.NetworkPortCommand = {
+export const NetworkPortCommand = {
   IDLE: 0,
   DISCARD_CHANGES: 1,
   RENEW_FD_REGISTRATION: 2,
@@ -1028,7 +1028,7 @@ module.exports.NetworkPortCommand = {
   RESTART_PORT: 7
 };
 
-module.exports.NetworkType = {
+export const NetworkType = {
   ETHERNET: 0,
   ARCNET: 1,
   MSTP: 2,
@@ -1041,7 +1041,7 @@ module.exports.NetworkType = {
   SERIAL: 10
 };
 
-module.exports.NodeType = {
+export const NodeType = {
   UNKNOWN: 0,
   SYSTEM: 1,
   NETWORK: 2,
@@ -1066,13 +1066,13 @@ module.exports.NodeType = {
   ZONE: 21
 };
 
-module.exports.NotifyType = {
+export const NotifyType = {
   ALARM: 0,
   EVENT: 1,
   ACK_NOTIFICATION: 2
 };
 
-module.exports.ObjectType = {
+export const ObjectType = {
   ACCESS_CREDENTIAL: 32,
   ACCESS_DOOR: 30,
   ACCESS_POINT: 33,
@@ -1135,12 +1135,12 @@ module.exports.ObjectType = {
   TREND_LOG_MULTIPLE: 27
 };
 
-module.exports.Polarity = {
+export const Polarity = {
   NORMAL: 0,
   REVERSE: 1
 };
 
-module.exports.ProgramError = {
+export const ProgramError = {
   NORMAL: 0,
   LOAD_FAILED: 1,
   INTERNAL: 2,
@@ -1148,7 +1148,7 @@ module.exports.ProgramError = {
   OTHER: 4
 };
 
-module.exports.ProgramRequest = {
+export const ProgramRequest = {
   READY: 0,
   LOAD: 1,
   RUN: 2,
@@ -1157,7 +1157,7 @@ module.exports.ProgramRequest = {
   UNLOAD: 5
 };
 
-module.exports.ProgramState = {
+export const ProgramState = {
   IDLE: 0,
   LOADING: 1,
   RUNNING: 2,
@@ -1166,7 +1166,7 @@ module.exports.ProgramState = {
   UNLOADING: 5
 };
 
-module.exports.PropertyIdentifier = {
+export const PropertyIdentifier = {
   ABSENTEE_LIMIT: 244,
   ACCEPTED_MODES: 175,
   ACCESS_ALARM_EVENTS: 245,
@@ -1624,14 +1624,14 @@ module.exports.PropertyIdentifier = {
   ZONE_TO: 321
 };
 
-module.exports.ProtocolLevel = {
+export const ProtocolLevel = {
   PHYSICAL: 0,
   PROTOCOL: 1,
   BACNET_APPLICATION: 2,
   NON_BACNET_APPLICATION: 3
 };
 
-module.exports.Relationship = {
+export const Relationship = {
   UNKNOWN: 0,
   DEFAULT: 1,
   CONTAINS: 2,
@@ -1664,7 +1664,7 @@ module.exports.Relationship = {
   RECEIVES_STEAM: 29
 };
 
-module.exports.Reliability = {
+export const Reliability = {
   NO_FAULT_DETECTED: 0,
   NO_SENSOR: 1,
   OVER_RANGE: 2,
@@ -1691,7 +1691,7 @@ module.exports.Reliability = {
   REFERENCED_OBJECT_FAULT: 24
 };
 
-module.exports.RestartReason = {
+export const RestartReason = {
   UNKNOWN: 0,
   COLDSTART: 1,
   WARMSTART: 2,
@@ -1703,7 +1703,7 @@ module.exports.RestartReason = {
   ACTIVATE_CHANGES: 8
 };
 
-module.exports.SecurityLevel = {
+export const SecurityLevel = {
   INCAPABLE: 0,
   PLAIN: 1,
   SIGNED: 2,
@@ -1712,41 +1712,41 @@ module.exports.SecurityLevel = {
   ENCRYPTED_END_TO_END: 5
 };
 
-module.exports.SecurityPolicy = {
+export const SecurityPolicy = {
   PLAIN_NON_TRUSTED: 0,
   PLAIN_TRUSTED: 1,
   SIGNED_TRUSTED: 2,
   ENCRYPTED_TRUSTED: 3
 };
 
-module.exports.Segmentation = {
+export const Segmentation = {
   SEGMENTED_BOTH: 0,
   SEGMENTED_TRANSMIT: 1,
   SEGMENTED_RECEIVE: 2,
   NO_SEGMENTATION: 3
 };
 
-module.exports.ShedState = {
+export const ShedState = {
   SHED_INACTIVE: 0,
   SHED_REQUEST_PENDING: 1,
   SHED_COMPLIANT: 2,
   SHED_NON_COMPLIANT: 3
 };
 
-module.exports.SilencedState = {
+export const SilencedState = {
   UNSILENCED: 0,
   AUDIBLE_SILENCED: 1,
   VISIBLE_SILENCED: 2,
   ALL_SILENCED: 3
 };
 
-module.exports.TimerState = {
+export const TimerState = {
   IDLE: 0,
   RUNNING: 1,
   EXPIRED: 2
 };
 
-module.exports.TimerTransition = {
+export const TimerTransition = {
   NONE: 0,
   IDLE_TO_RUNNING: 1,
   RUNNING_TO_IDLE: 2,
@@ -1757,7 +1757,7 @@ module.exports.TimerTransition = {
   EXPIRED_TO_RUNNING: 7
 };
 
-module.exports.VTClass = {
+export const VTClass = {
   DEFAULT_TERMINAL: 0,
   ANSI_X3_64: 1,
   DEC_VT52: 2,
@@ -1767,7 +1767,7 @@ module.exports.VTClass = {
   IBM_3130: 6
 };
 
-module.exports.WriteStatus = {
+export const WriteStatus = {
   IDLE: 0,
   IN_PROGRESS: 1,
   SUCCESSFUL: 2,
@@ -1775,7 +1775,7 @@ module.exports.WriteStatus = {
 };
 
 // ASHRE 135-2016 - 21 FORMAL DESCRIPTION OF APPLICATION PROTOCOL DATA UNITS - Bitstrings
-module.exports.DaysOfWeek = {
+export const DaysOfWeek = {
   MONDAY: 0,
   TUESDAY: 1,
   WEDNESDAY: 2,
@@ -1785,24 +1785,24 @@ module.exports.DaysOfWeek = {
   SUNDAY: 6
 };
 
-module.exports.EventTransitionBits = {
+export const EventTransitionBits = {
   TO_OFFNORMAL: 0,
   TO_FAULT: 1,
   TO_NORMAL: 2
 };
 
-module.exports.LimitEnable = {
+export const LimitEnable = {
   LOW_LIMIT_ENABLE: 0,
   HIGH_LIMIT_ENABLE: 1
 };
 
-module.exports.LogStatus = {
+export const LogStatus = {
   LOG_DISABLED: 0,
   BUFFER_PURGED: 1,
   LOG_INTERRUPTED: 2
 };
 
-module.exports.ObjectTypesSupported = {
+export const ObjectTypesSupported = {
   ANALOG_INPUT: 0,
   ANALOG_OUTPUT: 1,
   ANALOG_VALUE: 2,
@@ -1865,13 +1865,13 @@ module.exports.ObjectTypesSupported = {
   LIFT: 59
 };
 
-module.exports.ResultFlags = {
+export const ResultFlags = {
   FIRST_ITEM: 0,
   LAST_ITEM: 1,
   MORE_ITEMS: 2
 };
 
-module.exports.ServicesSupported = {
+export const ServicesSupported = {
   ACKNOWLEDGE_ALARM: 0,
   CONFIRMED_COV_NOTIFICATION: 1,
   CONFIRMED_EVENT_NOTIFICATION: 2,
@@ -1918,7 +1918,7 @@ module.exports.ServicesSupported = {
   UNCONFIRMED_COV_NOTIFICATION_MULTIPLE: 43
 };
 
-module.exports.StatusFlags = {
+export const StatusFlags = {
   IN_ALARM: 0,
   FAULT: 1,
   OVERRIDDEN: 2,
@@ -1930,7 +1930,7 @@ module.exports.StatusFlags = {
  * @readonly
  * @enum {ApplicationTags}
  */
-module.exports.ApplicationTags = {
+export const ApplicationTags = {
   NULL: 0,
   BOOLEAN: 1,
   UNSIGNED_INTEGER: 2,
@@ -1969,7 +1969,7 @@ module.exports.ApplicationTags = {
 };
 
 // ASHRE 135-2016 - J.2.1.1 BVLC-Result: Format - Enumerators
-module.exports.BvlcResultFormat = {
+export const BvlcResultFormat = {
   SUCCESSFUL_COMPLETION: 0x0000,
   WRITE_BROADCAST_DISTRIBUTION_TABLE_NAK: 0x0010,
   READ_BROADCAST_DISTRIBUTION_TABLE_NAK: 0x0020,
@@ -1980,7 +1980,7 @@ module.exports.BvlcResultFormat = {
 };
 
 // ASHRE 135-2016 - J.2.1 BVLC-Result: Purpose - Enumerators
-module.exports.BvlcResultPurpose = {
+export const BvlcResultPurpose = {
   BVLC_RESULT: 0x00,
   WRITE_BROADCAST_DISTRIBUTION_TABLE: 0x01,
   READ_BROADCAST_DISTRIBUTION_TABLE: 0x02,
@@ -1997,7 +1997,7 @@ module.exports.BvlcResultPurpose = {
 };
 
 // ASHRE 135-2016 - 20.2.9 Encoding of a Character String Value - Enumerators
-module.exports.CharacterStringEncoding = {
+export const CharacterStringEncoding = {
   UTF_8: 0,
   MICROSOFT_DBCS: 1,
   JIS_X_0208: 2,
@@ -2007,7 +2007,7 @@ module.exports.CharacterStringEncoding = {
 };
 
 // ASHRE 135-2016 - 13.3.3 CHANGE_OF_VALUE Event Algorithm - Internal
-module.exports.CovTypes = {
+export const CovTypes = {
   REAL: 0,
   BIT_STRING: 1
 };
@@ -2017,7 +2017,7 @@ module.exports.CovTypes = {
  * @readonly
  * @enum {EnableDisable}
  */
-module.exports.EnableDisable = {
+export const EnableDisable = {
   ENABLE: 0,
   DISABLE: 1,
   DISABLE_INITIATION: 2
@@ -2028,7 +2028,7 @@ module.exports.EnableDisable = {
  * @readonly
  * @enum {MaxApduLengthAccepted}
  */
-module.exports.MaxApduLengthAccepted = {
+export const MaxApduLengthAccepted = {
   OCTETS_50: 0b0000,
   OCTETS_128: 0b0001,
   OCTETS_206: 0b0010,
@@ -2042,7 +2042,7 @@ module.exports.MaxApduLengthAccepted = {
  * @readonly
  * @enum {MaxSegmentsAccepted}
  */
-module.exports.MaxSegmentsAccepted = {
+export const MaxSegmentsAccepted = {
   SEGMENTS_0: (0b000 << 4),
   SEGMENTS_2: (0b001 << 4),
   SEGMENTS_4: (0b010 << 4),
@@ -2054,7 +2054,7 @@ module.exports.MaxSegmentsAccepted = {
 };
 
 // ASHRE 135-2016 - 6.2.4 Network Layer Message Type - Enumerators
-module.exports.NetworkLayerMessageType = {
+export const NetworkLayerMessageType = {
   WHO_IS_ROUTER_TO_NETWORK: 0x00,
   I_AM_ROUTER_TO_NETWORK: 0x01,
   I_COULD_BE_ROUTER_TO_NETWORK: 0x02,
@@ -2078,7 +2078,7 @@ module.exports.NetworkLayerMessageType = {
 };
 
 // ASHRE 135-2016 - 6.2.2 Network Layer Protocol Control Information - Enumerators
-module.exports.NpduControlBits = {
+export const NpduControlBits = {
   EXPECTING_REPLY: (1 << 2),
   SOURCE_SPECIFIED: (1 << 3),
   DESTINATION_SPECIFIED: (1 << 5),
@@ -2086,7 +2086,7 @@ module.exports.NpduControlBits = {
 };
 
 // ASHRE 135-2016 - 6.2.2 Network Layer Protocol Control Information - Enumerators
-module.exports.NpduControlPriority = {
+export const NpduControlPriority = {
   NORMAL_MESSAGE: 0b00,
   URGENT_MESSAGE: 0b01,
   CRITICAL_EQUIPMENT_MESSAGE: 0b10,
@@ -2094,20 +2094,20 @@ module.exports.NpduControlPriority = {
 };
 
 // ASHRE 135-2016 - 20.1.2.11 Format of the BACnet-Confirmed-Request-PDU - Enumerators
-module.exports.PduConReqBits = {
+export const PduConReqBits = {
   SEGMENTED_RESPONSE_ACCEPTED: (1 << 1),
   MORE_FOLLOWS: (1 << 2),
   SEGMENTED_MESSAGE: (1 << 3)
 };
 
 // ASHRE 135-2016 - 20.1.6.6 Format of the BACnet-SegmentACK-PDU - Enumerators
-module.exports.PduSegAckBits = {
+export const PduSegAckBits = {
   SERVER: (1 << 0),
   NEGATIVE_ACK: (1 << 1)
 };
 
 // ASHRE 135-2016 - 21 FORMAL DESCRIPTION OF APPLICATION PROTOCOL DATA UNITS - Enumerators
-module.exports.PduTypes = {
+export const PduTypes = {
   CONFIRMED_REQUEST: (0 << 4),
   UNCONFIRMED_REQUEST: (1 << 4),
   SIMPLE_ACK: (2 << 4),
@@ -2119,7 +2119,7 @@ module.exports.PduTypes = {
 };
 
 // ASHRE 135-2016 - 21 FORMAL DESCRIPTION OF APPLICATION PROTOCOL DATA UNITS - Enumerators
-module.exports.PropertyStates = {
+export const PropertyStates = {
   BOOLEAN_VALUE: 0,
   BINARY_VALUE: 1,
   EVENT_TYPE: 2,
@@ -2181,7 +2181,7 @@ module.exports.PropertyStates = {
 };
 
 // ASHRE 135-2016 - 15.8.1.1.4 Range - Internal
-module.exports.ReadRangeType = {
+export const ReadRangeType = {
   BY_POSITION: 0,
   BY_SEQUENCE_NUMBER: 1,
   BY_TIME_REFERENCE_TIME_COUNT: 2
@@ -2192,7 +2192,7 @@ module.exports.ReadRangeType = {
  * @readonly
  * @enum {ReinitializedState}
  */
-module.exports.ReinitializedState = {
+export const ReinitializedState = {
   COLDSTART: 0,
   WARMSTART: 1,
   STARTBACKUP: 2,
@@ -2204,7 +2204,7 @@ module.exports.ReinitializedState = {
 };
 
 // ASHRE 135-2016 - 21 FORMAL DESCRIPTION OF APPLICATION PROTOCOL DATA UNITS - Internal
-module.exports.TimeStamp = {
+export const TimeStamp = {
   TIME: 0,
   SEQUENCE_NUMBER: 1,
   DATETIME: 2
