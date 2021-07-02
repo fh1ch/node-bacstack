@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID } from '../types';
 
-module.exports.encode = (buffer, ackProcessId, eventObjectId, eventStateAcknowledged, ackSource, eventTimeStamp, ackTimeStamp) => {
+export const encode = (buffer: EncodeBuffer, ackProcessId: number, eventObjectId: BACNetObjectID, eventStateAcknowledged: number, ackSource: string, eventTimeStamp: any, ackTimeStamp: any) => {
   baAsn1.encodeContextUnsigned(buffer, 0, ackProcessId);
   baAsn1.encodeContextObjectId(buffer, 1, eventObjectId.type, eventObjectId.instance);
   baAsn1.encodeContextEnumerated(buffer, 2, eventStateAcknowledged);
@@ -12,13 +13,11 @@ module.exports.encode = (buffer, ackProcessId, eventObjectId, eventStateAcknowle
   baAsn1.bacappEncodeContextTimestamp(buffer, 5, ackTimeStamp);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  const value = {};
-  let result;
-  let decodedValue;
-  let date;
-  let time;
+  const value: any = {};
+  let result: any;
+  let decodedValue: any;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   decodedValue = baAsn1.decodeUnsigned(buffer, offset + len, result.value);
@@ -39,7 +38,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber === baEnum.TimeStamp.TIME) {
-    decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len, result.value);
+    decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len);
     len += decodedValue.len;
     value.eventTimeStamp = decodedValue.value;
   } else if (result.tagNumber === baEnum.TimeStamp.SEQUENCE_NUMBER) {
@@ -47,12 +46,12 @@ module.exports.decode = (buffer, offset, apduLen) => {
     len += decodedValue.len;
     value.eventTimeStamp = decodedValue.value;
   } else if (result.tagNumber === baEnum.TimeStamp.DATETIME) {
-    date = baAsn1.decodeApplicationDate(buffer, offset + len);
-    len += date.len;
-    date = date.value.value;
-    time = baAsn1.decodeApplicationTime(buffer, offset + len);
-    len += time.len;
-    time = time.value.value;
+    const dateRaw = baAsn1.decodeApplicationDate(buffer, offset + len);
+    len += dateRaw.len;
+    const date = dateRaw.value;
+    const timeRaw = baAsn1.decodeApplicationTime(buffer, offset + len);
+    len += timeRaw.len;
+    const time = timeRaw.value;
     value.eventTimeStamp = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
     len++;
   }
@@ -67,7 +66,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber === baEnum.TimeStamp.TIME) {
-    decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len, result.value);
+    decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len);
     len += decodedValue.len;
     value.acknowledgeTimeStamp = decodedValue.value;
   } else if (result.tagNumber === baEnum.TimeStamp.SEQUENCE_NUMBER) {
@@ -75,12 +74,12 @@ module.exports.decode = (buffer, offset, apduLen) => {
     len += decodedValue.len;
     value.acknowledgeTimeStamp = decodedValue.value;
   } else if (result.tagNumber === baEnum.TimeStamp.DATETIME) {
-    date = baAsn1.decodeApplicationDate(buffer, offset + len);
-    len += date.len;
-    date = date.value.value;
-    time = baAsn1.decodeApplicationTime(buffer, offset + len);
-    len += time.len;
-    time = time.value.value;
+    const dateRaw = baAsn1.decodeApplicationDate(buffer, offset + len);
+    len += dateRaw.len;
+    const date = dateRaw.value;
+    const timeRaw = baAsn1.decodeApplicationTime(buffer, offset + len);
+    len += timeRaw.len;
+    const time = timeRaw.value;
     value.acknowledgeTimeStamp = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
     len++;
   }
