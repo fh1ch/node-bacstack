@@ -1,17 +1,18 @@
 'use strict';
 
 // Util Modules
-const EventEmitter = require('events').EventEmitter;
+import { EventEmitter } from 'events';
 const debug = require('debug')('bacstack');
 
 // Local Modules
-const baTransport = require('./transport');
-const baServices = require('./services');
-const baAsn1 = require('./asn1');
-const baApdu = require('./apdu');
-const baNpdu = require('./npdu');
-const baBvlc = require('./bvlc');
-const baEnum = require('./enum');
+import { Transport as baTransport } from './transport';
+import * as baServices from './services';
+import * as baAsn1 from './asn1';
+import * as baApdu from './apdu';
+import * as baNpdu from './npdu';
+import * as baBvlc from './bvlc';
+import * as baEnum from './enum';
+import { BACNetObjectID, BACNetPropertyID, BACNetAppData } from './types';
 
 const DEFAULT_HOP_COUNT = 0xFF;
 const BVLC_HEADER_LENGTH = 4;
@@ -34,17 +35,20 @@ const BVLC_HEADER_LENGTH = 4;
  *   apduTimeout: 6000                     // Wait twice as long for response
  * });
  */
-class Client extends EventEmitter {
-  constructor(options) {
+export class Client extends EventEmitter {
+  private _settings: any;
+  private _transport: baTransport;
+
+  private _invokeCounter = 1;
+  private _invokeStore: any = {};
+
+  private _lastSequenceNumber = 0;
+  private _segmentStore: any[] = [];
+
+  constructor(options: any) {
     super();
 
     options = options || {};
-
-    this._invokeCounter = 1;
-    this._invokeStore = {};
-
-    this._lastSequenceNumber = 0;
-    this._segmentStore = [];
 
     this._settings = {
       port: options.port || 47808,
@@ -67,31 +71,31 @@ class Client extends EventEmitter {
   }
 
   // Helper utils
-  _getInvokeId() {
+  private _getInvokeId() {
     const id = this._invokeCounter++;
     if (id >= 256) this._invokeCounter = 1;
     return id - 1;
   }
 
-  _invokeCallback(id, err, result) {
+  private _invokeCallback(id: number, err: Error, result?: any) {
     const callback = this._invokeStore[id];
     if (callback) return callback(err, result);
     debug('InvokeId ', id, ' not found -> drop package');
   }
 
-  _addCallback(id, callback) {
+  private _addCallback(id: number, callback: (err: Error, data?: any) => void) {
     const timeout = setTimeout(() => {
       delete this._invokeStore[id];
       callback(new Error('ERR_TIMEOUT'));
     }, this._settings.apduTimeout);
-    this._invokeStore[id] = (err, data) => {
+    this._invokeStore[id] = (err: Error, data: any) => {
       clearTimeout(timeout);
       delete this._invokeStore[id];
       callback(err, data);
     };
   }
 
-  _getBuffer() {
+  private _getBuffer() {
     return {
       buffer: Buffer.alloc(this._transport.getMaxPayload()),
       offset: BVLC_HEADER_LENGTH
@@ -99,17 +103,17 @@ class Client extends EventEmitter {
   }
 
   // Service Handlers
-  _processError(invokeId, buffer, offset, length) {
-    const result = baServices.error.decode(buffer, offset, length);
+  private _processError(invokeId: number, buffer: Buffer, offset: number, length: number) {
+    const result = baServices.error.decode(buffer, offset);
     if (!result) return debug('Couldn`t decode Error');
     this._invokeCallback(invokeId, new Error('BacnetError - Class:' + result.class + ' - Code:' + result.code));
   }
 
-  _processAbort(invokeId, reason) {
+  private _processAbort(invokeId: number, reason: number) {
     this._invokeCallback(invokeId, new Error('BacnetAbort - Reason:' + reason));
   }
 
-  _segmentAckResponse(receiver, negative, server, originalInvokeId, sequencenumber, actualWindowSize) {
+  private _segmentAckResponse(receiver: string, negative: boolean, server: boolean, originalInvokeId: number, sequencenumber: number, actualWindowSize: number) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, receiver, null, DEFAULT_HOP_COUNT, baEnum.NetworkLayerMessageType.WHO_IS_ROUTER_TO_NETWORK, 0);
     baApdu.encodeSegmentAck(buffer, baEnum.PduTypes.SEGMENT_ACK | (negative ? baEnum.PduSegAckBits.NEGATIVE_ACK : 0) | (server ? baEnum.PduSegAckBits.SERVER : 0), originalInvokeId, sequencenumber, actualWindowSize);
@@ -117,7 +121,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, receiver);
   }
 
-  _performDefaultSegmentHandling(sender, adr, type, service, invokeId, maxSegments, maxApdu, sequencenumber, first, moreFollows, buffer, offset, length) {
+  private _performDefaultSegmentHandling(sender: any, adr: string, type: number, service: number, invokeId: number, maxSegments: number, maxApdu: number, sequencenumber: number, first: boolean, moreFollows: number, buffer: Buffer, offset: number, length: number) {
     if (first) {
       this._segmentStore = [];
       type &= ~baEnum.PduConReqBits.SEGMENTED_MESSAGE;
@@ -145,7 +149,7 @@ class Client extends EventEmitter {
     }
   }
 
-  _processSegment(receiver, type, service, invokeId, maxSegments, maxApdu, server, sequencenumber, proposedWindowNumber, buffer, offset, length) {
+  private _processSegment(receiver: string, type: number, service: number, invokeId: number, maxSegments: number, maxApdu: number, server: boolean, sequencenumber: number, proposedWindowNumber: number, buffer: Buffer, offset: number, length: number) {
     let first = false;
     if (sequencenumber === 0 && this._lastSequenceNumber === 0) {
       first = true;
@@ -165,97 +169,96 @@ class Client extends EventEmitter {
     this._performDefaultSegmentHandling(this, receiver, type, service, invokeId, maxSegments, maxApdu, sequencenumber, first, moreFollows, buffer, offset, length);
   }
 
-  _processConfirmedServiceRequest(address, type, service, maxSegments, maxApdu, invokeId, buffer, offset, length) {
-    let result;
+  private _processConfirmedServiceRequest(address: string, type: number, service: number, maxSegments: number, maxApdu: number, invokeId: number, buffer: Buffer, offset: number, length: number) {
     debug('Handle this._processConfirmedServiceRequest');
     if (service === baEnum.ConfirmedServiceChoice.READ_PROPERTY) {
-      result = baServices.readProperty.decode(buffer, offset, length);
+      const result = baServices.readProperty.decode(buffer, offset, length);
       if (!result) return debug('Received invalid readProperty message');
       this.emit('readProperty', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.WRITE_PROPERTY) {
-      result = baServices.writeProperty.decode(buffer, offset, length);
+      const result = baServices.writeProperty.decode(buffer, offset, length);
       if (!result) return debug('Received invalid writeProperty message');
       this.emit('writeProperty', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.READ_PROPERTY_MULTIPLE) {
-      result = baServices.readPropertyMultiple.decode(buffer, offset, length);
+      const result = baServices.readPropertyMultiple.decode(buffer, offset, length);
       if (!result) return debug('Received invalid readPropertyMultiple message');
       this.emit('readPropertyMultiple', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.WRITE_PROPERTY_MULTIPLE) {
-      result = baServices.writePropertyMultiple.decode(buffer, offset, length);
+      const result = baServices.writePropertyMultiple.decode(buffer, offset, length);
       if (!result) return debug('Received invalid writePropertyMultiple message');
       this.emit('writePropertyMultiple', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.CONFIRMED_COV_NOTIFICATION) {
-      result = baServices.covNotify.decode(buffer, offset, length);
+      const result = baServices.covNotify.decode(buffer, offset, length);
       if (!result) return debug('Received invalid covNotify message');
       this.emit('covNotify', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.ATOMIC_WRITE_FILE) {
-      result = baServices.atomicWriteFile.decode(buffer, offset, length);
+      const result = baServices.atomicWriteFile.decode(buffer, offset, length);
       if (!result) return debug('Received invalid atomicWriteFile message');
       this.emit('atomicWriteFile', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.ATOMIC_READ_FILE) {
-      result = baServices.atomicReadFile.decode(buffer, offset, length);
+      const result = baServices.atomicReadFile.decode(buffer, offset);
       if (!result) return debug('Received invalid atomicReadFile message');
       this.emit('atomicReadFile', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.SUBSCRIBE_COV) {
-      result = baServices.subscribeCov.decode(buffer, offset, length);
+      const result = baServices.subscribeCov.decode(buffer, offset, length);
       if (!result) return debug('Received invalid subscribeCOV message');
       this.emit('subscribeCOV', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.SUBSCRIBE_COV_PROPERTY) {
-      result = baServices.subscribeProperty.decode(buffer, offset, length);
+      const result = baServices.subscribeProperty.decode(buffer, offset);
       if (!result) return debug('Received invalid subscribeProperty message');
       this.emit('subscribeProperty', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.DEVICE_COMMUNICATION_CONTROL) {
-      result = baServices.deviceCommunicationControl.decode(buffer, offset, length);
+      const result = baServices.deviceCommunicationControl.decode(buffer, offset, length);
       if (!result) return debug('Received invalid deviceCommunicationControl message');
       this.emit('deviceCommunicationControl', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.REINITIALIZE_DEVICE) {
-      result = baServices.reinitializeDevice.decode(buffer, offset, length);
+      const result = baServices.reinitializeDevice.decode(buffer, offset, length);
       if (!result) return debug('Received invalid reinitializeDevice message');
       this.emit('reinitializeDevice', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.CONFIRMED_EVENT_NOTIFICATION) {
-      result = baServices.eventNotifyData.decode(buffer, offset, length);
+      const result = baServices.eventNotifyData.decode(buffer, offset);
       if (!result) return debug('Received invalid eventNotifyData message');
       this.emit('eventNotifyData', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.READ_RANGE) {
-      result = baServices.readRange.decode(buffer, offset, length);
+      const result = baServices.readRange.decode(buffer, offset, length);
       if (!result) return debug('Received invalid readRange message');
       this.emit('readRange', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.CREATE_OBJECT) {
-      result = baServices.createObject.decode(buffer, offset, length);
+      const result = baServices.createObject.decode(buffer, offset, length);
       if (!result) return debug('Received invalid createObject message');
       this.emit('createObject', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.DELETE_OBJECT) {
-      result = baServices.deleteObject.decode(buffer, offset, length);
+      const result = baServices.deleteObject.decode(buffer, offset, length);
       if (!result) return debug('Received invalid deleteObject message');
       this.emit('deleteObject', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.ACKNOWLEDGE_ALARM) {
-      result = baServices.alarmAcknowledge.decode(buffer, offset, length);
+      const result = baServices.alarmAcknowledge.decode(buffer, offset, length);
       if (!result) return debug('Received invalid alarmAcknowledge message');
       this.emit('alarmAcknowledge', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.GET_ALARM_SUMMARY) {
       this.emit('getAlarmSummary', {address: address, invokeId: invokeId});
     } else if (service === baEnum.ConfirmedServiceChoice.GET_ENROLLMENT_SUMMARY) {
-      result = baServices.getEnrollmentSummary.decode(buffer, offset, length);
+      const result = baServices.getEnrollmentSummary.decode(buffer, offset, length);
       if (!result) return debug('Received invalid getEntrollmentSummary message');
       this.emit('getEntrollmentSummary', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.GET_EVENT_INFORMATION) {
-      result = baServices.getEventInformation.decode(buffer, offset, length);
+      const result = baServices.getEventInformation.decode(buffer, offset);
       if (!result) return debug('Received invalid getEventInformation message');
       this.emit('getEventInformation', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.LIFE_SAFETY_OPERATION) {
-      result = baServices.lifeSafetyOperation.decode(buffer, offset, length);
+      const result = baServices.lifeSafetyOperation.decode(buffer, offset, length);
       if (!result) return debug('Received invalid lifeSafetyOperation message');
       this.emit('lifeSafetyOperation', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.ADD_LIST_ELEMENT) {
-      result = baServices.addListElement.decode(buffer, offset, length);
+      const result = baServices.addListElement.decode(buffer, offset, length);
       if (!result) return debug('Received invalid addListElement message');
       this.emit('addListElement', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.REMOVE_LIST_ELEMENT) {
-      result = baServices.addListElement.decode(buffer, offset, length);
+      const result = baServices.addListElement.decode(buffer, offset, length);
       if (!result) return debug('Received invalid removeListElement message');
       this.emit('removeListElement', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.CONFIRMED_PRIVATE_TRANSFER) {
-      result = baServices.privateTransfer.decode(buffer, offset, length);
+      const result = baServices.privateTransfer.decode(buffer, offset, length);
       if (!result) return debug('Received invalid privateTransfer message');
       this.emit('privateTransfer', {address: address, invokeId: invokeId, request: result});
     } else {
@@ -263,11 +266,10 @@ class Client extends EventEmitter {
     }
   }
 
-  _processUnconfirmedServiceRequest(address, type, service, buffer, offset, length) {
-    let result;
+  private _processUnconfirmedServiceRequest(address: string, type: number, service: number, buffer: Buffer, offset: number, length: number) {
     debug('Handle this._processUnconfirmedServiceRequest');
     if (service === baEnum.UnconfirmedServiceChoice.I_AM) {
-      result = baServices.iAmBroadcast.decode(buffer, offset);
+      const result = baServices.iAmBroadcast.decode(buffer, offset);
       if (!result) return debug('Received invalid iAm message');
 
       /**
@@ -289,7 +291,7 @@ class Client extends EventEmitter {
        */
       this.emit('iAm', {address: address, deviceId: result.deviceId, maxApdu: result.maxApdu, segmentation: result.segmentation, vendorId: result.vendorId});
     } else if (service === baEnum.UnconfirmedServiceChoice.WHO_IS) {
-      result = baServices.whoIs.decode(buffer, offset, length);
+      const result = baServices.whoIs.decode(buffer, offset, length);
       if (!result) return debug('Received invalid WhoIs message');
 
       /**
@@ -309,15 +311,15 @@ class Client extends EventEmitter {
        */
       this.emit('whoIs', {address: address, lowLimit: result.lowLimit, highLimit: result.highLimit});
     } else if (service === baEnum.UnconfirmedServiceChoice.WHO_HAS) {
-      result = baServices.whoHas.decode(buffer, offset, length);
+      const result = baServices.whoHas.decode(buffer, offset, length);
       if (!result) return debug('Received invalid WhoHas message');
       this.emit('whoHas', {address: address, lowLimit: result.lowLimit, highLimit: result.highLimit, objectId: result.objectId, objectName: result.objectName});
     } else if (service === baEnum.UnconfirmedServiceChoice.UNCONFIRMED_COV_NOTIFICATION) {
-      result = baServices.covNotify.decode(buffer, offset, length);
+      const result = baServices.covNotify.decode(buffer, offset, length);
       if (!result) return debug('Received invalid covNotifyUnconfirmed message');
       this.emit('covNotifyUnconfirmed', {address: address, request: result});
     } else if (service === baEnum.UnconfirmedServiceChoice.TIME_SYNCHRONIZATION) {
-      result = baServices.timeSync.decode(buffer, offset, length);
+      const result = baServices.timeSync.decode(buffer, offset, length);
       if (!result) return debug('Received invalid TimeSync message');
 
       /**
@@ -331,12 +333,12 @@ class Client extends EventEmitter {
        * const client = new bacnet();
        *
        * client.on('timeSync', (request) => {
-       *   console.log('address: ', device.address, ' - dateTime: ', device.dateTime);
+       *   console.log('address: ', request.address, ' - dateTime: ', request.dateTime);
        * });
        */
-      this.emit('timeSync', {address: address, dateTime: result.dateTime});
+      this.emit('timeSync', {address: address, dateTime: result.value});
     } else if (service === baEnum.UnconfirmedServiceChoice.UTC_TIME_SYNCHRONIZATION) {
-      result = baServices.timeSync.decode(buffer, offset, length);
+      const result = baServices.timeSync.decode(buffer, offset, length);
       if (!result) return debug('Received invalid TimeSyncUTC message');
 
       /**
@@ -350,20 +352,20 @@ class Client extends EventEmitter {
        * const client = new bacnet();
        *
        * client.on('timeSyncUTC', (request) => {
-       *   console.log('address: ', device.address, ' - dateTime: ', device.dateTime);
+       *   console.log('address: ', request.address, ' - dateTime: ', request.dateTime);
        * });
        */
-      this.emit('timeSyncUTC', {address: address, dateTime: result.dateTime});
+      this.emit('timeSyncUTC', {address: address, dateTime: result.value});
     } else if (service === baEnum.UnconfirmedServiceChoice.UNCONFIRMED_EVENT_NOTIFICATION) {
-      result = baServices.eventNotifyData.decode(buffer, offset, length);
+      const result = baServices.eventNotifyData.decode(buffer, offset);
       if (!result) return debug('Received invalid EventNotify message');
       this.emit('eventNotify', {address: address, eventData: result.eventData});
     } else if (service === baEnum.UnconfirmedServiceChoice.I_HAVE) {
-      result = baServices.iHaveBroadcast.decode(buffer, offset, length);
+      const result = baServices.iHaveBroadcast.decode(buffer, offset, length);
       if (!result) return debug('Received invalid ihaveBroadcast message');
       this.emit('ihaveBroadcast', {address: address, eventData: result.eventData});
     } else if (service === baEnum.UnconfirmedServiceChoice.UNCONFIRMED_PRIVATE_TRANSFER) {
-      result = baServices.privateTransfer.decode(buffer, offset, length);
+      const result = baServices.privateTransfer.decode(buffer, offset, length);
       if (!result) return debug('Received invalid privateTransfer message');
       this.emit('privateTransfer', {address: address, eventData: result.eventData});
     } else {
@@ -371,7 +373,7 @@ class Client extends EventEmitter {
     }
   }
 
-  _handlePdu(address, type, buffer, offset, length) {
+  private _handlePdu(address: string, type: number, buffer: Buffer, offset: number, length: number) {
     let result;
     // Handle different PDU types
     switch (type & baEnum.PDU_TYPE_MASK) {
@@ -421,7 +423,7 @@ class Client extends EventEmitter {
     }
   }
 
-  _handleNpdu(buffer, offset, msgLength, remoteAddress) {
+  private _handleNpdu(buffer: Buffer, offset: number, msgLength: number, remoteAddress: string) {
     // Check data length
     if (msgLength <= 0) return debug('No NPDU data -> Drop package');
     // Parse baNpdu header
@@ -437,9 +439,9 @@ class Client extends EventEmitter {
     this._handlePdu(remoteAddress, apduType, buffer, offset, msgLength);
   }
 
-  _receiveData(buffer, remoteAddress) {
+  private _receiveData(buffer: Buffer, remoteAddress: string) {
     // Check data length
-    if (buffer.length < baBvlc.BVLC_HEADER_LENGTH) return debug('Received invalid data -> Drop package');
+    if (buffer.length < baEnum.BVLC_HEADER_LENGTH) return debug('Received invalid data -> Drop package');
     // Parse BVLC header
     const result = baBvlc.decode(buffer, 0);
     if (!result) return debug('Received invalid BVLC header -> Drop package');
@@ -451,7 +453,7 @@ class Client extends EventEmitter {
     }
   }
 
-  _receiveError(err) {
+  private _receiveError(err: Error) {
     /**
      * @event bacstack.error
      * @param {error} err - The error object thrown by the underlying transport layer.
@@ -481,7 +483,7 @@ class Client extends EventEmitter {
    *
    * client.whoIs();
    */
-  whoIs(options) {
+  whoIs(options?: {lowLimit?: number, highLimit?: number, address?: string}) {
     options = options || {};
     const settings = {
       lowLimit: options.lowLimit,
@@ -508,7 +510,7 @@ class Client extends EventEmitter {
    *
    * client.timeSync('192.168.1.43', new Date());
    */
-  timeSync(address, dateTime) {
+  timeSync(address: string, dateTime: Date) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, address);
     baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.TIME_SYNCHRONIZATION);
@@ -529,7 +531,7 @@ class Client extends EventEmitter {
    *
    * client.timeSyncUTC('192.168.1.43', new Date());
    */
-  timeSyncUTC(address, dateTime) {
+  timeSyncUTC(address: string, dateTime: Date) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, address);
     baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.UTC_TIME_SYNCHRONIZATION);
@@ -561,7 +563,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  readProperty(address, objectId, propertyId, options, next) {
+  readProperty(address: string, objectId: BACNetObjectID, propertyId: number, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -612,7 +614,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  writeProperty(address, objectId, propertyId, values, options, next) {
+  writeProperty(address: string, objectId: BACNetObjectID, propertyId: number, values: BACNetAppData[], options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -656,7 +658,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  readPropertyMultiple(address, propertiesArray, options, next) {
+  readPropertyMultiple(address: string, propertiesArray: any[], options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -712,7 +714,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  writePropertyMultiple(address, values, options, next) {
+  writePropertyMultiple(address: string, values: any[], options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -748,7 +750,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  deviceCommunicationControl(address, timeDuration, enableDisable, options, next) {
+  deviceCommunicationControl(address: string, timeDuration: number, enableDisable: number, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -784,7 +786,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  reinitializeDevice(address, state, options, next) {
+  reinitializeDevice(address: string, state: number, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -823,7 +825,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  writeFile(address, objectId, position, fileBuffer, options, next) {
+  writeFile(address: string, objectId: BACNetObjectID, position: number, fileBuffer: number[][], options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -838,7 +840,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, address);
     this._addCallback(settings.invokeId, (err, data) => {
       if (err) return next(err);
-      const result = baServices.atomicWriteFile.decodeAcknowledge(data.buffer, data.offset, data.length);
+      const result = baServices.atomicWriteFile.decodeAcknowledge(data.buffer, data.offset);
       if (!result) return next(new Error('INVALID_DECODING'));
       next(null, result);
     });
@@ -866,7 +868,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  readFile(address, objectId, position, count, options, next) {
+  readFile(address: string, objectId: BACNetObjectID, position: number, count: number, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -881,7 +883,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, address);
     this._addCallback(settings.invokeId, (err, data) => {
       if (err) return next(err);
-      const result = baServices.atomicReadFile.decodeAcknowledge(data.buffer, data.offset, data.length);
+      const result = baServices.atomicReadFile.decodeAcknowledge(data.buffer, data.offset);
       if (!result) return next(new Error('INVALID_DECODING'));
       next(null, result);
     });
@@ -909,7 +911,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  readRange(address, objectId, idxBegin, quantity, options, next) {
+  readRange(address: string, objectId: BACNetObjectID, idxBegin: number, quantity: number, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -954,7 +956,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  subscribeCOV(address, objectId, subscribeId, cancel, issueConfirmedNotifications, lifetime, options, next) {
+  subscribeCOV(address: string, objectId: BACNetObjectID, subscribeId: number, cancel: boolean, issueConfirmedNotifications: boolean, lifetime: number, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -996,7 +998,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  subscribeProperty(address, objectId, monitoredProperty, subscribeId, cancel, issueConfirmedNotifications, options, next) {
+  subscribeProperty(address: string, objectId: BACNetObjectID, monitoredProperty: BACNetPropertyID, subscribeId: number, cancel: boolean, issueConfirmedNotifications: boolean, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1012,7 +1014,7 @@ class Client extends EventEmitter {
     this._addCallback(settings.invokeId, (err) => next(err));
   }
 
-  createObject(address, objectId, values, options, next) {
+  createObject(address: string, objectId: BACNetObjectID, values: any, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1048,7 +1050,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  deleteObject(address, objectId, options, next) {
+  deleteObject(address: string, objectId: BACNetObjectID, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1064,7 +1066,7 @@ class Client extends EventEmitter {
     this._addCallback(settings.invokeId, (err) => next(err));
   }
 
-  removeListElement(address, objectId, reference, values, options, next) {
+  removeListElement(address: string, objectId: BACNetObjectID, reference: BACNetPropertyID, values: any, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1080,7 +1082,7 @@ class Client extends EventEmitter {
     this._addCallback(settings.invokeId, (err) => next(err));
   }
 
-  addListElement(address, objectId, reference, values, options, next) {
+  addListElement(address: string, objectId: BACNetObjectID, reference: BACNetPropertyID, values: any, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1113,7 +1115,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  getAlarmSummary(address, options, next) {
+  getAlarmSummary(address: string, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1153,7 +1155,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  getEventInformation(address, objectId, options, next) {
+  getEventInformation(address: string, objectId: BACNetObjectID, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1174,7 +1176,7 @@ class Client extends EventEmitter {
     });
   }
 
-  acknowledgeAlarm(address, objectId, eventState, ackText, evTimeStamp, ackTimeStamp, options, next) {
+  acknowledgeAlarm(address: string, objectId: BACNetObjectID, eventState: number, ackText: string, evTimeStamp: any, ackTimeStamp: any, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1210,7 +1212,7 @@ class Client extends EventEmitter {
    *   console.log('error: ', err);
    * });
    */
-  confirmedPrivateTransfer(address, vendorId, serviceNumber, data, options, next) {
+  confirmedPrivateTransfer(address: string, vendorId: number, serviceNumber: number, data: number[], options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1239,7 +1241,7 @@ class Client extends EventEmitter {
    *
    * client.unconfirmedPrivateTransfer('192.168.1.43', 0, 7, [0x00, 0xaa, 0xfa, 0xb1, 0x00]);
    */
-  unconfirmedPrivateTransfer(address, vendorId, serviceNumber, data) {
+  unconfirmedPrivateTransfer(address: string, vendorId: number, serviceNumber: number, data: number[]) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, address);
     baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.UNCONFIRMED_PRIVATE_TRANSFER);
@@ -1273,7 +1275,7 @@ class Client extends EventEmitter {
    *   console.log('value: ', value);
    * });
    */
-  getEnrollmentSummary(address, acknowledgmentFilter, options, next) {
+  getEnrollmentSummary(address: string, acknowledgmentFilter: number, options: any, next: (err?: Error, result?: any) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1294,7 +1296,7 @@ class Client extends EventEmitter {
     });
   }
 
-  unconfirmedEventNotification(address, eventNotification) {
+  unconfirmedEventNotification(address: string, eventNotification: any) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, address);
     baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.UNCONFIRMED_EVENT_NOTIFICATION);
@@ -1303,7 +1305,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, address);
   }
 
-  confirmedEventNotification(address, eventNotification, options, next) {
+  confirmedEventNotification(address: string, eventNotification: any, options: any, next: (err?: Error) => void) {
     next = next || options;
     const settings = {
       maxSegments: options.maxSegments || baEnum.MaxSegmentsAccepted.SEGMENTS_65,
@@ -1320,7 +1322,7 @@ class Client extends EventEmitter {
   }
 
   // Public Device Functions
-  readPropertyResponse(receiver, invokeId, objectId, property, value) {
+  readPropertyResponse(receiver: string, invokeId: number, objectId: BACNetObjectID, property: BACNetPropertyID, value: any[]) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, receiver);
     baApdu.encodeComplexAck(buffer, baEnum.PduTypes.COMPLEX_ACK, baEnum.ConfirmedServiceChoice.READ_PROPERTY, invokeId);
@@ -1329,7 +1331,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, receiver);
   }
 
-  readPropertyMultipleResponse(receiver, invokeId, values) {
+  readPropertyMultipleResponse(receiver: string, invokeId: number, values: any[]) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, receiver);
     baApdu.encodeComplexAck(buffer, baEnum.PduTypes.COMPLEX_ACK, baEnum.ConfirmedServiceChoice.READ_PROPERTY_MULTIPLE, invokeId);
@@ -1338,7 +1340,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, receiver);
   }
 
-  iAmResponse(deviceId, segmentation, vendorId) {
+  iAmResponse(deviceId: number, segmentation: number, vendorId: number) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, this._transport.getBroadcastAddress());
     baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.I_AM);
@@ -1347,16 +1349,16 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, this._transport.getBroadcastAddress());
   }
 
-  iHaveResponse(deviceId, objectId, objectName) {
+  iHaveResponse(deviceId: BACNetObjectID, objectId: BACNetObjectID, objectName: string) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, this._transport.getBroadcastAddress());
-    baApdu.EecodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.I_HAVE);
-    baServices.EncodeIhaveBroadcast(buffer, deviceId, objectId, objectName);
+    baApdu.encodeUnconfirmedServiceRequest(buffer, baEnum.PduTypes.UNCONFIRMED_REQUEST, baEnum.UnconfirmedServiceChoice.I_HAVE);
+    baServices.iHaveBroadcast.encode(buffer, deviceId, objectId, objectName);
     baBvlc.encode(buffer.buffer, baEnum.BvlcResultPurpose.ORIGINAL_BROADCAST_NPDU, buffer.offset);
     this._transport.send(buffer.buffer, buffer.offset, this._transport.getBroadcastAddress());
   }
 
-  simpleAckResponse(receiver, service, invokeId) {
+  simpleAckResponse(receiver: string, service: number, invokeId: number) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, receiver);
     baApdu.encodeSimpleAck(buffer, baEnum.PduTypes.SIMPLE_ACK, service, invokeId);
@@ -1364,7 +1366,7 @@ class Client extends EventEmitter {
     this._transport.send(buffer.buffer, buffer.offset, receiver);
   }
 
-  errorResponse(receiver, service, invokeId, errorClass, errorCode) {
+  errorResponse(receiver: string, service: number, invokeId: number, errorClass: number, errorCode: number) {
     const buffer = this._getBuffer();
     baNpdu.encode(buffer, baEnum.NpduControlPriority.NORMAL_MESSAGE, receiver);
     baApdu.encodeError(buffer, baEnum.PduTypes.ERROR, service, invokeId);
@@ -1386,4 +1388,3 @@ class Client extends EventEmitter {
     this._transport.close();
   }
 }
-module.exports = Client;
