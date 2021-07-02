@@ -1,22 +1,23 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
+import * as baAsn1 from '../asn1';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, state, password) => {
+export const encode = (buffer: EncodeBuffer, state: number, password: string) => {
   baAsn1.encodeContextEnumerated(buffer, 0, state);
   if (password && password !== '') {
     baAsn1.encodeContextCharacterString(buffer, 1, password);
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  const value = {};
-  let result;
+  const value: any = {};
+  let result: any;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
-  let decodedValue = baAsn1.decodeEnumerated(buffer, offset + len, result.value);
+  let decodedValue: any = baAsn1.decodeEnumerated(buffer, offset + len, result.value);
   value.state = decodedValue.value;
   len += decodedValue.len;
   if (len < apduLen) {
