@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID, BACNetBitString } from '../types';
 
-module.exports.encode = (buffer, objectId, propertyId, arrayIndex, requestType, position, time, count) => {
+export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID, propertyId: number, arrayIndex: number, requestType: number, position: number, time: Date, count: number) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectId.type, objectId.instance);
   baAsn1.encodeContextEnumerated(buffer, 1, propertyId);
   if (arrayIndex !== baEnum.ASN1_ARRAY_ALL) {
@@ -34,20 +35,20 @@ module.exports.encode = (buffer, objectId, propertyId, arrayIndex, requestType, 
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  let requestType;
-  let position;
-  let time;
-  let count;
+  let result: any;
+  let decodedValue: any;
+  let requestType: number;
+  let position: number;
+  let time: Date;
+  let count: number;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   len++;
-  decodedValue = baAsn1.decodeObjectId(buffer, offset + len, 0);
+  decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
   len += decodedValue.len;
   const objectId = {type: decodedValue.objectType, instance: decodedValue.instance};
-  const property = {};
+  const property: any = {};
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== 1) return;
@@ -97,10 +98,10 @@ module.exports.decode = (buffer, offset, apduLen) => {
         requestType = baEnum.ReadRangeType.BY_TIME_REFERENCE_TIME_COUNT;
         decodedValue = baAsn1.decodeApplicationDate(buffer, offset + len);
         len += decodedValue.len;
-        const tmpDate = decodedValue.value.value;
+        const tmpDate = decodedValue.value;
         decodedValue = baAsn1.decodeApplicationTime(buffer, offset + len);
         len += decodedValue.len;
-        const tmpTime = decodedValue.value.value;
+        const tmpTime = decodedValue.value;
         time = new Date(tmpDate.getYear(), tmpDate.getMonth(), tmpDate.getDate(), tmpTime.getHours(), tmpTime.getMinutes(), tmpTime.getSeconds(), tmpTime.getMilliseconds());
         result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
         len += result.len;
@@ -125,7 +126,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, objectId, propertyId, arrayIndex, resultFlags, itemCount, applicationData, requestType, firstSequence) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, objectId: BACNetObjectID, propertyId: number, arrayIndex: number, resultFlags: BACNetBitString, itemCount: number, applicationData: Buffer, requestType: number, firstSequence: number) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectId.type, objectId.instance);
   baAsn1.encodeContextEnumerated(buffer, 1, propertyId);
   if (arrayIndex !== baEnum.ASN1_ARRAY_ALL) {
@@ -144,16 +145,16 @@ module.exports.encodeAcknowledge = (buffer, objectId, propertyId, arrayIndex, re
   }
 };
 
-module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
+  let result: any;
+  let decodedValue: any;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   len++;
   decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
   len += decodedValue.len;
   const objectId = {type: decodedValue.objectType, instance: decodedValue.instance};
-  const property = {index: baEnum.ASN1_ARRAY_ALL};
+  const property: any = {index: baEnum.ASN1_ARRAY_ALL};
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== 1) return;
