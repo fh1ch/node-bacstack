@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { BACNetObjectID, EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, isStream, objectId, position, blocks) => {
+export const encode = (buffer: EncodeBuffer, isStream: boolean, objectId: BACNetObjectID, position: number, blocks: number[][]) => {
   baAsn1.encodeApplicationObjectId(buffer, objectId.type, objectId.instance);
   if (isStream) {
     baAsn1.encodeOpeningTag(buffer, 0);
@@ -21,14 +22,14 @@ module.exports.encode = (buffer, isStream, objectId, position, blocks) => {
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  let isStream;
-  let position;
+  let result: any;
+  let decodedValue: any;
+  let isStream: boolean;
+  let position: number;
   const blocks = [];
-  let blockCount;
+  let blockCount: number;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== baEnum.ApplicationTags.OBJECTIDENTIFIER) return;
@@ -89,7 +90,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, isStream, position) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, isStream: boolean, position: number) => {
   if (isStream) {
     baAsn1.encodeContextSigned(buffer, 0, position);
   } else {
@@ -97,7 +98,7 @@ module.exports.encodeAcknowledge = (buffer, isStream, position) => {
   }
 };
 
-module.exports.decodeAcknowledge = (buffer, offset) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number) => {
   let len = 0;
   let isStream = false;
   let position = 0;
