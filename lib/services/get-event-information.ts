@@ -1,25 +1,23 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID, BACNetEventInformation } from '../types';
 
-module.exports.encode = (buffer, lastReceivedObjectId) => {
+export const encode = (buffer: EncodeBuffer, lastReceivedObjectId: BACNetObjectID) => {
   baAsn1.encodeContextObjectId(buffer, 0, lastReceivedObjectId.type, lastReceivedObjectId.instance);
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len = 0;
-  const value = {};
   const result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   const decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
   len += decodedValue.len;
-  value.lastReceivedObjectId = {type: decodedValue.objectType, instance: decodedValue.instance};
-  value.len = len;
-  return value;
+  return {len, lastReceivedObjectId: {type: decodedValue.objectType, instance: decodedValue.instance}};
 };
 
-module.exports.encodeAcknowledge = (buffer, events, moreEvents) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, events: BACNetEventInformation[], moreEvents: boolean) => {
   baAsn1.encodeOpeningTag(buffer, 0);
   events.forEach((eventData) => {
     baAsn1.encodeContextObjectId(buffer, 0, eventData.objectId.type, eventData.objectId.instance);
@@ -42,16 +40,16 @@ module.exports.encodeAcknowledge = (buffer, events, moreEvents) => {
   baAsn1.encodeContextBoolean(buffer, 1, moreEvents);
 };
 
-module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  const value = {};
+  let result: any;
+  let decodedValue: any;
+  const value: any = {};
   if (!baAsn1.decodeIsOpeningTagNumber(buffer, offset + len, 0)) return;
   len++;
   value.events = [];
   while ((apduLen - len) > 3) {
-    const event = {};
+    const event: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
@@ -74,7 +72,7 @@ module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
       result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
       len += result.len;
       if (result.tagNumber === baEnum.TimeStamp.TIME) {
-        decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len, result.value);
+        decodedValue = baAsn1.decodeBacnetTime(buffer, offset + len);
         len += decodedValue.len;
         event.eventTimeStamps[i] = {value: decodedValue.value, type: baEnum.TimeStamp.TIME};
       } else if (result.tagNumber === baEnum.TimeStamp.SEQUENCE_NUMBER) {
@@ -82,12 +80,12 @@ module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
         len += decodedValue.len;
         event.eventTimeStamps[i] = {value: decodedValue.value, type: baEnum.TimeStamp.SEQUENCE_NUMBER};
       } else if (result.tagNumber === baEnum.TimeStamp.DATETIME) {
-        let date = baAsn1.decodeApplicationDate(buffer, offset + len);
-        len += date.len;
-        date = date.value.value;
-        let time = baAsn1.decodeApplicationTime(buffer, offset + len);
-        len += time.len;
-        time = time.value.value;
+        const dateRaw = baAsn1.decodeApplicationDate(buffer, offset + len);
+        len += dateRaw.len;
+        const date = dateRaw.value;
+        const timeRaw = baAsn1.decodeApplicationTime(buffer, offset + len);
+        len += timeRaw.len;
+        const time = timeRaw.value;
         event.eventTimeStamps[i] = {value: new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds()), type: baEnum.TimeStamp.DATETIME};
         len++;
       }
