@@ -1,8 +1,9 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
+import * as baAsn1 from '../asn1';
+import { EncodeBuffer, BACNetAlarm } from '../types';
 
-module.exports.encode = (buffer, alarms) => {
+export const encode = (buffer: EncodeBuffer, alarms: BACNetAlarm[]) => {
   alarms.forEach((alarm) => {
     baAsn1.encodeContextObjectId(buffer, 12, alarm.objectId.type, alarm.objectId.instance);
     baAsn1.encodeContextEnumerated(buffer, 9, alarm.alarmState);
@@ -10,13 +11,13 @@ module.exports.encode = (buffer, alarms) => {
   });
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
-  const alarms = [];
+  let result: any;
+  let decodedValue: any;
+  const alarms: BACNetAlarm[] = [];
   while ((apduLen - 3 - len) > 0) {
-    const value = {};
+    const value: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
