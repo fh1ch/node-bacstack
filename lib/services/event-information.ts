@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetEvent } from '../types';
 
-module.exports.encode = (buffer, events, moreEvents) => {
+export const encode = (buffer: EncodeBuffer, events: BACNetEvent[], moreEvents: boolean) => {
   baAsn1.encodeOpeningTag(buffer, 0);
   events.forEach((event) => {
     baAsn1.encodeContextObjectId(buffer, 0, event.objectId.type, event.objectId.instance);
@@ -27,14 +28,14 @@ module.exports.encode = (buffer, events, moreEvents) => {
   baAsn1.encodeContextBoolean(buffer, 1, moreEvents);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
+  let result: any;
+  let decodedValue: any;
   len++;
   const alarms = [];
   while ((apduLen - 3 - len) > 0) {
-    const value = {};
+    const value: any = {};
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
     len += result.len;
     decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
@@ -57,10 +58,10 @@ module.exports.decode = (buffer, offset, apduLen) => {
       if (result.tagNumber !== baEnum.ApplicationTags.NULL) {
         decodedValue = baAsn1.decodeApplicationDate(buffer, offset + len);
         len += decodedValue.len;
-        const date = decodedValue.value.value;
+        const date = decodedValue.value;
         decodedValue = baAsn1.decodeApplicationTime(buffer, offset + len);
         len += decodedValue.len;
-        const time = decodedValue.value.value;
+        const time = decodedValue.value;
         value.eventTimeStamps[i] = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
       } else {
         len += result.value;
