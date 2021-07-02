@@ -1,8 +1,8 @@
 'use strict';
 
-const baEnum = require('./enum');
+import * as baEnum from './enum';
 
-module.exports.encode = (buffer, func, msgLength) => {
+export const encode = (buffer: Buffer, func: number, msgLength: number) => {
   buffer[0] = baEnum.BVLL_TYPE_BACNET_IP;
   buffer[1] = func;
   buffer[2] = (msgLength & 0xFF00) >> 8;
@@ -10,7 +10,7 @@ module.exports.encode = (buffer, func, msgLength) => {
   return baEnum.BVLC_HEADER_LENGTH;
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len;
   const func = buffer[1];
   const msgLength = (buffer[2] << 8) | (buffer[3] << 0);
