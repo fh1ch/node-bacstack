@@ -1,14 +1,13 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
+import * as baAsn1 from '../asn1';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, properties) => {
-  properties.forEach((value) => {
-    baAsn1.encodeReadAccessSpecification(buffer, value);
-  });
+export const encode = (buffer: EncodeBuffer, properties: any[]) => {
+  properties.forEach((value) => baAsn1.encodeReadAccessSpecification(buffer, value));
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
   const values = [];
   while ((apduLen - len) > 0) {
@@ -23,13 +22,11 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, values) => {
-  values.forEach((value) => {
-    baAsn1.encodeReadAccessResult(buffer, value);
-  });
+export const encodeAcknowledge = (buffer: EncodeBuffer, values: any[]) => {
+  values.forEach((value) => baAsn1.encodeReadAccessResult(buffer, value));
 };
 
-module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
+export const decodeAcknowledge = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
   const values = [];
   while ((apduLen - len) > 0) {
