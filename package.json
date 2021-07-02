@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "changelog": "commitlint --from=origin/master",
+    "build": "tsc",
     "lint": "eslint lib/ test/ index.js",
     "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.js",
     "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.js",
@@ -57,10 +58,12 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
+    "@types/node": "^15.12.5",
     "docdash": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.6",
-    "jsdoc": "^3.6.7"
+    "jsdoc": "^3.6.7",
+    "typescript": "^4.3.4"
   }
 }
