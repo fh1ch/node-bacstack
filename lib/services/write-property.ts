@@ -1,31 +1,30 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetAppData } from '../types';
 
-module.exports.encode = (buffer, objectType, objectInstance, propertyId, arrayIndex, priority, values) => {
+export const encode = (buffer: EncodeBuffer, objectType: number, objectInstance: number, propertyId: number, arrayIndex: number, priority: number, values: BACNetAppData[]) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectType, objectInstance);
   baAsn1.encodeContextEnumerated(buffer, 1, propertyId);
   if (arrayIndex !== baEnum.ASN1_ARRAY_ALL) {
     baAsn1.encodeContextUnsigned(buffer, 2, arrayIndex);
   }
   baAsn1.encodeOpeningTag(buffer, 3);
-  values.forEach((value) => {
-    baAsn1.bacappEncodeApplicationData(buffer, value);
-  });
+  values.forEach((value) => baAsn1.bacappEncodeApplicationData(buffer, value));
   baAsn1.encodeClosingTag(buffer, 3);
   if (priority !== baEnum.ASN1_NO_PRIORITY) {
     baAsn1.encodeContextUnsigned(buffer, 4, priority);
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  const value = {
+  const value: any = {
     property: {}
   };
-  let decodedValue;
-  let result;
+  let decodedValue: any;
+  let result: any;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   len++;
   decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
