@@ -1,17 +1,19 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import { EncodeBuffer } from "../types";
 
-module.exports.encode = (buffer, deviceId, maxApdu, segmentation, vendorId) => {
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+
+export const encode = (buffer: EncodeBuffer, deviceId: number, maxApdu: number, segmentation: number, vendorId: number) => {
   baAsn1.encodeApplicationObjectId(buffer, baEnum.ObjectType.DEVICE, deviceId);
   baAsn1.encodeApplicationUnsigned(buffer, maxApdu);
   baAsn1.encodeApplicationEnumerated(buffer, segmentation);
   baAsn1.encodeApplicationUnsigned(buffer, vendorId);
 };
 
-module.exports.decode = (buffer, offset) => {
-  let result;
+export const decode = (buffer: Buffer, offset: number) => {
+  let result: any;
   let apduLen = 0;
   const orgOffset = offset;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + apduLen);
