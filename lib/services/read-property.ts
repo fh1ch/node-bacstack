@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID } from '../types';
 
-module.exports.encode = (buffer, objectType, objectInstance, propertyId, arrayIndex) => {
+export const encode = (buffer: EncodeBuffer, objectType: number, objectInstance: number, propertyId: number, arrayIndex: number) => {
   if (objectType <= baEnum.ASN1_MAX_OBJECT) {
     baAsn1.encodeContextObjectId(buffer, 0, objectType, objectInstance);
   }
@@ -15,17 +16,17 @@ module.exports.encode = (buffer, objectType, objectInstance, propertyId, arrayIn
   }
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
+  let result: any;
+  let decodedValue: any;
   if (apduLen < 7) return;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   len++;
   decodedValue = baAsn1.decodeObjectId(buffer, offset + len);
   len += decodedValue.len;
   const objectId = {type: decodedValue.objectType, instance: decodedValue.instance};
-  const property = {};
+  const property: any = {};
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
   if (result.tagNumber !== 1) return;
@@ -52,24 +53,22 @@ module.exports.decode = (buffer, offset, apduLen) => {
   };
 };
 
-module.exports.encodeAcknowledge = (buffer, objectId, propertyId, arrayIndex, values) => {
+export const encodeAcknowledge = (buffer: EncodeBuffer, objectId: BACNetObjectID, propertyId: number, arrayIndex: number, values: any[]) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectId.type, objectId.instance);
   baAsn1.encodeContextEnumerated(buffer, 1, propertyId);
   if (arrayIndex !== baEnum.ASN1_ARRAY_ALL) {
     baAsn1.encodeContextUnsigned(buffer, 2, arrayIndex);
   }
   baAsn1.encodeOpeningTag(buffer, 3);
-  values.forEach((value) => {
-    baAsn1.bacappEncodeApplicationData(buffer, value);
-  });
+  values.forEach((value) => baAsn1.bacappEncodeApplicationData(buffer, value));
   baAsn1.encodeClosingTag(buffer, 3);
 };
 
-module.exports.decodeAcknowledge = (buffer, offset, apduLen) => {
-  let result;
-  let decodedValue;
-  const objectId = {};
-  const property = {};
+export const decodeAcknowledge = (buffer: Buffer, offset: number, apduLen: number) => {
+  let result: any;
+  let decodedValue: any;
+  const objectId: any = {};
+  const property: any = {};
   if (!baAsn1.decodeIsContextTag(buffer, offset, 0)) return;
   let len = 1;
   result = baAsn1.decodeObjectId(buffer, offset + len);
