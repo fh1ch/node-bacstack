@@ -1,15 +1,16 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
+import * as baAsn1 from '../asn1';
+import { EncodeBuffer } from '../types';
 
-module.exports.encode = (buffer, errorClass, errorCode) => {
+export const encode = (buffer: EncodeBuffer, errorClass: number, errorCode: number) => {
   baAsn1.encodeApplicationEnumerated(buffer, errorClass);
   baAsn1.encodeApplicationEnumerated(buffer, errorCode);
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   const orgOffset = offset;
-  let result;
+  let result: any;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset);
   offset += result.len;
   const errorClass = baAsn1.decodeEnumerated(buffer, offset, result.value);
