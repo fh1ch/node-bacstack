@@ -1,10 +1,15 @@
 'use strict';
 
-const createSocket = require('dgram').createSocket;
-const EventEmitter = require('events').EventEmitter;
+import { createSocket, Socket } from 'dgram';
+import { EventEmitter } from 'events';
 
-class Transport extends EventEmitter {
-  constructor(settings) {
+import { TransportSettings } from './types';
+
+export class Transport extends EventEmitter {
+  private _settings: TransportSettings;
+  private _server: Socket;
+
+  constructor(settings: TransportSettings) {
     super();
     this._settings = settings;
     this._server = createSocket({type: 'udp4', reuseAddr: true});
@@ -20,7 +25,7 @@ class Transport extends EventEmitter {
     return 1482;
   }
 
-  send(buffer, offset, receiver) {
+  send(buffer: Buffer, offset: number, receiver: string) {
     this._server.send(buffer, 0, offset, this._settings.port, receiver);
   }
 
@@ -34,4 +39,3 @@ class Transport extends EventEmitter {
     this._server.close();
   }
 }
-module.exports = Transport;
