@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID, BACNetPropertyID } from '../types';
 
-module.exports.encode = (buffer, subscriberProcessId, monitoredObjectId, cancellationRequest, issueConfirmedNotifications, lifetime, monitoredProperty, covIncrementPresent, covIncrement) => {
+export const encode = (buffer: EncodeBuffer, subscriberProcessId: number, monitoredObjectId: BACNetObjectID, cancellationRequest: boolean, issueConfirmedNotifications: boolean, lifetime: number, monitoredProperty: BACNetPropertyID, covIncrementPresent: boolean, covIncrement: number) => {
   baAsn1.encodeContextUnsigned(buffer, 0, subscriberProcessId);
   baAsn1.encodeContextObjectId(buffer, 1, monitoredObjectId.type, monitoredObjectId.instance);
   if (!cancellationRequest) {
@@ -21,11 +22,11 @@ module.exports.encode = (buffer, subscriberProcessId, monitoredObjectId, cancell
   }
 };
 
-module.exports.decode = (buffer, offset) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len = 0;
-  const value = {};
-  let result;
-  let decodedValue;
+  const value: any = {};
+  let result: any;
+  let decodedValue: any;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
