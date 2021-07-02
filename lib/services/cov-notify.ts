@@ -1,9 +1,10 @@
 'use strict';
 
-const baAsn1 = require('../asn1');
-const baEnum = require('../enum');
+import * as baAsn1 from '../asn1';
+import * as baEnum from '../enum';
+import { EncodeBuffer, BACNetObjectID } from '../types';
 
-module.exports.encode = (buffer, subscriberProcessId, initiatingDeviceId, monitoredObjectId, timeRemaining, values) => {
+export const encode = (buffer: EncodeBuffer, subscriberProcessId: number, initiatingDeviceId: number, monitoredObjectId: BACNetObjectID, timeRemaining: number, values: any[]) => {
   baAsn1.encodeContextUnsigned(buffer, 0, subscriberProcessId);
   baAsn1.encodeContextObjectId(buffer, 1, baEnum.ObjectType.DEVICE, initiatingDeviceId);
   baAsn1.encodeContextObjectId(buffer, 2, monitoredObjectId.type, monitoredObjectId.instance);
@@ -15,9 +16,7 @@ module.exports.encode = (buffer, subscriberProcessId, initiatingDeviceId, monito
       baAsn1.encodeContextUnsigned(buffer, 1, value.property.index);
     }
     baAsn1.encodeOpeningTag(buffer, 2);
-    value.value.forEach((v) => {
-      baAsn1.bacappEncodeApplicationData(buffer, v);
-    });
+    value.value.forEach((v: any) => baAsn1.bacappEncodeApplicationData(buffer, v));
     baAsn1.encodeClosingTag(buffer, 2);
     if (value.priority === baEnum.ASN1_NO_PRIORITY) {
       baAsn1.encodeContextUnsigned(buffer, 3, value.priority);
@@ -27,10 +26,10 @@ module.exports.encode = (buffer, subscriberProcessId, initiatingDeviceId, monito
   baAsn1.encodeClosingTag(buffer, 4);
 };
 
-module.exports.decode = (buffer, offset, apduLen) => {
+export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
-  let result;
-  let decodedValue;
+  let result: any;
+  let decodedValue: any;
   if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;
@@ -59,7 +58,7 @@ module.exports.decode = (buffer, offset, apduLen) => {
   len++;
   const values = [];
   while ((apduLen - len) > 1 && !baAsn1.decodeIsClosingTagNumber(buffer, offset + len, 4)) {
-    const newEntry = {};
+    const newEntry: any = {};
     newEntry.property = {};
     if (!baAsn1.decodeIsContextTag(buffer, offset + len, 0)) return;
     result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
