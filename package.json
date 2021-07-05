@@ -30,6 +30,7 @@
     "node": ">= 12.0.0"
   },
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
     "coverageReporters": [
@@ -38,7 +39,7 @@
       "lcov"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.js"
+      "lib/**/*.ts"
     ]
   },
   "commitlint": {
@@ -58,12 +59,14 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
+    "@types/jest": "^26.0.23",
     "@types/node": "^15.12.5",
     "docdash": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.6",
     "jsdoc": "^3.6.7",
+    "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
   }
 }
