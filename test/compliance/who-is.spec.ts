@@ -1,18 +1,19 @@
 'use strict';
 
-const bacnet = require('../../');
+import { Client } from '../../lib/client';
+import * as baEnum from '../../lib/enum';
 
 describe('bacstack - whoIs compliance', () => {
-  let client;
+  let client: Client;
 
-  beforeEach(() => client = new bacnet({apduTimeout: 1000}));
+  beforeEach(() => client = new Client({apduTimeout: 1000}));
   afterEach(() => client.close());
 
   it('should find the device simulator', (next) => {
     client.on('iAm', (device) => {
       expect(device.deviceId).toEqual(1234);
       expect(device.maxApdu).toEqual(1476);
-      expect(device.segmentation).toEqual(bacnet.enum.Segmentation.NO_SEGMENTATION);
+      expect(device.segmentation).toEqual(baEnum.Segmentation.NO_SEGMENTATION);
       expect(device.vendorId).toEqual(260);
       next();
     });
@@ -24,7 +25,7 @@ describe('bacstack - whoIs compliance', () => {
       expect(device.deviceId).toEqual(1234);
       next();
     });
-    client.whoIs(1233);
+    client.whoIs({lowLimit: 1233});
   });
 
   it('should find the device simulator with provided min/max device ID and IP', (next) => {
@@ -32,6 +33,6 @@ describe('bacstack - whoIs compliance', () => {
       expect(device.deviceId).toEqual(1234);
       next();
     });
-    client.whoIs(1233, 1235, 'bacnet-device');
+    client.whoIs({lowLimit: 1233,highLimit: 1235, address: 'bacnet-device'});
   });
 });
