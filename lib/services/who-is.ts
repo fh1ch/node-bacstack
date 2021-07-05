@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, lowLimit: number, highLimit: number) => {
   if ((lowLimit >= 0) && (lowLimit <= baEnum.ASN1_MAX_INSTANCE) && (highLimit >= 0) && (highLimit <= baEnum.ASN1_MAX_INSTANCE)) {

@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, acknowledgmentFilter: number, enrollmentFilter?: any, eventStateFilter?: number, eventTypeFilter?: number, priorityFilter?: any, notificationClassFilter?: number) => {
   baAsn1.encodeContextEnumerated(buffer, 0, acknowledgmentFilter);
@@ -37,7 +37,7 @@ export const encode = (buffer: EncodeBuffer, acknowledgmentFilter: number, enrol
   }
 };
 
-export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len = 0;
   let result: any;
   let decodedValue: any;

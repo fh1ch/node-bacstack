@@ -2,14 +2,14 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, time: Date) => {
   baAsn1.encodeApplicationDate(buffer, time);
   baAsn1.encodeApplicationTime(buffer, time);
 };
 
-export const decode = (buffer: Buffer, offset: number, length: number) => {
+export const decode = (buffer: Buffer, offset: number) => {
   let len = 0;
   let result: any;
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);

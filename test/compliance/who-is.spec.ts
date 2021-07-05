@@ -1,6 +1,6 @@
 'use strict';
 
-import { Client } from '../../lib/client';
+import {Client} from '../../lib/client';
 import * as baEnum from '../../lib/enum';
 
 describe('bacstack - whoIs compliance', () => {
@@ -33,6 +33,6 @@ describe('bacstack - whoIs compliance', () => {
       expect(device.deviceId).toEqual(1234);
       next();
     });
-    client.whoIs({lowLimit: 1233,highLimit: 1235, address: 'bacnet-device'});
+    client.whoIs({lowLimit: 1233, highLimit: 1235, address: 'bacnet-device'});
   });
 });

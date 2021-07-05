@@ -9,7 +9,7 @@ describe('bacstack - Services layer TimeSync unit', () => {
     const date = new Date();
     date.setMilliseconds(990);
     baServices.timeSync.encode(buffer, date);
-    const result = baServices.timeSync.decode(buffer.buffer, 0, buffer.offset);
+    const result = baServices.timeSync.decode(buffer.buffer, 0);
     delete result.len;
     expect(result).toEqual({
       value: date

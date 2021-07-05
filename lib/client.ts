@@ -238,7 +238,7 @@ export class Client extends EventEmitter {
     } else if (service === baEnum.ConfirmedServiceChoice.GET_ALARM_SUMMARY) {
       this.emit('getAlarmSummary', {address: address, invokeId: invokeId});
     } else if (service === baEnum.ConfirmedServiceChoice.GET_ENROLLMENT_SUMMARY) {
-      const result = baServices.getEnrollmentSummary.decode(buffer, offset, length);
+      const result = baServices.getEnrollmentSummary.decode(buffer, offset);
       if (!result) return debug('Received invalid getEntrollmentSummary message');
       this.emit('getEntrollmentSummary', {address: address, invokeId: invokeId, request: result});
     } else if (service === baEnum.ConfirmedServiceChoice.GET_EVENT_INFORMATION) {
@@ -319,7 +319,7 @@ export class Client extends EventEmitter {
       if (!result) return debug('Received invalid covNotifyUnconfirmed message');
       this.emit('covNotifyUnconfirmed', {address: address, request: result});
     } else if (service === baEnum.UnconfirmedServiceChoice.TIME_SYNCHRONIZATION) {
-      const result = baServices.timeSync.decode(buffer, offset, length);
+      const result = baServices.timeSync.decode(buffer, offset);
       if (!result) return debug('Received invalid TimeSync message');
 
       /**
@@ -338,7 +338,7 @@ export class Client extends EventEmitter {
        */
       this.emit('timeSync', {address: address, dateTime: result.value});
     } else if (service === baEnum.UnconfirmedServiceChoice.UTC_TIME_SYNCHRONIZATION) {
-      const result = baServices.timeSync.decode(buffer, offset, length);
+      const result = baServices.timeSync.decode(buffer, offset);
       if (!result) return debug('Received invalid TimeSyncUTC message');
 
       /**

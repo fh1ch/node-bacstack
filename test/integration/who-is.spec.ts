@@ -4,7 +4,7 @@ import * as utils from './utils';
 
 describe('bacstack - whoIs integration', () => {
   it('should not invoke a event if no device is available', (next) => {
-    const client = new utils.bacnetClient({apduTimeout: 200});
+    const client = new utils.BacnetClient({apduTimeout: 200});
     client.on('iAm', () => {
       client.close();
       next(new Error('Unallowed Callback'));

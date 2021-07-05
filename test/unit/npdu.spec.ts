@@ -1,16 +1,16 @@
 'use strict';
 
 import * as utils from './utils';
-const baNpdu = require('../../lib/npdu');
+import * as baNpdu from '../../lib/npdu';
 
 describe('bacstack - NPDU layer', () => {
   it('should successfully decode the NPDU function', () => {
-    const result = baNpdu.decodeFunction([0, 1, 12], 1);
+    const result = baNpdu.decodeFunction(Buffer.from([0, 1, 12]), 1);
     expect(result).toEqual(12);
   });
 
   it('should fail decoding the NPDU function if invalid version', () => {
-    const result = baNpdu.decodeFunction([0, 2, 12], 1);
+    const result = baNpdu.decodeFunction(Buffer.from([0, 2, 12]), 1);
     expect(result).toBeUndefined();
   });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 import * as baAsn1 from '../asn1';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, vendorId: number, serviceNumber: number, data: number[]) => {
   baAsn1.encodeContextUnsigned(buffer, 0, vendorId);

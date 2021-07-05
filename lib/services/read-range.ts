@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer, BACNetObjectID, BACNetBitString } from '../types';
+import {EncodeBuffer, BACNetObjectID, BACNetBitString} from '../types';
 
 export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID, propertyId: number, arrayIndex: number, requestType: number, position: number, time: Date, count: number) => {
   baAsn1.encodeContextObjectId(buffer, 0, objectId.type, objectId.instance);

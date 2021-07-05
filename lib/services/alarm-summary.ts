@@ -1,7 +1,7 @@
 'use strict';
 
 import * as baAsn1 from '../asn1';
-import { EncodeBuffer, BACNetAlarm } from '../types';
+import {EncodeBuffer, BACNetAlarm} from '../types';
 
 export const encode = (buffer: EncodeBuffer, alarms: BACNetAlarm[]) => {
   alarms.forEach((alarm) => {

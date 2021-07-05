@@ -1,11 +1,11 @@
 'use strict';
 
-import { EventEmitter } from 'events';
-import { Client } from '../../lib/client';
+import {EventEmitter} from 'events';
+import {Client} from '../../lib/client';
 
-export const bacnetClient = Client;
+export const BacnetClient = Client;
 
-export class transportStub extends EventEmitter {
+export class TransportStub extends EventEmitter {
   constructor() {
     super();
   }
@@ -15,12 +15,12 @@ export class transportStub extends EventEmitter {
   getMaxPayload() {
     return 1482;
   }
-  send() { }
-  open() { }
-  close() { }
+  send() {} // eslint-disable-line @typescript-eslint/no-empty-function
+  open() {} // eslint-disable-line @typescript-eslint/no-empty-function
+  close() {} // eslint-disable-line @typescript-eslint/no-empty-function
 }
 
-export const propertyFormater = (object: {id: number, value: any}[]) => {
+export const propertyFormater = (object: {id: number; value: any}[]) => {
   const converted: {[name: number]: any} = {};
   object.forEach((property) => converted[property.id] = property.value);
   return converted;

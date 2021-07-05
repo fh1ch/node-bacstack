@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer, BACNetObjectID, BACNetPropertyID, BACNetAppData } from '../types';
+import {EncodeBuffer, BACNetObjectID, BACNetPropertyID, BACNetAppData} from '../types';
 
 interface BACNETWPM {
   property: BACNetPropertyID;

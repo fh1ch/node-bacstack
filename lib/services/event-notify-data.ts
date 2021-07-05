@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, data: any) => {
   baAsn1.encodeContextUnsigned(buffer, 0, data.processId);

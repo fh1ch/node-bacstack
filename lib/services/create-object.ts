@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer, BACNetObjectID } from '../types';
+import {EncodeBuffer, BACNetObjectID} from '../types';
 
 export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID, values: any[]) => {
   baAsn1.encodeOpeningTag(buffer, 0);
@@ -30,7 +30,7 @@ export const decode = (buffer: Buffer, offset: number, apduLen: number) => {
   let len = 0;
   let result: any;
   let decodedValue: any;
-  let objectId: {type: number, instance: number};
+  let objectId: {type: number; instance: number};
   const valueList = [];
   result = baAsn1.decodeTagNumberAndValue(buffer, offset + len);
   len += result.len;

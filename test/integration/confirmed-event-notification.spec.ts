@@ -4,7 +4,7 @@ import * as utils from './utils';
 
 describe('bacstack - confirmedEventNotification integration', () => {
   it('should return a timeout error if no device is available', (next) => {
-    const client = new utils.bacnetClient({apduTimeout: 200});
+    const client = new utils.BacnetClient({apduTimeout: 200});
     const date = new Date();
     date.setMilliseconds(880);
     client.confirmedEventNotification('127.0.0.1', {

@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer, BACNetObjectID } from '../types';
+import {EncodeBuffer, BACNetObjectID} from '../types';
 
 export const encode = (buffer: EncodeBuffer, objectType: number, objectInstance: number, propertyId: number, arrayIndex: number) => {
   if (objectType <= baEnum.ASN1_MAX_OBJECT) {

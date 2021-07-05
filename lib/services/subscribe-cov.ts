@@ -1,7 +1,7 @@
 'use strict';
 
 import * as baAsn1 from '../asn1';
-import { EncodeBuffer, BACNetObjectID } from '../types';
+import {EncodeBuffer, BACNetObjectID} from '../types';
 
 export const encode = (buffer: EncodeBuffer, subscriberProcessId: number, monitoredObjectId: BACNetObjectID, cancellationRequest: boolean, issueConfirmedNotifications: boolean, lifetime: number) => {
   baAsn1.encodeContextUnsigned(buffer, 0, subscriberProcessId);

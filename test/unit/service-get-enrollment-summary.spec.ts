@@ -7,7 +7,7 @@ describe('bacstack - Services layer GetEnrollmentSummary unit', () => {
   it('should successfully encode and decode', () => {
     const buffer = utils.getBuffer();
     baServices.getEnrollmentSummary.encode(buffer, 2);
-    const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0, buffer.offset);
+    const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0);
     delete result.len;
     expect(result).toEqual({
       acknowledgmentFilter: 2
@@ -17,7 +17,7 @@ describe('bacstack - Services layer GetEnrollmentSummary unit', () => {
   it('should successfully encode and decode full payload', () => {
     const buffer = utils.getBuffer();
     baServices.getEnrollmentSummary.encode(buffer, 2, {objectId: {type: 5, instance: 33}, processId: 7}, 1, 3, {min: 1, max: 65}, 5);
-    const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0, buffer.offset);
+    const result = baServices.getEnrollmentSummary.decode(buffer.buffer, 0);
     delete result.len;
     expect(result).toEqual({
       acknowledgmentFilter: 2,

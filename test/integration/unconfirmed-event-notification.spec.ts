@@ -4,7 +4,7 @@ import * as utils from './utils';
 
 describe('bacstack - unconfirmedEventNotification integration', () => {
   it('should correctly send a telegram', () => {
-    const client = new utils.bacnetClient({apduTimeout: 200});
+    const client = new utils.BacnetClient({apduTimeout: 200});
     const date = new Date();
     date.setMilliseconds(880);
     client.unconfirmedEventNotification('127.0.0.1', {

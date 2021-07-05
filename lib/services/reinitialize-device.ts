@@ -1,7 +1,7 @@
 'use strict';
 
 import * as baAsn1 from '../asn1';
-import { EncodeBuffer } from '../types';
+import {EncodeBuffer} from '../types';
 
 export const encode = (buffer: EncodeBuffer, state: number, password: string) => {
   baAsn1.encodeContextEnumerated(buffer, 0, state);

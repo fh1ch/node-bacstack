@@ -2,7 +2,7 @@
 
 import * as baAsn1 from '../asn1';
 import * as baEnum from '../enum';
-import { EncodeBuffer, BACNetObjectID, BACNetPropertyID } from '../types';
+import {EncodeBuffer, BACNetObjectID, BACNetPropertyID} from '../types';
 
 export const encode = (buffer: EncodeBuffer, subscriberProcessId: number, monitoredObjectId: BACNetObjectID, cancellationRequest: boolean, issueConfirmedNotifications: boolean, lifetime: number, monitoredProperty: BACNetPropertyID, covIncrementPresent: boolean, covIncrement: number) => {
   baAsn1.encodeContextUnsigned(buffer, 0, subscriberProcessId);

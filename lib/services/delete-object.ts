@@ -1,7 +1,7 @@
 'use strict';
 
 import * as baAsn1 from '../asn1';
-import { EncodeBuffer, BACNetObjectID } from '../types';
+import {EncodeBuffer, BACNetObjectID} from '../types';
 
 export const encode = (buffer: EncodeBuffer, objectId: BACNetObjectID) => {
   baAsn1.encodeApplicationObjectId(buffer, objectId.type, objectId.instance);
