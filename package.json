@@ -6,7 +6,7 @@
   "scripts": {
     "changelog": "commitlint --from=origin/master",
     "build": "tsc",
-    "lint": "eslint lib/ test/ index.js",
+    "lint": "eslint lib/**/*.ts test/**/*.ts index.ts",
     "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.ts",
     "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.ts",
     "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.ts",
@@ -61,6 +61,8 @@
     "@commitlint/config-conventional": "^12.1.4",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "docdash": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
