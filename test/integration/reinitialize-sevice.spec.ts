@@ -1,13 +1,12 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
-describe('bacstack - subscribeCOV integration', () => {
+describe('bacstack - reinitializeDevice integration', () => {
   it('should return a timeout error if no device is available', (next) => {
     const client = new utils.bacnetClient({apduTimeout: 200});
-    client.subscribeCOV('127.0.0.1', {type: 5, instance: 3}, 7, false, false, 0, (err, value) => {
+    client.reinitializeDevice('127.0.0.1', 1, {password: 'Test1234'}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });

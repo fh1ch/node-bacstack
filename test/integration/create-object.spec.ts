@@ -1,13 +1,14 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
-describe('bacstack - writeProperty integration', () => {
+describe('bacstack - createObject integration', () => {
   it('should return a timeout error if no device is available', (next) => {
     const client = new utils.bacnetClient({apduTimeout: 200});
-    client.writeProperty('127.0.0.1', {type: 8, instance: 44301}, 28, [{type: 4, value: 100}], (err, value) => {
+    client.createObject('127.0.0.1', {type: 2, instance: 300}, [
+      {property: {id: 85, index: 1}, value: [{type: 1, value: true}]}
+    ], {}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });

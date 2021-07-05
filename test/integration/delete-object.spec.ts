@@ -1,13 +1,12 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
-describe('bacstack - readFile integration', () => {
+describe('bacstack - deleteObject integration', () => {
   it('should return a timeout error if no device is available', (next) => {
     const client = new utils.bacnetClient({apduTimeout: 200});
-    client.readFile('127.0.0.1', {type: 10, instance: 100}, 0, 100, (err, value) => {
+    client.deleteObject('127.0.0.1', {type: 2, instance: 15}, {}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });

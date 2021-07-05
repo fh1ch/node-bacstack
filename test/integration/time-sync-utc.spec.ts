@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
 describe('bacstack - timeSyncUTC integration', () => {
   it('should send a time UTC sync package', () => {

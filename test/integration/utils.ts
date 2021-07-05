@@ -1,11 +1,11 @@
 'use strict';
 
-const EventEmitter = require('events').EventEmitter;
-const bacnet = require('../../');
+import { EventEmitter } from 'events';
+import { Client } from '../../lib/client';
 
-module.exports.bacnetClient = bacnet;
+export const bacnetClient = Client;
 
-class Transport extends EventEmitter {
+export class transportStub extends EventEmitter {
   constructor() {
     super();
   }
@@ -19,10 +19,9 @@ class Transport extends EventEmitter {
   open() { }
   close() { }
 }
-module.exports.transportStub = Transport;
 
-module.exports.propertyFormater = (object) => {
-  const converted = {};
+export const propertyFormater = (object: {id: number, value: any}[]) => {
+  const converted: {[name: number]: any} = {};
   object.forEach((property) => converted[property.id] = property.value);
   return converted;
 };

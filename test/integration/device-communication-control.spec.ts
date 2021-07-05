@@ -1,13 +1,12 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
-describe('bacstack - confirmedPrivateTransfer integration', () => {
+describe('bacstack - deviceCommunicationControl integration', () => {
   it('should return a timeout error if no device is available', (next) => {
     const client = new utils.bacnetClient({apduTimeout: 200});
-    client.confirmedPrivateTransfer('127.0.0.1', 0, 8, [0x00, 0xaa, 0xfa, 0xb1, 0x00], (err, value) => {
+    client.deviceCommunicationControl('127.0.0.1', 60, 1, {password: 'Test1234'}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });

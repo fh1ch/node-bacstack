@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
 describe('bacstack - writePropertyMultiple integration', () => {
   it('should return a timeout error if no device is available', (next) => {
@@ -10,9 +10,8 @@ describe('bacstack - writePropertyMultiple integration', () => {
         {property: {id: 28, index: 12}, value: [{type: 1, value: true}], priority: 8}
       ]}
     ];
-    client.writePropertyMultiple('127.0.0.1', values, (err, value) => {
+    client.writePropertyMultiple('127.0.0.1', values, {}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });

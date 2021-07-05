@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
 describe('bacstack - readPropertyMultiple integration', () => {
   it('should return a timeout error if no device is available', (next) => {
@@ -8,7 +8,7 @@ describe('bacstack - readPropertyMultiple integration', () => {
     const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, (err, value) => {
+    client.readPropertyMultiple('127.0.0.1', requestArray, {}, (err, value) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
       expect(value).toBeUndefined();
       client.close();
@@ -23,7 +23,7 @@ describe('bacstack - readPropertyMultiple integration', () => {
     const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
+    client.readPropertyMultiple('127.0.0.1', requestArray, {}, (err, response) => {
       expect(err).toBeNull();
       const object = utils.propertyFormater(response.values[0].values);
       expect(response.values[0].objectId).toEqual({type: 29, instance: 31});
@@ -64,7 +64,7 @@ describe('bacstack - readPropertyMultiple integration', () => {
     const requestArray = [
       {objectId: {type: 8, instance: 4194303}, properties: [{id: 8}]}
     ];
-    client.readPropertyMultiple('127.0.0.1', requestArray, (err, response) => {
+    client.readPropertyMultiple('127.0.0.1', requestArray, {}, (err, response) => {
       expect(err).toBeNull();
       expect(response.values[0].objectId).toEqual({type: 19, instance: 10});
       const object = utils.propertyFormater(response.values[0].values);

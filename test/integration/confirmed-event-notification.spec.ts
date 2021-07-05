@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 
 describe('bacstack - confirmedEventNotification integration', () => {
   it('should return a timeout error if no device is available', (next) => {
@@ -20,9 +20,8 @@ describe('bacstack - confirmedEventNotification integration', () => {
       changeOfValueTag: 0,
       changeOfValueChangeValue: 90,
       changeOfValueStatusFlags: {bitsUsed: 24, value: [0xaa, 0xaa, 0xaa]}
-    }, (err, value) => {
+    }, {}, (err) => {
       expect(err.message).toEqual('ERR_TIMEOUT');
-      expect(value).toBeUndefined();
       client.close();
       next();
     });
