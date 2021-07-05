@@ -7,7 +7,7 @@
     "changelog": "commitlint --from=origin/master",
     "build": "tsc",
     "lint": "eslint lib/ test/ index.js",
-    "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.js",
+    "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.ts",
     "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.js",
     "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.ts",
     "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
