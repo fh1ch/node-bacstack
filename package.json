@@ -10,7 +10,7 @@
     "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.ts",
     "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.ts",
     "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.ts",
-    "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
+    "docs": "typedoc --out docs --entryPoint '\"client\"' --excludeExternals --excludeNotExported --excludePrivate lib/client.ts"
   },
   "repository": {
     "type": "git",
@@ -63,11 +63,9 @@
     "@types/node": "^15.12.5",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
-    "docdash": "^1.2.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.6",
-    "jsdoc": "^3.6.7",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
   }
