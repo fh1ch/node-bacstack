@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "changelog": "commitlint --from=origin/master",
-    "lint": "eslint lib/ test/ index.js",
-    "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.js",
-    "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.js",
-    "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.js",
-    "docs": "jsdoc -d ./docs -t node_modules/docdash ./lib ./index.js ./README.md"
+    "build": "tsc",
+    "lint": "eslint lib/**/*.ts test/**/*.ts index.ts",
+    "test": "jest --coverageDirectory reports/coverage-test test/unit/*.spec.ts",
+    "integration": "jest --coverageDirectory reports/coverage-integration test/integration/*.spec.ts",
+    "compliance": "jest --coverageDirectory reports/coverage-compliance test/compliance/*.spec.ts",
+    "docs": "typedoc --out docs --entryPoint '\"client\"' --excludeExternals --excludeNotExported --excludePrivate lib/client.ts"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "node": ">= 12.0.0"
   },
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
     "coverageReporters": [
@@ -37,7 +39,7 @@
       "lcov"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.js"
+      "lib/**/*.ts"
     ]
   },
   "commitlint": {
@@ -57,10 +59,14 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "docdash": "^1.2.0",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.6",
-    "jsdoc": "^3.6.7"
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.4"
   }
 }

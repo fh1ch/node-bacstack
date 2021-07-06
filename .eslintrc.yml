@@ -1,13 +1,17 @@
 extends:
-  - eslint:recommended
-  - google
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/recommended'
+  - 'google'
 env:
   node: true
   jest: true
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 2020
 rules:
-  comma-dangle: [error, never]
-  max-len: [error, 320]
-  require-jsdoc: 0
-  new-cap: 0
+  'comma-dangle': [error, never]
+  'max-len': [error, 320]
+  'require-jsdoc': 0
+  'new-cap': 0
+  '@typescript-eslint/no-explicit-any': 0
+  '@typescript-eslint/explicit-function-return-type': 0
